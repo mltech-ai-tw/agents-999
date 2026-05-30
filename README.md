@@ -4,7 +4,7 @@
 
 **999 free AI consultant agents. Bring your own API key.**
 
-[![Live demo](https://img.shields.io/badge/Live_demo-agents--999-7c5cff?style=flat-square)](https://agents-999-eta.vercel.app)
+[![Live demo](https://img.shields.io/badge/Live_demo-agents--999-7c5cff?style=flat-square)](https://agents-999.vercel.app)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green?style=flat-square)](./LICENSE)
 [![Next.js](https://img.shields.io/badge/Next.js-15-black?style=flat-square&logo=next.js)](https://nextjs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-3178c6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
