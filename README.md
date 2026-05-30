@@ -15,7 +15,7 @@ Supports: **OpenAI · Anthropic · Gemini · Ollama · Mistral · Groq · Azure 
 ## Quick Start
 
 ```bash
-git clone https://github.com/MLTech-AI/agents-999
+git clone https://github.com/mltech-ai-tw/agents-999
 cd agents-999
 npm install
 npm run dev
@@ -24,7 +24,7 @@ npm run dev
 
 ## Deploy
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/MLTech-AI/agents-999)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/mltech-ai-tw/agents-999)
 
 Runs on any Node.js host — Vercel, Railway, Render, Fly.io, or self-hosted.
 There are **no server-side secrets** to configure: keys come from each visitor's
