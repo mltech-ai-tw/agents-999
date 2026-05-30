@@ -1,5 +1,7 @@
 # agents-999
 
+**English** · [繁體中文](./README.zh-TW.md)
+
 **999 free AI consultant agents. Bring your own API key.**
 
 A standalone, self-hostable Next.js web app that lets anyone run 999 AI
