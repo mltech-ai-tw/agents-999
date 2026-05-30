@@ -4,6 +4,8 @@
 
 **999 free AI consultant agents. Bring your own API key.**
 
+🔗 **Live demo: https://agents-999-eta.vercel.app**
+
 A standalone, self-hostable Next.js web app that lets anyone run 999 AI
 consultant agents using their own LLM API keys. No account, no signup, no data
 sent anywhere except the LLM provider you choose. **API keys are stored in your
