@@ -1,10 +1,18 @@
-# agents-999
+<div align="center">
 
-[English](./README.md) · **繁體中文**
+# agents-999
 
 **999 個免費 AI 顧問代理人。用你自己的 API 金鑰。**
 
-🔗 **線上展示：https://agents-999-eta.vercel.app**
+[![線上展示](https://img.shields.io/badge/線上展示-agents--999-7c5cff?style=flat-square)](https://agents-999-eta.vercel.app)
+[![授權: MIT](https://img.shields.io/badge/授權-MIT-green?style=flat-square)](./LICENSE)
+[![Next.js](https://img.shields.io/badge/Next.js-15-black?style=flat-square&logo=next.js)](https://nextjs.org)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178c6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
+[![一鍵部署 Vercel](https://img.shields.io/badge/部署-Vercel-black?style=flat-square&logo=vercel)](https://vercel.com/new/clone?repository-url=https://github.com/mltech-ai-tw/agents-999)
+
+[English](./README.md) · **繁體中文**
+
+</div>
 
 一個獨立、可自架的 Next.js 網頁應用，讓任何人都能用自己的 LLM API 金鑰執行 999 個
 AI 顧問代理人。免帳號、免註冊，除了你選擇的 LLM 供應商外，資料不會傳到任何地方。

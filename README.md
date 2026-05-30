@@ -1,10 +1,18 @@
-# agents-999
+<div align="center">
 
-**English** · [繁體中文](./README.zh-TW.md)
+# agents-999
 
 **999 free AI consultant agents. Bring your own API key.**
 
-🔗 **Live demo: https://agents-999-eta.vercel.app**
+[![Live demo](https://img.shields.io/badge/Live_demo-agents--999-7c5cff?style=flat-square)](https://agents-999-eta.vercel.app)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green?style=flat-square)](./LICENSE)
+[![Next.js](https://img.shields.io/badge/Next.js-15-black?style=flat-square&logo=next.js)](https://nextjs.org)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178c6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
+[![Deploy with Vercel](https://img.shields.io/badge/Deploy-Vercel-black?style=flat-square&logo=vercel)](https://vercel.com/new/clone?repository-url=https://github.com/mltech-ai-tw/agents-999)
+
+**English** · [繁體中文](./README.zh-TW.md)
+
+</div>
 
 A standalone, self-hostable Next.js web app that lets anyone run 999 AI
 consultant agents using their own LLM API keys. No account, no signup, no data
