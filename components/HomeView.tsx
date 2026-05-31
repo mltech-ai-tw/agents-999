@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { AGENT_DATA } from "@/lib/agents/data";
 import type { AgentCategory, AgentMeta } from "@/lib/agents/types";
 import { t } from "@/lib/i18n";
+import { SITE } from "@/lib/site";
 import { useLang } from "@/lib/hooks/useLang";
 import Header from "./Header";
 import SearchBar from "./SearchBar";
@@ -55,27 +56,25 @@ export default function HomeView() {
         <section className="grid grid-cols-1 gap-8 border-b border-border py-14 md:grid-cols-12 md:items-end md:py-20">
           <div className="md:col-span-8">
             <p className="font-mono text-xs uppercase tracking-[0.25em] text-muted">
-              MLTech · {lang === "zh" ? "自帶金鑰" : "Bring your own key"}
+              {lang === "zh" ? "開源 · 自帶金鑰" : "Open source · Bring your own key"}
             </p>
             <h1 className="font-display mt-4 text-5xl font-semibold leading-[1.02] tracking-tight sm:text-6xl md:text-7xl">
               {lang === "zh" ? (
                 <>
-                  999 位 AI 顧問，
+                  999 個 AI 代理人，
                   <br />
-                  <span className="italic text-accent">一把金鑰</span> 即可召喚。
+                  <span className="italic text-accent">自帶金鑰</span> 即可使用。
                 </>
               ) : (
                 <>
-                  999 AI consultants,
+                  999 AI agents,
                   <br />
-                  <span className="italic text-accent">one key</span> away.
+                  <span className="italic text-accent">run with your own key</span>.
                 </>
               )}
             </h1>
             <p className="mt-6 max-w-xl text-base leading-relaxed text-foreground-soft">
-              {lang === "zh"
-                ? "免帳號、免註冊。你的 API 金鑰只存在瀏覽器，永不上傳。選一位顧問，貼上金鑰，立即開工。"
-                : "No account, no signup. Your API key lives in your browser and is never uploaded. Pick a consultant, paste a key, get to work."}
+              {SITE.subtitle[lang]}
             </p>
           </div>
 
@@ -128,18 +127,26 @@ export default function HomeView() {
 
       <footer className="border-t border-border">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-2 px-5 py-7 font-mono text-xs uppercase tracking-widest text-muted sm:flex-row">
-          <span>agents-999 · MIT</span>
           <span>
-            {lang === "zh" ? "由" : "by"}{" "}
-            <a
-              href="https://www.mltech.tw/en"
-              target="_blank"
-              rel="noreferrer"
-              className="text-foreground-soft transition hover:text-accent"
-            >
-              MLTech 美樂信科技
-            </a>
+            {SITE.name} · MIT · {lang === "zh" ? "開源自架" : "self-hostable"}
           </span>
+          {SITE.attribution && (
+            <span>
+              {lang === "zh" ? "由" : "by"}{" "}
+              {SITE.attributionUrl ? (
+                <a
+                  href={SITE.attributionUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-foreground-soft transition hover:text-accent"
+                >
+                  {SITE.attribution}
+                </a>
+              ) : (
+                <span className="text-foreground-soft">{SITE.attribution}</span>
+              )}
+            </span>
+          )}
         </div>
       </footer>
     </div>
