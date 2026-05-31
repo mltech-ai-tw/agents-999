@@ -14,6 +14,7 @@ import {
 } from "@/lib/settings";
 import { PROVIDERS_BY_KEY } from "@/lib/providers-meta";
 import { runAgent } from "@/lib/runAgentClient";
+import { getExamples } from "@/lib/agents/examples";
 import Header from "./Header";
 import CategoryBadge from "./CategoryBadge";
 import ModelSelector from "./ModelSelector";
@@ -207,6 +208,33 @@ export default function AgentRunner({ agent }: { agent: AgentView }) {
               onModelChange={setModel}
               lang={lang}
             />
+
+            {agent.inputs[0] && (
+              <div className="flex flex-col gap-2">
+                <span className="font-mono text-xs uppercase tracking-widest text-muted">
+                  {lang === "zh" ? "範例（點擊填入）" : "Examples (click to fill)"}
+                </span>
+                <div className="grid gap-2 sm:grid-cols-2">
+                  {getExamples(agent.cat, agent.label, agent.labelEn, lang).map(
+                    (ex, i) => (
+                      <button
+                        key={i}
+                        type="button"
+                        onClick={() => setField(agent.inputs[0]!.key, ex)}
+                        className="group flex flex-col gap-1 border border-border bg-surface p-3 text-left transition hover:border-accent hover:bg-surface-2"
+                      >
+                        <span className="font-mono text-[11px] uppercase tracking-widest text-accent">
+                          {lang === "zh" ? `範例 ${i + 1}` : `Example ${i + 1}`}
+                        </span>
+                        <span className="line-clamp-3 text-sm leading-relaxed text-muted group-hover:text-foreground-soft">
+                          {ex}
+                        </span>
+                      </button>
+                    )
+                  )}
+                </div>
+              </div>
+            )}
 
             {agent.inputs.map((input) => (
               <Field
