@@ -137,7 +137,7 @@ export default function HomeView() {
               rel="noreferrer"
               className="text-foreground-soft transition hover:text-accent"
             >
-              MLTech 美樂信
+              MLTech 美樂信科技
             </a>
           </span>
         </div>
