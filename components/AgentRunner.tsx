@@ -15,6 +15,7 @@ import {
 import { PROVIDERS_BY_KEY } from "@/lib/providers-meta";
 import { runAgent } from "@/lib/runAgentClient";
 import { getExamples } from "@/lib/agents/examples";
+import MarkdownView from "./MarkdownView";
 import Header from "./Header";
 import CategoryBadge from "./CategoryBadge";
 import ModelSelector from "./ModelSelector";
@@ -293,12 +294,14 @@ export default function AgentRunner({ agent }: { agent: AgentView }) {
               </div>
               <div
                 ref={outputRef}
-                className="thin-scroll max-h-[28rem] min-h-[10rem] overflow-y-auto whitespace-pre-wrap rounded-none border border-border bg-surface p-4 font-mono text-sm leading-relaxed"
+                className="thin-scroll max-h-[32rem] min-h-[10rem] overflow-y-auto rounded-none border border-border bg-surface p-5"
               >
                 {output ? (
-                  <span className={running ? "stream-cursor" : ""}>{output}</span>
+                  <div className={running ? "stream-cursor" : ""}>
+                    <MarkdownView text={output} />
+                  </div>
                 ) : (
-                  <span className="text-muted">
+                  <span className="font-mono text-sm text-muted">
                     {running ? t("running", lang) : t("emptyOutputHint", lang)}
                   </span>
                 )}

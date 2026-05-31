@@ -98,6 +98,147 @@ body::after {
   color: var(--accent);
 }
 
+/* ── Markdown output (agent results) — editorial styling ───────────── */
+.md-output {
+  font-size: 0.925rem;
+  line-height: 1.7;
+  color: var(--foreground);
+  word-break: break-word;
+}
+.md-output > :first-child {
+  margin-top: 0;
+}
+.md-output > :last-child {
+  margin-bottom: 0;
+}
+.md-output h1,
+.md-output h2,
+.md-output h3,
+.md-output h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+  margin: 1.5em 0 0.6em;
+}
+.md-output h1 {
+  font-size: 1.6rem;
+}
+.md-output h2 {
+  font-size: 1.3rem;
+  padding-bottom: 0.2em;
+  border-bottom: 1px solid var(--border);
+}
+.md-output h3 {
+  font-size: 1.1rem;
+}
+.md-output h4 {
+  font-size: 1rem;
+}
+.md-output p {
+  margin: 0.7em 0;
+}
+.md-output ul,
+.md-output ol {
+  margin: 0.7em 0;
+  padding-left: 1.4em;
+}
+.md-output li {
+  margin: 0.3em 0;
+}
+.md-output ul > li {
+  list-style: none;
+  position: relative;
+}
+.md-output ul > li::before {
+  content: "—";
+  position: absolute;
+  left: -1.3em;
+  color: var(--accent);
+}
+.md-output ol {
+  list-style: decimal;
+}
+.md-output ol > li::marker {
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+}
+.md-output strong {
+  font-weight: 700;
+  color: var(--foreground);
+}
+.md-output em {
+  font-style: italic;
+}
+.md-output a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.md-output blockquote {
+  margin: 1em 0;
+  padding: 0.4em 1em;
+  border-left: 3px solid var(--accent);
+  background: var(--surface-2);
+  color: var(--foreground-soft);
+}
+.md-output blockquote p {
+  margin: 0.3em 0;
+}
+.md-output code {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  background: var(--surface-2);
+  padding: 0.12em 0.4em;
+  border: 1px solid var(--border);
+}
+.md-output pre {
+  margin: 1em 0;
+  padding: 1em;
+  overflow-x: auto;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+}
+.md-output pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 0.85em;
+}
+.md-output hr {
+  margin: 1.5em 0;
+  border: none;
+  border-top: 1px solid var(--border);
+}
+/* Tables — the key fix for "no formatting" */
+.md-output table {
+  width: 100%;
+  margin: 1em 0;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+  display: block;
+  overflow-x: auto;
+}
+.md-output th,
+.md-output td {
+  border: 1px solid var(--border);
+  padding: 0.5em 0.75em;
+  text-align: left;
+  vertical-align: top;
+}
+.md-output thead th {
+  background: var(--surface-2);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--foreground-soft);
+}
+.md-output tbody tr:nth-child(even) {
+  background: color-mix(in srgb, var(--surface-2) 45%, transparent);
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

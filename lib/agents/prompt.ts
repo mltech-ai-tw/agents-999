@@ -45,9 +45,11 @@ export function buildPrompt(
       "請依此產出專業、具體、可立即執行的成果。",
       "要求：",
       "1. 直接給出結論與建議，避免空泛的客套話。",
-      "2. 適度使用標題、條列與表格讓內容易讀。",
-      "3. 若資訊不足，先列出你的合理假設再繼續。",
-      "4. 全程使用繁體中文。",
+      "2. 全程使用 Markdown 排版：用 ## / ### 標題分段、用條列與編號清單、**粗體**標出重點。",
+      "3. 凡是比較、評分、數據、時程或選項，一律用 Markdown 表格（| 欄 | 欄 |）呈現，不要寫成一段文字。",
+      "4. 流程或步驟用編號清單；必要時可用 > 引用區塊強調關鍵提醒。",
+      "5. 若資訊不足，先列出你的合理假設再繼續。",
+      "6. 全程使用繁體中文。",
     ].join("\n");
   }
 
@@ -62,8 +64,10 @@ export function buildPrompt(
     "Produce a professional, concrete and immediately actionable result.",
     "Requirements:",
     "1. Lead with conclusions and recommendations — skip filler.",
-    "2. Use headings, bullet points and tables where they improve readability.",
-    "3. If information is missing, state your reasonable assumptions, then proceed.",
-    "4. Respond entirely in English.",
+    "2. Format everything in Markdown: use ## / ### headings, bullet and numbered lists, and **bold** for key points.",
+    "3. Whenever you compare options, score, show data, timelines or trade-offs, use a Markdown table (| col | col |) — never bury it in prose.",
+    "4. Use numbered lists for processes/steps; use > blockquotes for critical callouts when useful.",
+    "5. If information is missing, state your reasonable assumptions, then proceed.",
+    "6. Respond entirely in English.",
   ].join("\n");
 }
