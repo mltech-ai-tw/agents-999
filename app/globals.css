@@ -239,6 +239,14 @@ body::after {
   background: color-mix(in srgb, var(--surface-2) 45%, transparent);
 }
 
+/* Mermaid diagrams (journey maps, flowcharts) */
+.mermaid-figure svg {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

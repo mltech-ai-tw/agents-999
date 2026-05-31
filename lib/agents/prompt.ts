@@ -50,9 +50,10 @@ export function buildPrompt(
       "4. 當有可量化的數據（占比、趨勢、各項目數值比較）時，額外輸出一個圖表，格式為 ```chart 程式碼區塊，內容是 JSON：",
       '   {"type":"bar|line|pie","title":"標題","data":[{"name":"項目","value":數字}]}（多數列時可加 "series":["欄1","欄2"] 並在每筆 data 放對應數字欄）。',
       "   圖表只在數據適合視覺化時使用，且仍要保留對應的文字說明或表格。",
-      "5. 流程或步驟用編號清單；必要時可用 > 引用區塊強調關鍵提醒。",
-      "6. 若資訊不足，先列出你的合理假設再繼續。",
-      "7. 全程使用繁體中文。",
+      "5. 當內容涉及流程、步驟、旅程、決策樹、組織架構或時程時，額外輸出一張圖，用 ```mermaid 程式碼區塊（flowchart TD / journey / sequenceDiagram / gantt 皆可）。節點文字務必用雙引號包住，例如 A[\"認知階段\"] --> B[\"考慮階段\"]。",
+      "6. 流程或步驟用編號清單；必要時可用 > 引用區塊強調關鍵提醒。",
+      "7. 若資訊不足，先列出你的合理假設再繼續。",
+      "8. 全程使用繁體中文。",
     ].join("\n");
   }
 
@@ -72,8 +73,9 @@ export function buildPrompt(
     "4. When you have quantifiable data (proportions, trends, value comparisons), also output a chart as a ```chart code block containing JSON:",
     '   {"type":"bar|line|pie","title":"Title","data":[{"name":"Item","value":number}]} (for multi-series add "series":["col1","col2"] and put those numeric fields on each data row).',
     "   Only use a chart when the data genuinely suits visualization, and still keep the matching text or table.",
-    "5. Use numbered lists for processes/steps; use > blockquotes for critical callouts when useful.",
-    "6. If information is missing, state your reasonable assumptions, then proceed.",
-    "7. Respond entirely in English.",
+    "5. When the content involves a process, steps, a journey, a decision tree, an org structure or a timeline, also output a diagram in a ```mermaid code block (flowchart TD / journey / sequenceDiagram / gantt). Always wrap node labels in double quotes, e.g. A[\"Awareness\"] --> B[\"Consideration\"].",
+    "6. Use numbered lists for processes/steps; use > blockquotes for critical callouts when useful.",
+    "7. If information is missing, state your reasonable assumptions, then proceed.",
+    "8. Respond entirely in English.",
   ].join("\n");
 }
