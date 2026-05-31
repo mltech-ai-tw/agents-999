@@ -12,9 +12,9 @@ export default function SearchBar({
   lang: Lang;
 }) {
   return (
-    <div className="relative">
+    <div className="group relative flex items-center border-b-2 border-border-strong transition-colors focus-within:border-accent">
       <svg
-        className="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-muted"
+        className="pointer-events-none mr-3 h-5 w-5 shrink-0 text-muted transition-colors group-focus-within:text-accent"
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"
@@ -28,7 +28,7 @@ export default function SearchBar({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={t("searchPlaceholder", lang)}
-        className="w-full rounded-xl border border-border bg-surface py-3 pl-11 pr-4 text-foreground outline-none transition placeholder:text-muted focus:border-accent"
+        className="font-display w-full bg-transparent py-3 text-xl tracking-tight outline-none placeholder:text-muted placeholder:opacity-60"
       />
     </div>
   );

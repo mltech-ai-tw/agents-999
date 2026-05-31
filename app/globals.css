@@ -1,14 +1,21 @@
 @import "tailwindcss";
 
+/*
+  agents-999 — editorial / Swiss-print "index" aesthetic.
+  Warm paper, ink black, a single vermilion accent. No purple, no glass.
+*/
 :root {
-  --background: #0a0a0f;
-  --surface: #14141c;
-  --surface-2: #1c1c28;
-  --border: #2a2a3a;
-  --foreground: #ededf2;
-  --muted: #9494a8;
-  --accent: #7c5cff;
-  --accent-hover: #9277ff;
+  --background: #f2eee4; /* warm paper */
+  --surface: #faf7f0; /* card */
+  --surface-2: #e8e2d4; /* inset / input */
+  --border: #d8d1c1; /* hairline */
+  --border-strong: #bdb4a0;
+  --foreground: #1b1a16; /* warm ink */
+  --foreground-soft: #423f38;
+  --muted: #837c6f;
+  --accent: #d4371b; /* vermilion */
+  --accent-hover: #b12c12;
+  --accent-wash: #f4e3dd;
 }
 
 @theme inline {
@@ -16,23 +23,49 @@
   --color-surface: var(--surface);
   --color-surface-2: var(--surface-2);
   --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
   --color-foreground: var(--foreground);
+  --color-foreground-soft: var(--foreground-soft);
   --color-muted: var(--muted);
   --color-accent: var(--accent);
   --color-accent-hover: var(--accent-hover);
+  --color-accent-wash: var(--accent-wash);
+
+  --font-sans: var(--font-space-grotesk), "Noto Sans TC", "PingFang TC",
+    "Microsoft JhengHei", system-ui, sans-serif;
+  --font-display: var(--font-fraunces), "Noto Serif TC", "Songti TC", Georgia,
+    serif;
+  --font-mono: var(--font-jetbrains), "Noto Sans TC", ui-monospace,
+    "SFMono-Regular", monospace;
 }
 
 html {
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
-  font-family:
-    ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
-    "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+  font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Subtle paper grain — tactile, print-like. Sits above content, ignores clicks. */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  pointer-events: none;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Display headings carry the serif voice. */
+.font-display {
+  font-feature-settings: "ss01";
+  letter-spacing: -0.015em;
 }
 
 /* Thin scrollbars for the output box */
@@ -41,14 +74,14 @@ body {
   height: 8px;
 }
 .thin-scroll::-webkit-scrollbar-thumb {
-  background: var(--border);
-  border-radius: 4px;
+  background: var(--border-strong);
+  border-radius: 0;
 }
 .thin-scroll::-webkit-scrollbar-track {
   background: transparent;
 }
 
-/* Blinking cursor for the streaming output */
+/* Blinking caret for streaming output */
 @keyframes blink {
   0%,
   100% {
@@ -63,4 +96,13 @@ body {
   margin-left: 1px;
   animation: blink 1s step-start infinite;
   color: var(--accent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
 }

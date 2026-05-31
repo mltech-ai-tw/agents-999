@@ -168,20 +168,27 @@ export default function AgentRunner({ agent }: { agent: AgentView }) {
       <Header lang={lang} onToggleLang={setLang} />
 
       <main className="mx-auto max-w-3xl px-4 py-8">
-        <Link href="/" className="text-sm text-muted hover:text-foreground">
+        <Link
+          href="/"
+          className="font-mono text-xs uppercase tracking-widest text-muted transition hover:text-accent"
+        >
           {t("backToHome", lang)}
         </Link>
 
-        <div className="mt-4 flex items-start justify-between gap-3">
+        <div className="mt-5 flex items-start justify-between gap-3 border-b border-border pb-6">
           <div>
-            <h1 className="text-2xl font-bold">{name}</h1>
-            <p className="mt-1 text-muted">{desc}</p>
+            <h1 className="font-display text-3xl font-semibold tracking-tight">
+              {name}
+            </h1>
+            <p className="mt-2 max-w-xl leading-relaxed text-foreground-soft">
+              {desc}
+            </p>
           </div>
           <CategoryBadge cat={agent.cat} lang={lang} />
         </div>
 
         {noProviders ? (
-          <div className="mt-6 rounded-xl border border-amber-500/30 bg-amber-500/10 p-4 text-sm">
+          <div className="mt-6 rounded-none border border-amber-500/30 bg-amber-500/10 p-4 text-sm">
             <p className="text-amber-200">{t("noKeysConfigured", lang)}</p>
             <Link
               href="/settings"
@@ -215,14 +222,14 @@ export default function AgentRunner({ agent }: { agent: AgentView }) {
               {!running ? (
                 <button
                   onClick={handleRun}
-                  className="rounded-lg bg-accent px-5 py-2.5 font-medium text-white transition hover:bg-accent-hover"
+                  className="bg-accent px-6 py-2.5 font-mono text-sm uppercase tracking-widest text-white transition hover:bg-accent-hover"
                 >
-                  {t("run", lang)}
+                  {t("run", lang)} →
                 </button>
               ) : (
                 <button
                   onClick={handleStop}
-                  className="rounded-lg border border-border px-5 py-2.5 font-medium transition hover:border-accent"
+                  className="border border-border-strong px-6 py-2.5 font-mono text-sm uppercase tracking-widest transition hover:border-accent hover:text-accent"
                 >
                   ◼ {t("stop", lang)}
                 </button>
@@ -230,21 +237,21 @@ export default function AgentRunner({ agent }: { agent: AgentView }) {
               <button
                 onClick={handleReset}
                 disabled={running}
-                className="rounded-lg border border-border px-5 py-2.5 font-medium text-muted transition hover:text-foreground disabled:opacity-50"
+                className="border border-border px-6 py-2.5 font-mono text-sm uppercase tracking-widest text-muted transition hover:text-foreground disabled:opacity-50"
               >
                 {t("reset", lang)}
               </button>
             </div>
 
             {error && (
-              <div className="rounded-lg border border-red-500/30 bg-red-500/10 p-3 text-sm text-red-300">
+              <div className="rounded-none border border-red-500/30 bg-red-500/10 p-3 text-sm text-red-300">
                 {error}
               </div>
             )}
 
             <div>
               <div className="mb-2 flex items-center justify-between">
-                <span className="text-xs font-medium text-muted">
+                <span className="font-mono text-xs uppercase tracking-widest text-muted">
                   {t("output", lang)}
                 </span>
                 {output && (
@@ -258,7 +265,7 @@ export default function AgentRunner({ agent }: { agent: AgentView }) {
               </div>
               <div
                 ref={outputRef}
-                className="thin-scroll max-h-[28rem] min-h-[10rem] overflow-y-auto whitespace-pre-wrap rounded-xl border border-border bg-surface p-4 font-mono text-sm leading-relaxed"
+                className="thin-scroll max-h-[28rem] min-h-[10rem] overflow-y-auto whitespace-pre-wrap rounded-none border border-border bg-surface p-4 font-mono text-sm leading-relaxed"
               >
                 {output ? (
                   <span className={running ? "stream-cursor" : ""}>{output}</span>
@@ -294,13 +301,9 @@ function Field({
 
   return (
     <label className="flex flex-col gap-1.5">
-      <span className="text-sm font-medium">
+      <span className="font-mono text-xs uppercase tracking-widest">
         {label}{" "}
-        <span
-          className={`text-xs ${
-            input.required ? "text-accent" : "text-muted"
-          }`}
-        >
+        <span className={input.required ? "text-accent" : "text-muted"}>
           ({tag})
         </span>
       </span>
@@ -311,13 +314,13 @@ function Field({
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
           rows={4}
-          className="resize-y rounded-lg border border-border bg-surface px-3 py-2 outline-none transition placeholder:text-muted focus:border-accent"
+          className="resize-y rounded-none border border-border bg-surface px-3 py-2 outline-none transition placeholder:text-muted focus:border-accent"
         />
       ) : input.type === "select" ? (
         <select
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className="rounded-lg border border-border bg-surface px-3 py-2 outline-none focus:border-accent"
+          className="rounded-none border border-border bg-surface px-3 py-2 outline-none focus:border-accent"
         >
           <option value="">—</option>
           {(input.options ?? []).map((opt) => (
@@ -332,7 +335,7 @@ function Field({
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
-          className="rounded-lg border border-border bg-surface px-3 py-2 outline-none transition placeholder:text-muted focus:border-accent"
+          className="rounded-none border border-border bg-surface px-3 py-2 outline-none transition placeholder:text-muted focus:border-accent"
         />
       )}
     </label>

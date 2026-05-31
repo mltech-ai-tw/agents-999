@@ -19,17 +19,18 @@ export default function CategoryFilter({
   lang: Lang;
 }) {
   const base =
-    "whitespace-nowrap rounded-full border px-3 py-1.5 text-sm transition";
-  const on = "border-accent bg-accent text-white";
-  const off = "border-border text-muted hover:border-accent hover:text-foreground";
+    "font-mono text-xs uppercase tracking-widest transition-colors whitespace-nowrap pb-0.5 border-b";
+  const on = "border-accent text-accent";
+  const off = "border-transparent text-muted hover:text-foreground";
 
   return (
-    <div className="flex flex-wrap gap-2">
+    <div className="flex flex-wrap gap-x-5 gap-y-2">
       <button
         onClick={() => onChange("all")}
         className={`${base} ${active === "all" ? on : off}`}
       >
-        {t("all", lang)} ({total})
+        {t("all", lang)}
+        <sup className="ml-0.5 text-[9px]">{total}</sup>
       </button>
       {categories.map(({ cat, count }) => (
         <button
@@ -37,7 +38,8 @@ export default function CategoryFilter({
           onClick={() => onChange(cat)}
           className={`${base} ${active === cat ? on : off}`}
         >
-          {categoryLabel(cat, lang)} ({count})
+          {categoryLabel(cat, lang)}
+          <sup className="ml-0.5 text-[9px]">{count}</sup>
         </button>
       ))}
     </div>

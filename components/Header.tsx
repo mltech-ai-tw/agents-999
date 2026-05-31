@@ -10,33 +10,38 @@ type Props = {
 
 export default function Header({ lang, onToggleLang }: Props) {
   return (
-    <header className="sticky top-0 z-20 border-b border-border bg-background/80 backdrop-blur">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
-        <Link href="/" className="flex items-center gap-2 font-bold">
-          <span className="grid h-8 w-8 place-items-center rounded-lg bg-accent text-sm text-white">
-            9
+    <header className="sticky top-0 z-30 border-b border-border bg-background/85 backdrop-blur">
+      {/* top accent rule — editorial masthead flourish */}
+      <div className="h-1 bg-accent" />
+      <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3">
+        <Link href="/" className="group flex items-baseline gap-1.5">
+          <span className="font-display text-2xl font-semibold tracking-tight">
+            agents
           </span>
-          <span className="text-lg tracking-tight">agents-999</span>
+          <span className="font-mono text-2xl font-semibold text-accent">
+            -999
+          </span>
         </Link>
 
-        <div className="flex items-center gap-2">
-          <div className="flex overflow-hidden rounded-lg border border-border text-sm">
+        <nav className="flex items-center gap-5 font-mono text-xs uppercase tracking-widest">
+          <div className="flex items-center gap-2">
             <button
               onClick={() => onToggleLang("zh")}
-              className={`px-3 py-1.5 transition ${
+              className={`transition ${
                 lang === "zh"
-                  ? "bg-accent text-white"
+                  ? "text-accent underline underline-offset-4"
                   : "text-muted hover:text-foreground"
               }`}
               aria-pressed={lang === "zh"}
             >
               中
             </button>
+            <span className="text-border-strong">/</span>
             <button
               onClick={() => onToggleLang("en")}
-              className={`px-3 py-1.5 transition ${
+              className={`transition ${
                 lang === "en"
-                  ? "bg-accent text-white"
+                  ? "text-accent underline underline-offset-4"
                   : "text-muted hover:text-foreground"
               }`}
               aria-pressed={lang === "en"}
@@ -47,11 +52,11 @@ export default function Header({ lang, onToggleLang }: Props) {
 
           <Link
             href="/settings"
-            className="rounded-lg border border-border px-3 py-1.5 text-sm text-muted transition hover:border-accent hover:text-foreground"
+            className="text-muted transition hover:text-foreground"
           >
             {t("settings", lang)}
           </Link>
-        </div>
+        </nav>
       </div>
     </header>
   );

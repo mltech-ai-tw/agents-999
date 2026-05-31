@@ -124,17 +124,24 @@ export default function SettingsView() {
       <Header lang={lang} onToggleLang={setLang} />
 
       <main className="mx-auto max-w-2xl px-4 py-8">
-        <Link href="/" className="text-sm text-muted hover:text-foreground">
+        <Link
+          href="/"
+          className="font-mono text-xs uppercase tracking-widest text-muted transition hover:text-accent"
+        >
           {t("backToHome", lang)}
         </Link>
 
-        <h1 className="mt-4 text-2xl font-bold">{t("settings", lang)}</h1>
-        <p className="mt-1 text-sm text-muted">{t("heroSubtitle", lang)}</p>
+        <h1 className="font-display mt-5 text-3xl font-semibold tracking-tight">
+          {t("settings", lang)}
+        </h1>
+        <p className="mt-2 text-sm leading-relaxed text-foreground-soft">
+          {t("heroSubtitle", lang)}
+        </p>
 
         {!loaded ? null : (
           <>
             {/* Defaults */}
-            <section className="mt-6 rounded-xl border border-border bg-surface p-4">
+            <section className="mt-6 rounded-none border border-border bg-surface p-4">
               <h2 className="mb-3 font-semibold">
                 {lang === "zh" ? "預設值" : "Defaults"}
               </h2>
@@ -151,7 +158,7 @@ export default function SettingsView() {
                         defaultProvider: e.target.value as ProviderKey,
                       })
                     }
-                    className="rounded-lg border border-border bg-surface-2 px-3 py-2 outline-none focus:border-accent"
+                    className="rounded-none border border-border bg-surface-2 px-3 py-2 outline-none focus:border-accent"
                   >
                     {PROVIDERS_META.map((p) => (
                       <option key={p.key} value={p.key}>
@@ -169,7 +176,7 @@ export default function SettingsView() {
                     onChange={(e) =>
                       update({ ...settings, defaultModel: e.target.value })
                     }
-                    className="rounded-lg border border-border bg-surface-2 px-3 py-2 outline-none focus:border-accent"
+                    className="rounded-none border border-border bg-surface-2 px-3 py-2 outline-none focus:border-accent"
                   />
                 </label>
               </div>
@@ -183,7 +190,7 @@ export default function SettingsView() {
                 return (
                   <section
                     key={p.key}
-                    className="rounded-xl border border-border bg-surface p-4"
+                    className="rounded-none border border-border bg-surface p-4"
                   >
                     <div className="mb-3 flex items-center justify-between">
                       <h2 className="flex items-center gap-2 font-semibold">
@@ -209,7 +216,7 @@ export default function SettingsView() {
                           value={settings.keys.ollama?.baseUrl ?? ""}
                           onChange={(e) => setOllama(e.target.value)}
                           placeholder="http://localhost:11434"
-                          className="w-full rounded-lg border border-border bg-surface-2 px-3 py-2 outline-none focus:border-accent"
+                          className="w-full rounded-none border border-border bg-surface-2 px-3 py-2 outline-none focus:border-accent"
                         />
                       </Labeled>
                     ) : p.key === "azure" ? (
@@ -219,7 +226,7 @@ export default function SettingsView() {
                             value={settings.keys.azure?.endpoint ?? ""}
                             onChange={(e) => setAzure({ endpoint: e.target.value })}
                             placeholder="https://my-resource.openai.azure.com"
-                            className="w-full rounded-lg border border-border bg-surface-2 px-3 py-2 outline-none focus:border-accent"
+                            className="w-full rounded-none border border-border bg-surface-2 px-3 py-2 outline-none focus:border-accent"
                           />
                         </Labeled>
                         <Labeled label={t("deploymentName", lang)}>
@@ -229,7 +236,7 @@ export default function SettingsView() {
                               setAzure({ deploymentName: e.target.value })
                             }
                             placeholder="gpt-4o"
-                            className="w-full rounded-lg border border-border bg-surface-2 px-3 py-2 outline-none focus:border-accent"
+                            className="w-full rounded-none border border-border bg-surface-2 px-3 py-2 outline-none focus:border-accent"
                           />
                         </Labeled>
                         <Labeled label={t("apiKey", lang)}>
@@ -267,7 +274,7 @@ export default function SettingsView() {
                       <button
                         onClick={() => handleTest(p.key)}
                         disabled={state === "testing"}
-                        className="rounded-lg border border-border px-3 py-1.5 text-sm transition hover:border-accent disabled:opacity-50"
+                        className="rounded-none border border-border px-3 py-1.5 text-sm transition hover:border-accent disabled:opacity-50"
                       >
                         {state === "testing" ? t("testing", lang) : t("test", lang)}
                       </button>
@@ -296,13 +303,13 @@ export default function SettingsView() {
             <div className="mt-6 flex items-center gap-3">
               <button
                 onClick={handleSave}
-                className="rounded-lg bg-accent px-5 py-2.5 font-medium text-white transition hover:bg-accent-hover"
+                className="rounded-none bg-accent px-5 py-2.5 font-medium text-white transition hover:bg-accent-hover"
               >
                 {saved ? t("saved", lang) : t("save", lang)}
               </button>
               <button
                 onClick={handleClear}
-                className="rounded-lg border border-border px-5 py-2.5 font-medium text-muted transition hover:border-red-500/50 hover:text-red-300"
+                className="rounded-none border border-border px-5 py-2.5 font-medium text-muted transition hover:border-red-500/50 hover:text-red-300"
               >
                 {t("clearAll", lang)}
               </button>
@@ -350,12 +357,12 @@ function KeyInput({
         onChange={(e) => onChange(e.target.value)}
         placeholder="sk-…"
         autoComplete="off"
-        className="w-full rounded-lg border border-border bg-surface-2 px-3 py-2 font-mono text-sm outline-none focus:border-accent"
+        className="w-full rounded-none border border-border bg-surface-2 px-3 py-2 font-mono text-sm outline-none focus:border-accent"
       />
       <button
         type="button"
         onClick={onToggle}
-        className="rounded-lg border border-border px-3 text-sm text-muted transition hover:text-foreground"
+        className="rounded-none border border-border px-3 text-sm text-muted transition hover:text-foreground"
       >
         {reveal ? t("hide", lang) : t("show", lang)}
       </button>

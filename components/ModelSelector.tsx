@@ -25,13 +25,13 @@ export default function ModelSelector({
   return (
     <div className="flex flex-col gap-3 sm:flex-row">
       <label className="flex flex-1 flex-col gap-1">
-        <span className="text-xs font-medium text-muted">
+        <span className="font-mono text-xs uppercase tracking-widest text-muted">
           {t("provider", lang)}
         </span>
         <select
           value={provider}
           onChange={(e) => onProviderChange(e.target.value as ProviderKey)}
-          className="rounded-lg border border-border bg-surface px-3 py-2 outline-none focus:border-accent"
+          className="rounded-none border border-border bg-surface px-3 py-2 outline-none focus:border-accent"
         >
           {providers.map((p) => (
             <option key={p} value={p}>
@@ -42,13 +42,15 @@ export default function ModelSelector({
       </label>
 
       <label className="flex flex-1 flex-col gap-1">
-        <span className="text-xs font-medium text-muted">{t("model", lang)}</span>
+        <span className="font-mono text-xs uppercase tracking-widest text-muted">
+          {t("model", lang)}
+        </span>
         <input
           list={datalistId}
           value={model}
           onChange={(e) => onModelChange(e.target.value)}
           placeholder={meta?.models[0]}
-          className="rounded-lg border border-border bg-surface px-3 py-2 outline-none focus:border-accent"
+          className="rounded-none border border-border bg-surface px-3 py-2 outline-none focus:border-accent"
         />
         <datalist id={datalistId}>
           {meta?.models.map((m) => (
