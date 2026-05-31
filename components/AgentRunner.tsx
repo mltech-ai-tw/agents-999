@@ -298,7 +298,7 @@ export default function AgentRunner({ agent }: { agent: AgentView }) {
               >
                 {output ? (
                   <div className={running ? "stream-cursor" : ""}>
-                    <MarkdownView text={output} />
+                    <MarkdownView text={output} streaming={running} />
                   </div>
                 ) : (
                   <span className="font-mono text-sm text-muted">
