@@ -34,3 +34,6 @@ next-env.d.ts
 .idea
 
 .vercel
+
+# build log
+.build.log

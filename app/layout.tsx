@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Fraunces, JetBrains_Mono, Space_Grotesk } from "next/font/google";
+import { SITE } from "@/lib/site";
 import "./globals.css";
 
 const fraunces = Fraunces({
@@ -22,9 +23,9 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "agents-999 — 999 AI Consultant Agents, Bring Your Own Key",
+  title: `${SITE.name} — ${SITE.tagline.en}`,
   description:
-    "999 free AI consultant agents. Bring your own API key (OpenAI, Anthropic, Gemini, Ollama, Mistral, Groq, Azure). No account, keys stay in your browser.",
+    "999 AI agents, run with your own API key (OpenAI, Anthropic, Gemini, Ollama, Mistral, Groq, Azure). Open source, self-hostable, no account — keys stay in your browser.",
 };
 
 export default function RootLayout({

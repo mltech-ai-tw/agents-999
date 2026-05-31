@@ -2,11 +2,18 @@
 
 import Link from "next/link";
 import { t, type Lang } from "@/lib/i18n";
+import { SITE } from "@/lib/site";
 
 type Props = {
   lang: Lang;
   onToggleLang: (lang: Lang) => void;
 };
+
+// Split the brand name at the last "-" so the suffix renders in the accent
+// colour/mono. Names without a "-" just render whole.
+const lastDash = SITE.name.lastIndexOf("-");
+const NAME_BASE = lastDash > 0 ? SITE.name.slice(0, lastDash) : SITE.name;
+const NAME_SUFFIX = lastDash > 0 ? SITE.name.slice(lastDash) : "";
 
 export default function Header({ lang, onToggleLang }: Props) {
   return (
@@ -16,11 +23,13 @@ export default function Header({ lang, onToggleLang }: Props) {
       <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3">
         <Link href="/" className="group flex items-baseline gap-1.5">
           <span className="font-display text-2xl font-semibold tracking-tight">
-            agents
+            {NAME_BASE}
           </span>
-          <span className="font-mono text-2xl font-semibold text-accent">
-            -999
-          </span>
+          {NAME_SUFFIX && (
+            <span className="font-mono text-2xl font-semibold text-accent">
+              {NAME_SUFFIX}
+            </span>
+          )}
         </Link>
 
         <nav className="flex items-center gap-5 font-mono text-xs uppercase tracking-widest">

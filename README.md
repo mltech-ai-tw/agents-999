@@ -49,6 +49,30 @@ npm start
 
 ---
 
+## Make it your own
+
+This project is meant to be **forked and rebranded**. All branding lives in one
+file — [`lib/site.ts`](./lib/site.ts):
+
+```ts
+export const SITE = {
+  name: "agents-999",                 // masthead + page title
+  tagline: { zh: "…", en: "…" },      // hero headline
+  subtitle: { zh: "…", en: "…" },     // hero sub-line
+  attribution: "",                    // optional footer credit ("" = none)
+  attributionUrl: "",
+  repoUrl: "https://github.com/…",
+};
+```
+
+Change `name` and the masthead, title, and footer update automatically (a `-999`
+style suffix is rendered in the accent colour). Leave `attribution` empty for a
+fully white-label build, or set it to your own name/company. Recolour the whole
+UI from the CSS variables at the top of [`app/globals.css`](./app/globals.css).
+No other file hardcodes a brand.
+
+---
+
 ## How it works
 
 ```
