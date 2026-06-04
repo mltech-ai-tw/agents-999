@@ -22,10 +22,26 @@ const jetbrainsMono = JetBrains_Mono({
   display: "swap",
 });
 
+const TITLE = `${SITE.name} — ${SITE.tagline.en}`;
+const DESCRIPTION =
+  "999 AI agents, run with your own API key (OpenAI, Anthropic, Gemini, Ollama, Mistral, Groq, Azure). Open source, self-hostable, no account — keys stay in your browser.";
+
 export const metadata: Metadata = {
-  title: `${SITE.name} — ${SITE.tagline.en}`,
-  description:
-    "999 AI agents, run with your own API key (OpenAI, Anthropic, Gemini, Ollama, Mistral, Groq, Azure). Open source, self-hostable, no account — keys stay in your browser.",
+  metadataBase: new URL(SITE.url),
+  title: TITLE,
+  description: DESCRIPTION,
+  openGraph: {
+    type: "website",
+    url: SITE.url,
+    siteName: SITE.name,
+    title: TITLE,
+    description: DESCRIPTION,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: TITLE,
+    description: DESCRIPTION,
+  },
 };
 
 export default function RootLayout({

@@ -36,4 +36,11 @@ export const SITE = {
 
   /** Repository URL (used by the README/deploy button; safe to change). */
   repoUrl: "https://github.com/mltech-ai-tw/agents-999",
+
+  /**
+   * Production URL — used as Open Graph / Twitter metadataBase so social
+   * previews (LinkedIn, X, Slack…) resolve absolute image/links. Forkers:
+   * change this to your own deployed domain.
+   */
+  url: "https://www.mltech.tw",
 } as const;
