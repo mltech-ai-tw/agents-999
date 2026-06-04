@@ -277,4 +277,34 @@ export const OPERATIONS_OVERRIDES: Record<string, AgentOverride> = {
       ],
     }),
   },
+  escalationMatrix: {
+    inputs: [
+      field("context", ["組織 / 流程描述", "Organization / Process Description"], { required: true, placeholder: ["團隊、決策類型、現有升級問題、痛點", "Team, decision types, current escalation issues, pain points"] }),
+      field("goal", ["目標（選填）", "Goal (optional)"], { type: "text", placeholder: ["例：加快決策、釐清權限、降卡關", "e.g. faster decisions, clarify authority, reduce stalls"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位問題升級矩陣設計師。",
+        "", `組織/流程：${v.context}`,
+        v.goal && `目標：${v.goal}`,
+        "", "### 1. 升級分級設計",
+        "問題分級(嚴重度/影響)+ 各級對應的決策層級,用表格呈現",
+        "", "### 2. 升級路徑",
+        "升級觸發條件與路徑,用 ```mermaid flowchart 呈現升級決策樹",
+        "", "### 3. 權責與時效",
+        "各層級的決策權限 + 回應時效(SLA)+ 避免過度/不足升級",
+        "", "### 4. 落地建議",
+        "升級機制溝通 + 監控與檢討。全程使用繁體中文。",
+      ],
+      en: (v) => [
+        "You are an escalation matrix framework designer.",
+        "", `Organization/process: ${v.context}`,
+        v.goal && `Goal: ${v.goal}`,
+        "", "### 1. Escalation Tiering — issue tiering (severity/impact) + decision level per tier, table",
+        "### 2. Escalation Path — escalation triggers and paths, ```mermaid flowchart of escalation decision tree",
+        "### 3. Authority & Timing — decision authority per level + response SLA + avoid over/under-escalation",
+        "### 4. Implementation — escalation mechanism communication + monitoring and review. Respond in English.",
+      ],
+    }),
+  },
 };

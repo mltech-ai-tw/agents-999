@@ -355,4 +355,34 @@ export const CONTENT_OVERRIDES: Record<string, AgentOverride> = {
       ],
     }),
   },
+  copyEditingAdvisor: {
+    inputs: [
+      field("copy", ["文案內容", "Copy Content"], { required: true, placeholder: ["貼上要潤稿的文案", "Paste the copy to edit"] }),
+      field("context", ["品牌 / 目的（選填）", "Brand / Purpose (optional)"], { type: "text", placeholder: ["品牌語調、目標受眾、目的", "Brand voice, target audience, purpose"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位文案潤稿優化師。",
+        "", `文案內容：\n${v.copy}`,
+        v.context && `品牌/目的：${v.context}`,
+        "", "### 1. 清晰度診斷",
+        "找出冗詞/模糊/被動/結構問題 + 整體評分",
+        "", "### 2. 說服力強化",
+        "Before/After 改寫(強化鉤子/利益/具體性)+ 改寫原則",
+        "", "### 3. 品牌語調一致",
+        "語調是否一致 + 調整建議",
+        "", "### 4. 行動號召優化",
+        "CTA 改寫(3 版本)+ 放置建議。全程使用繁體中文。",
+      ],
+      en: (v) => [
+        "You are a copy editing and optimization advisor.",
+        "", `Copy content:\n${v.copy}`,
+        v.context && `Brand/purpose: ${v.context}`,
+        "", "### 1. Clarity Diagnostic — find wordiness/vagueness/passive voice/structure issues + overall score",
+        "### 2. Persuasiveness Enhancement — Before/After rewrites (stronger hook/benefit/specificity) + rewrite principles",
+        "### 3. Brand Voice Consistency — whether tone is consistent + adjustments",
+        "### 4. CTA Optimization — CTA rewrites (3 versions) + placement advice. Respond in English.",
+      ],
+    }),
+  },
 };
