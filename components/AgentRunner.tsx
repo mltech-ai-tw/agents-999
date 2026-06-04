@@ -190,8 +190,8 @@ export default function AgentRunner({ agent }: { agent: AgentView }) {
         </div>
 
         {noProviders ? (
-          <div className="mt-6 rounded-none border border-amber-500/30 bg-amber-500/10 p-4 text-sm">
-            <p className="text-amber-200">{t("noKeysConfigured", lang)}</p>
+          <div className="mt-6 rounded-none border border-amber-600/40 bg-amber-500/15 p-4 text-sm">
+            <p className="text-amber-900">{t("noKeysConfigured", lang)}</p>
             <Link
               href="/settings"
               className="mt-2 inline-block font-medium text-accent hover:text-accent-hover"
