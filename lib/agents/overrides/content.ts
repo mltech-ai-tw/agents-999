@@ -325,4 +325,34 @@ export const CONTENT_OVERRIDES: Record<string, AgentOverride> = {
       ],
     }),
   },
+  newsletterWriter: {
+    inputs: [
+      field("topic", ["主題與受眾", "Topic and Audience"], { required: true, placeholder: ["電子報主題、目標讀者、品牌、目的", "Newsletter topic, target reader, brand, purpose"] }),
+      field("tone", ["語調（選填）", "Tone (optional)"], { type: "text", placeholder: ["例：專業、親切、有趣", "e.g. professional, friendly, fun"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位電子報撰寫師,產出高開信率、高互動的電子報。",
+        "", `主題與受眾：${v.topic}`,
+        v.tone && `語調：${v.tone}`,
+        "", "### 1. 主旨與結構",
+        "主旨行(5個高開信率版本)+ Preview 文字 + 整體結構設計",
+        "", "### 2. 完整內容",
+        "依結構撰寫完整電子報內容(開場鉤子/主體/重點段落)",
+        "", "### 3. 號召行動",
+        "主要 CTA 設計(3個版本)+ 放置時機 + 次要 CTA",
+        "", "### 4. 成效優化",
+        "提升開信/點擊的技巧 + 該追蹤的指標。全程使用繁體中文。",
+      ],
+      en: (v) => [
+        "You are a newsletter writer producing high-open-rate, high-engagement newsletters.",
+        "", `Topic and audience: ${v.topic}`,
+        v.tone && `Tone: ${v.tone}`,
+        "", "### 1. Subject & Structure — subject line (5 high-open-rate versions) + preview text + overall structure",
+        "### 2. Full Content — write the full newsletter per structure (hook opener/body/key sections)",
+        "### 3. Call to Action — primary CTA (3 versions) + placement + secondary CTA",
+        "### 4. Performance Optimization — techniques to boost open/click + metrics to track. Respond in English.",
+      ],
+    }),
+  },
 };
