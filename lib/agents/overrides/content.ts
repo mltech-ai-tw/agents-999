@@ -295,4 +295,34 @@ export const CONTENT_OVERRIDES: Record<string, AgentOverride> = {
       ],
     }),
   },
+  thoughtLeadership: {
+    inputs: [
+      field("expertise", ["專業領域", "Expertise Area"], { required: true, placeholder: ["專業領域、獨特觀點、目標受眾、平台", "Expertise, unique perspective, target audience, platform"] }),
+      field("goal", ["目標（選填）", "Goal (optional)"], { type: "text", placeholder: ["例：建立權威、吸引客戶、人才", "e.g. build authority, attract clients, talent"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位思想領導力內容策略師。",
+        "", `專業領域：${v.expertise}`,
+        v.goal && `目標：${v.goal}`,
+        "", "### 1. 內容策略",
+        "獨特觀點定位(POV)+ 內容支柱(3-4個)+ 與眾不同的角度",
+        "", "### 2. 文章主題規劃",
+        "12 個高價值文章主題(標題+角度)+ 系列化建議",
+        "", "### 3. 傳播渠道設計",
+        "各渠道(部落格/LinkedIn/演講/Podcast)的角色與內容改編",
+        "", "### 4. 權威建立計畫",
+        "建立思想領導地位的 90 天計畫 + 衡量指標。全程使用繁體中文。",
+      ],
+      en: (v) => [
+        "You are a thought leadership content strategist.",
+        "", `Expertise area: ${v.expertise}`,
+        v.goal && `Goal: ${v.goal}`,
+        "", "### 1. Content Strategy — unique POV positioning + content pillars (3-4) + differentiated angle",
+        "### 2. Article Topic Planning — 12 high-value topics (title+angle) + series suggestions",
+        "### 3. Distribution Channel Design — role and adaptation per channel (blog/LinkedIn/speaking/podcast)",
+        "### 4. Authority Building — 90-day plan to establish thought leadership + metrics. Respond in English.",
+      ],
+    }),
+  },
 };
