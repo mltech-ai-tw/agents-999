@@ -16,7 +16,10 @@ lib/
     types.ts             Agent / AgentMeta / AgentInput / AgentCategory
     inputs.ts            DEFAULT_INPUTS used when an agent has no custom inputs
     prompt.ts            buildPrompt() — the generic prompt template
-    overrides.ts         per-agent customisations (inputs / prompt / model)
+    overrides/           per-agent customisations, one file per category
+      index.ts           merges every category into AGENT_OVERRIDES
+      helpers.ts         field() / bilingual() — concise authoring helpers
+      strategy.ts …      one file per AgentCategory (strategy, marketing, …)
     index.ts             getAgent / listAgents / ALL_AGENTS (resolves overrides)
   llm/
     router.ts            chat() → dispatches to a provider
@@ -44,32 +47,42 @@ This keeps all 999 agents data-driven instead of 999 hand-written files.
 
 ### Customise a single agent
 
-Add an entry to `lib/agents/overrides.ts`. Anything you omit falls back to the
-generated defaults:
+Open the category file for the agent (e.g. `lib/agents/overrides/strategy.ts`)
+and add an entry keyed by the agent id. Anything you omit falls back to the
+generated defaults. The `field()` / `bilingual()` helpers keep it terse:
 
 ```ts
-export const AGENT_OVERRIDES: Record<string, AgentOverride> = {
+import { field, bilingual } from "./helpers";
+
+export const STRATEGY_OVERRIDES: Record<string, AgentOverride> = {
   competitor: {
     inputs: [
-      { key: "product", label: "你的產品/服務", labelEn: "Your Product/Service",
-        type: "textarea", required: true },
-      { key: "competitors", label: "競品名稱（逗號分隔）",
-        labelEn: "Competitor Names (comma-separated)", type: "text", required: true },
+      field("product", ["你的產品/服務", "Your Product/Service"], { required: true }),
+      field("competitors", ["競品名稱（逗號分隔）", "Competitor Names (comma-separated)"],
+        { type: "text", required: true }),
     ],
-    prompt: (inputs, lang) =>
-      lang === "zh"
-        ? `你是一位競品分析師。\n產品：${inputs.product}\n競品：${inputs.competitors}\n請分析定位並整合差異化建議。`
-        : `You are a competitive analyst.\nProduct: ${inputs.product}\nCompetitors: ${inputs.competitors}\nAnalyze positioning and synthesize differentiation.`,
+    prompt: bilingual({
+      zh: (v) => ["你是一位競品分析師。", `產品：${v.product}`, `競品：${v.competitors}`,
+        "請分析定位並整合差異化建議。"],
+      en: (v) => ["You are a competitive analyst.", `Product: ${v.product}`,
+        `Competitors: ${v.competitors}`, "Analyze positioning and synthesize differentiation."],
+    }),
     model: "gpt-4o", // optional per-agent model override
   },
 };
 ```
 
+Every category file is merged into `AGENT_OVERRIDES` by
+`lib/agents/overrides/index.ts` — you never edit that barrel directly. The
+older verbose form (plain `inputs` objects + a `(values, lang) =>` ternary) is
+still valid; the helpers are just the recommended shorthand for new entries.
+
 ### Add a brand-new agent
 
 1. Add a row to `lib/agents/data.ts`. Each entry is:
    `{ id, label, labelEn, desc, descEn, cat }` where `cat` is an `AgentCategory`.
-2. (Optional) Add an override in `overrides.ts` for custom inputs/prompt.
+2. (Optional) Add an override in the matching `overrides/<category>.ts` for
+   custom inputs/prompt.
 
 If you maintain agents in an upstream source table, edit the generator and run
 `npm run gen:agents` instead of editing `data.ts` by hand.

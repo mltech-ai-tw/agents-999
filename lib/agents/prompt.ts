@@ -6,7 +6,7 @@ import type { AgentInput, AgentMeta, Lang } from "./types";
  * and mission; user inputs are appended as labelled context.
  *
  * This generic builder powers all 999 agents. To give a specific agent a
- * bespoke prompt, add a `prompt` function in lib/agents/overrides.ts.
+ * bespoke prompt, add a `prompt` function in lib/agents/overrides/<category>.ts.
  */
 export function buildPrompt(
   meta: AgentMeta,

@@ -405,7 +405,7 @@ they return Markdown tables, data charts (` ```chart `) and Mermaid diagrams
 The 999 agents are defined as flat metadata in `lib/agents/data.ts`
 (auto-generated) and turned into runnable agents at load time with a generic
 prompt builder. To customise a single agent's inputs or prompt, **don't edit the
-generated file** — add an entry to `lib/agents/overrides.ts`. See
+generated file** — add an entry to the matching `lib/agents/overrides/<category>.ts`. See
 [CONTRIBUTING.md](./CONTRIBUTING.md).
 
 ---

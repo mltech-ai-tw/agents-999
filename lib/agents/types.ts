@@ -58,7 +58,7 @@ export type Agent = {
 
 /**
  * Partial override for a single agent. Anything omitted falls back to the
- * generated defaults. See lib/agents/overrides.ts.
+ * generated defaults. See lib/agents/overrides/.
  */
 export type AgentOverride = Partial<
   Pick<Agent, "inputs" | "prompt" | "model" | "label" | "labelEn" | "desc" | "descEn">

@@ -2,7 +2,7 @@ import type { AgentInput } from "./types";
 
 /**
  * Default input fields used by every agent that doesn't declare its own
- * (via lib/agents/overrides.ts). Most agents only need a free-text context
+ * (via lib/agents/overrides/). Most agents only need a free-text context
  * box plus an optional tone/format hint, so we keep this deliberately small.
  */
 export const DEFAULT_INPUTS: AgentInput[] = [

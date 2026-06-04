@@ -376,7 +376,7 @@ npm start
 
 999 個代理人以扁平 metadata 形式定義在 `lib/agents/data.ts`（自動產生），於載入時透過
 通用 prompt 產生器轉成可執行的代理人。若要客製單一代理人的輸入欄位或 prompt，
-**請勿編輯自動產生的檔案** — 改在 `lib/agents/overrides.ts` 加一筆。詳見
+**請勿編輯自動產生的檔案** — 改在對應的 `lib/agents/overrides/<category>.ts` 加一筆。詳見
 [CONTRIBUTING.md](./CONTRIBUTING.md)。
 
 ---

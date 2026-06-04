@@ -40,7 +40,7 @@ understand before touching agents:
   by attaching `inputs` (default: `lib/agents/inputs.ts`) and a `prompt` closure
   (default: `buildPrompt()` in `lib/agents/prompt.ts`).
 - To customise one agent's inputs/prompt/model, add an entry to
-  `lib/agents/overrides.ts` — never edit the generated file.
+  `lib/agents/overrides/<category>.ts` — never edit the generated file.
 - `getAgent`, `listAgents`, `ALL_AGENTS` are the public API from `lib/agents`.
 
 **Unified SSE is the contract between every provider and the client.** Wire format
