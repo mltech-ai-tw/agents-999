@@ -1,4 +1,5 @@
 import type { AgentOverride } from "../types";
+import { bilingual, field } from "./helpers";
 
 /** sales category agent overrides. See ./index.ts for how these merge. */
 export const SALES_OVERRIDES: Record<string, AgentOverride> = {
@@ -1198,5 +1199,126 @@ export const SALES_OVERRIDES: Record<string, AgentOverride> = {
           ]
             .filter(Boolean)
             .join("\n"),
+  },
+  salesKpiFramework: {
+    inputs: [
+      field("goals", ["銷售目標", "Sales Goals"], { required: true, placeholder: ["營收目標、銷售模式、團隊規模", "Revenue targets, sales model, team size"] }),
+      field("issue", ["現有問題（選填）", "Current Issues (optional)"], { type: "text", placeholder: ["例：只看營收、缺先行指標", "e.g. only revenue tracked, no leading indicators"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位銷售營運顧問,設計能驅動行為的銷售 KPI 框架。",
+        "", `銷售目標：${v.goals}`,
+        v.issue && `現有問題：${v.issue}`,
+        "", "### 1. KPI 框架",
+        "結果指標 + 先行指標(活動/管道/轉換)的設計,用表格:KPI/定義/目標/頻率",
+        "", "### 2. 指標串聯",
+        "公司→團隊→個人的 KPI 串聯邏輯",
+        "", "### 3. 追蹤與激勵連結",
+        "KPI 與獎酬的連結設計 + 避免錯誤誘因",
+        "", "### 4. 儀表板與檢視",
+        "銷售儀表板建議 + 檢視節律。全程使用繁體中文。",
+      ],
+      en: (v) => [
+        "You are a sales operations consultant designing a behavior-driving sales KPI framework.",
+        "", `Sales goals: ${v.goals}`,
+        v.issue && `Current issues: ${v.issue}`,
+        "", "### 1. KPI Framework — result metrics + leading indicators (activity/pipeline/conversion), table: KPI/definition/target/frequency",
+        "### 2. Cascading — company→team→individual KPI cascade logic",
+        "### 3. Tracking & Incentive Alignment — link KPIs to rewards + avoid perverse incentives",
+        "### 4. Dashboard & Review — sales dashboard + review cadence. Respond in English.",
+      ],
+    }),
+  },
+  salesCompensationDesigner: {
+    inputs: [
+      field("goals", ["銷售目標 + 角色", "Sales Goals + Roles"], { required: true, placeholder: ["銷售目標、角色類型、現有薪酬", "Sales targets, role types, current comp"] }),
+      field("behavior", ["想驅動的行為（選填）", "Behavior to Drive (optional)"], { type: "text", placeholder: ["例：新客、續約、大單、利潤", "e.g. new logos, renewals, big deals, profit"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位銷售薪酬設計顧問。",
+        "", `銷售目標+角色：${v.goals}`,
+        v.behavior && `想驅動行為：${v.behavior}`,
+        "", "### 1. 薪酬結構",
+        "底薪/佣金/加速器的比例設計(依角色)+ 行業基準",
+        "輸出 ```chart 長條圖顯示各角色的底薪 vs 變動比例。",
+        "", "### 2. 佣金與加速器",
+        "佣金計算邏輯 + 達標加速器 + 上限/封頂考量",
+        "", "### 3. 行為激勵",
+        "如何用薪酬驅動目標行為(SPIFF/門檻/組合)+ 避免錯誤誘因",
+        "", "### 4. 落地與檢視",
+        "推行注意事項 + 公平性 + 定期檢討。全程使用繁體中文。",
+      ],
+      en: (v) => [
+        "You are a sales compensation design consultant.",
+        "", `Sales goals + roles: ${v.goals}`,
+        v.behavior && `Behavior to drive: ${v.behavior}`,
+        "", "### 1. Compensation Structure — base/commission/accelerator mix by role + industry benchmark. ```chart bar chart of base vs variable by role.",
+        "### 2. Commission & Accelerators — commission logic + quota accelerators + cap/ceiling considerations",
+        "### 3. Behavioral Incentives — using comp to drive target behaviors (SPIFFs/thresholds/mix) + avoid perverse incentives",
+        "### 4. Rollout & Review — rollout notes + fairness + periodic review. Respond in English.",
+      ],
+    }),
+  },
+  winLossAnalyzer: {
+    inputs: [
+      field("deals", ["交易結果", "Deal Outcomes"], { required: true, placeholder: ["贏單與輸單描述、原因、競爭情況", "Won and lost deals, reasons, competition"] }),
+      field("context", ["銷售背景（選填）", "Sales Context (optional)"], { type: "text", placeholder: ["產品、客群、銷售流程", "Product, segments, sales process"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位贏輸分析顧問,從交易結果萃取可行動的洞察。",
+        "", `交易結果：${v.deals}`,
+        v.context && `銷售背景：${v.context}`,
+        "", "### 1. 贏輸模式分析",
+        "贏單與輸單的共同因素 + 原因分類(產品/價格/關係/時機/競爭)",
+        "輸出 ```chart 圓餅圖顯示輸單原因分布。",
+        "", "### 2. 成功模式識別",
+        "可複製的致勝因素 + 理想客戶特徵",
+        "", "### 3. 流失原因深掘",
+        "最大輸單原因 + 根因 + 可改善處",
+        "", "### 4. 銷售流程優化",
+        "依分析的流程改善建議 + 該強化的階段。全程使用繁體中文。",
+      ],
+      en: (v) => [
+        "You are a win-loss analysis advisor extracting actionable insights from deal outcomes.",
+        "", `Deal outcomes: ${v.deals}`,
+        v.context && `Sales context: ${v.context}`,
+        "", "### 1. Win-Loss Pattern Analysis — common factors in wins and losses + reason categories (product/price/relationship/timing/competition). ```chart pie chart of loss reasons.",
+        "### 2. Success Pattern — replicable winning factors + ideal customer traits",
+        "### 3. Loss Root Cause — biggest loss reasons + root causes + improvable areas",
+        "### 4. Sales Process Optimization — process improvements from analysis + stages to strengthen. Respond in English.",
+      ],
+    }),
+  },
+  winBackCampaign: {
+    inputs: [
+      field("churned", ["流失客戶分析", "Churned Customer Analysis"], { required: true, placeholder: ["流失客戶類型、流失原因、流失時間", "Churned customer types, reasons, timing"] }),
+      field("product", ["產品 / 業務", "Product / Business"], { type: "text", required: true, placeholder: ["產品、商業模式", "Product, business model"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位客戶召回計畫設計師。",
+        "", `流失客戶：${v.churned}`, `產品/業務：${v.product}`,
+        "", "### 1. 分群診斷",
+        "流失客戶分群(可召回/低意願/不值得)+ 各群召回潛力",
+        "輸出 ```chart 長條圖顯示各群召回潛力。",
+        "", "### 2. 個人化召回策略",
+        "各群的召回策略(誘因/溝通/時機)+ 召回價值評估",
+        "", "### 3. 挽回訊息設計",
+        "召回 Email/訊息序列(主旨+核心訊息)+ 誘因設計",
+        "", "### 4. 執行與衡量",
+        "召回活動執行步驟 + 成效指標 + 避免重蹈覆轍。全程使用繁體中文。",
+      ],
+      en: (v) => [
+        "You are a customer win-back campaign designer.",
+        "", `Churned customers: ${v.churned}`, `Product/business: ${v.product}`,
+        "", "### 1. Segmentation Diagnostic — segment churned customers (winnable/low-intent/not worth it) + win-back potential per segment. ```chart bar chart of potential.",
+        "### 2. Personalized Win-Back — strategy per segment (incentive/messaging/timing) + win-back value assessment",
+        "### 3. Re-Engagement Messaging — win-back email/message sequence (subject + core message) + incentive design",
+        "### 4. Execution & Measurement — campaign steps + metrics + preventing re-churn. Respond in English.",
+      ],
+    }),
   },
 };

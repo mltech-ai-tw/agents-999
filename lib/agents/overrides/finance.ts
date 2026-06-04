@@ -1,4 +1,5 @@
 import type { AgentOverride } from "../types";
+import { bilingual, field } from "./helpers";
 
 /** finance category agent overrides. See ./index.ts for how these merge. */
 export const FINANCE_OVERRIDES: Record<string, AgentOverride> = {
@@ -1298,5 +1299,156 @@ export const FINANCE_OVERRIDES: Record<string, AgentOverride> = {
       "### 3. Governance & IR — board and governance structure / investor relations prep / equity story",
       "### 4. IPO Roadmap — ```mermaid gantt of IPO preparation timeline (advisory→filing→underwriting→listing) + key milestones. Respond in English.",
     ].filter(Boolean).join("\n"),
+  },
+  priceElasticity: {
+    inputs: [
+      field("pricing", ["產品定價", "Product Pricing"], { required: true, placeholder: ["產品、現有價格、銷量、成本", "Product, current price, volume, cost"] }),
+      field("data", ["價量數據（選填）", "Price-Volume Data (optional)"], { type: "text", placeholder: ["歷史調價與銷量變化", "Historical price changes and volume response"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位定價分析師,以需求彈性分析最大化收益。",
+        "", `產品定價：${v.pricing}`,
+        v.data && `價量數據：${v.data}`,
+        "", "### 1. 需求彈性分析",
+        "估算價格彈性(彈性/非彈性)+ 影響彈性的因素 + 客群差異",
+        "", "### 2. 收益最大化定價",
+        "不同價格點的預估需求與收益,找出最適價格",
+        "輸出 ```chart 折線圖顯示價格 vs 預估收益。",
+        "", "### 3. 定價策略",
+        "依彈性建議的定價方向(漲/降/分層)+ 風險",
+        "", "### 4. 測試建議",
+        "定價測試方法 + 監控指標。全程使用繁體中文。",
+      ],
+      en: (v) => [
+        "You are a pricing analyst maximizing revenue via demand elasticity analysis.",
+        "", `Product pricing: ${v.pricing}`,
+        v.data && `Price-volume data: ${v.data}`,
+        "", "### 1. Demand Elasticity — estimate price elasticity (elastic/inelastic) + factors + segment differences",
+        "### 2. Revenue-Maximizing Price — estimated demand and revenue at different price points, find optimal. ```chart line chart of price vs estimated revenue.",
+        "### 3. Pricing Strategy — direction by elasticity (raise/lower/tier) + risks",
+        "### 4. Testing — pricing test methods + monitoring metrics. Respond in English.",
+      ],
+    }),
+  },
+  exitMultipleAdvisor: {
+    inputs: [
+      field("financials", ["財務描述", "Financial Description"], { required: true, placeholder: ["營收、獲利、成長、行業", "Revenue, profit, growth, industry"] }),
+      field("goal", ["退場目標（選填）", "Exit Goal (optional)"], { type: "text", placeholder: ["例：併購出售、上市、時程", "e.g. M&A sale, IPO, timeline"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位退場估值顧問,協助以最佳倍數實現退場價值。",
+        "", `財務描述：${v.financials}`,
+        v.goal && `退場目標：${v.goal}`,
+        "", "### 1. 行業倍數分析",
+        "適用的估值倍數(EV/Revenue、EV/EBITDA、P/E)+ 行業基準區間",
+        "輸出 ```chart 長條圖比較各倍數法的估值。",
+        "", "### 2. 估值區間",
+        "依倍數推算估值區間(保守/基本/樂觀)+ 影響倍數的關鍵因素",
+        "", "### 3. 倍數提升槓桿",
+        "提升退場倍數的 3-5 個槓桿(成長/獲利品質/可預測性/護城河)",
+        "", "### 4. 退場策略",
+        "最大化估值的準備行動 + 時機建議。全程使用繁體中文。",
+      ],
+      en: (v) => [
+        "You are an exit valuation advisor helping realize exit value at the best multiple.",
+        "", `Financials: ${v.financials}`,
+        v.goal && `Exit goal: ${v.goal}`,
+        "", "### 1. Industry Multiple Analysis — applicable multiples (EV/Revenue, EV/EBITDA, P/E) + industry benchmark ranges. ```chart bar chart comparing valuations.",
+        "### 2. Valuation Range — range by multiple (conservative/base/optimistic) + key factors affecting the multiple",
+        "### 3. Multiple Uplift Levers — 3-5 levers to raise exit multiple (growth/profit quality/predictability/moat)",
+        "### 4. Exit Strategy — preparation to maximize valuation + timing. Respond in English.",
+      ],
+    }),
+  },
+  financialRatioAdvisor: {
+    inputs: [
+      field("statements", ["財務報表", "Financial Statements"], { required: true, placeholder: ["損益、資產負債、現金流數據", "Income, balance sheet, cash flow figures"] }),
+      field("industry", ["行業（選填）", "Industry (optional)"], { type: "text", placeholder: ["用於同業比較", "For peer comparison"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位財務分析師,以比率分析診斷財務健康。",
+        "", `財務報表：${v.statements}`,
+        v.industry && `行業：${v.industry}`,
+        "", "### 1. 比率診斷",
+        "流動性(流動/速動)、獲利(毛利/淨利/ROE)、槓桿(負債比/利息保障)、效率(週轉)比率,各附數值與評級",
+        "輸出 ```chart 長條圖顯示各比率 vs 行業基準。",
+        "", "### 2. 健康評估",
+        "整體財務健康評級 + 最須關注的 3 個比率",
+        "", "### 3. 根因分析",
+        "異常比率的可能原因",
+        "", "### 4. 改善建議",
+        "針對弱項的具體改善行動。全程使用繁體中文。",
+      ],
+      en: (v) => [
+        "You are a financial analyst diagnosing financial health via ratio analysis.",
+        "", `Financial statements: ${v.statements}`,
+        v.industry && `Industry: ${v.industry}`,
+        "", "### 1. Ratio Diagnostic — liquidity (current/quick), profitability (gross/net/ROE), leverage (debt ratio/interest coverage), efficiency (turnover), each with value and rating. ```chart bar chart vs industry benchmark.",
+        "### 2. Health Assessment — overall rating + top 3 ratios to watch",
+        "### 3. Root Cause — likely causes of abnormal ratios",
+        "### 4. Improvement — specific actions for weak areas. Respond in English.",
+      ],
+    }),
+  },
+  scenarioModeling: {
+    inputs: [
+      field("business", ["業務 / 財務描述", "Business / Financial Description"], { required: true, placeholder: ["商業模式、關鍵假設、現有財務", "Business model, key assumptions, current financials"] }),
+      field("decision", ["要支援的決策", "Decision to Support"], { type: "text", required: true, placeholder: ["例：擴張、投資、定價、融資", "e.g. expansion, investment, pricing, fundraising"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位財務建模分析師,建立三情境模型支援決策。",
+        "", `業務/財務：${v.business}`, `決策：${v.decision}`,
+        "", "### 1. 關鍵假設",
+        "影響結果的關鍵假設(成長/成本/轉換等)+ 各假設的合理區間",
+        "", "### 2. 三情境模型",
+        "悲觀/基本/樂觀情境的財務結果(收入/獲利/現金),逐期呈現",
+        "輸出 ```chart 折線圖顯示三情境關鍵指標。",
+        "", "### 3. 敏感度分析",
+        "哪個假設最影響結果 + 損益平衡的臨界值",
+        "", "### 4. 情境決策指引",
+        "各情境下的建議行動 + 觸發調整的信號。全程使用繁體中文。",
+      ],
+      en: (v) => [
+        "You are a financial modeling analyst building a three-scenario model to support decisions.",
+        "", `Business/financial: ${v.business}`, `Decision: ${v.decision}`,
+        "", "### 1. Key Assumptions — assumptions driving outcomes (growth/cost/conversion) + reasonable range per assumption",
+        "### 2. Three-Scenario Model — pessimistic/base/optimistic financial outcomes (revenue/profit/cash), period by period. ```chart line chart of key metrics across scenarios.",
+        "### 3. Sensitivity Analysis — which assumption most affects outcomes + breakeven thresholds",
+        "### 4. Scenario Decision Guidance — recommended actions per scenario + signals triggering adjustment. Respond in English.",
+      ],
+    }),
+  },
+  cashflowOptimizer: {
+    inputs: [
+      field("financial", ["財務描述", "Financial Description"], { required: true, placeholder: ["營收、應收應付、存貨、現金週期", "Revenue, AR/AP, inventory, cash cycle"] }),
+      field("concern", ["主要問題", "Main Concern"], { type: "text", required: true, placeholder: ["例：週轉緊、應收慢、季節性", "e.g. tight cash, slow AR, seasonality"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位現金流優化顧問,提升短期資金效率。",
+        "", `財務描述：${v.financial}`, `主要問題：${v.concern}`,
+        "", "### 1. 現金循環分析",
+        "現金轉換週期(DSO/DIO/DPO)拆解 + 資金卡點識別",
+        "輸出 ```chart 長條圖顯示現金週期各環節天數。",
+        "", "### 2. 應收應付優化",
+        "加速應收 + 優化應付帳期 + 平衡建議",
+        "", "### 3. 短期資金效率",
+        "存貨優化 + 閒置資金運用 + 緊急現金來源",
+        "", "### 4. 改善計畫",
+        "90 天現金流改善行動 + 監控指標。全程使用繁體中文。",
+      ],
+      en: (v) => [
+        "You are a cash flow optimizer improving short-term capital efficiency.",
+        "", `Financial: ${v.financial}`, `Main concern: ${v.concern}`,
+        "", "### 1. Cash Cycle Analysis — cash conversion cycle (DSO/DIO/DPO) breakdown + trapped-cash identification. ```chart bar chart of cycle days by component.",
+        "### 2. AR/AP Optimization — accelerate AR + optimize AP terms + balance",
+        "### 3. Short-Term Efficiency — inventory optimization + idle cash deployment + emergency cash sources",
+        "### 4. Improvement Plan — 90-day cash flow actions + monitoring metrics. Respond in English.",
+      ],
+    }),
   },
 };

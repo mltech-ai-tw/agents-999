@@ -1,4 +1,5 @@
 import type { AgentOverride } from "../types";
+import { bilingual, field } from "./helpers";
 
 /** ops category agent overrides. See ./index.ts for how these merge. */
 export const OPS_OVERRIDES: Record<string, AgentOverride> = {
@@ -368,5 +369,124 @@ export const OPS_OVERRIDES: Record<string, AgentOverride> = {
       "### 3. Vendor Assessment Framework — qualification thresholds / evaluation process / must-ask questions / reference check focus",
       "### 4. RFP Execution — timeline + bidder briefing + negotiation and award process. Respond in English.",
     ].filter(Boolean).join("\n"),
+  },
+  procurementStrategy: {
+    inputs: [
+      field("needs", ["採購需求", "Procurement Needs"], { required: true, placeholder: ["採購類別、規模、現有供應商、痛點", "Procurement category, scale, current suppliers, pain points"] }),
+      field("goal", ["策略目標", "Strategy Goal"], { type: "text", required: true, placeholder: ["例：降成本、降風險、提升品質", "e.g. cut cost, reduce risk, improve quality"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位採購策略設計顧問。",
+        "", `採購需求：${v.needs}`, `策略目標：${v.goal}`,
+        "", "### 1. 需求分析",
+        "採購支出分類(品類分析)+ 需求優先序 + 集中度風險",
+        "輸出 ```chart 圓餅圖顯示採購支出分布。",
+        "", "### 2. 市場與供應商策略",
+        "供應市場分析 + 採購槓桿(集中/競標/長約)+ 供應商組合策略",
+        "", "### 3. 成本優化計畫",
+        "降本機會(談判/規格優化/替代/整合)+ 預估節省",
+        "", "### 4. 執行與治理",
+        "採購流程改善 + 供應商管理機制 + KPI。全程使用繁體中文。",
+      ],
+      en: (v) => [
+        "You are a procurement strategy design consultant.",
+        "", `Procurement needs: ${v.needs}`, `Strategy goal: ${v.goal}`,
+        "", "### 1. Needs Analysis — spend categorization (category analysis) + needs priority + concentration risk. ```chart pie chart of spend distribution.",
+        "### 2. Market & Supplier Strategy — supply market analysis + procurement levers (consolidation/bidding/long-term) + supplier portfolio strategy",
+        "### 3. Cost Optimization — savings opportunities (negotiation/spec optimization/substitution/consolidation) + estimated savings",
+        "### 4. Execution & Governance — procurement process improvement + supplier management + KPIs. Respond in English.",
+      ],
+    }),
+  },
+  demandForecaster: {
+    inputs: [
+      field("data", ["歷史銷售資料", "Historical Sales Data"], { required: true, placeholder: ["銷量歷史、季節性、趨勢、品項", "Sales history, seasonality, trends, SKUs"] }),
+      field("context", ["業務背景", "Business Context"], { type: "text", required: true, placeholder: ["行業、通路、前置時間", "Industry, channels, lead time"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位需求預測規劃顧問。",
+        "", `歷史銷售資料：${v.data}`, `業務背景：${v.context}`,
+        "", "### 1. 需求預測模型",
+        "適合的預測方法(趨勢/季節/移動平均)+ 預測結果(保守/基本/樂觀)",
+        "輸出 ```chart 折線圖顯示需求預測。",
+        "", "### 2. 預測假設與風險",
+        "關鍵假設 + 影響準確度的因素 + 不確定性",
+        "", "### 3. 補貨策略",
+        "安全庫存 + 再訂購點 + 各品項分類的補貨策略",
+        "", "### 4. 監控與優化",
+        "預測準確度追蹤 + 模型優化機制。全程使用繁體中文。",
+      ],
+      en: (v) => [
+        "You are a demand forecasting planning advisor.",
+        "", `Historical sales data: ${v.data}`, `Business context: ${v.context}`,
+        "", "### 1. Demand Forecast Model — suitable method (trend/seasonal/moving average) + forecast (conservative/base/optimistic). ```chart line chart of demand forecast.",
+        "### 2. Assumptions & Risks — key assumptions + factors affecting accuracy + uncertainty",
+        "### 3. Replenishment Strategy — safety stock + reorder points + replenishment strategy per SKU class",
+        "### 4. Monitoring & Optimization — forecast accuracy tracking + model improvement. Respond in English.",
+      ],
+    }),
+  },
+  supplyChainMapping: {
+    inputs: [
+      field("chain", ["供應鏈描述", "Supply Chain Description"], { required: true, placeholder: ["供應商、生產、物流、關鍵物料", "Suppliers, production, logistics, critical materials"] }),
+      field("goal", ["目標（選填）", "Goal (optional)"], { type: "text", placeholder: ["例：找風險、提升韌性、降成本", "e.g. find risks, improve resilience, cut cost"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位供應鏈地圖顧問。",
+        "", `供應鏈：${v.chain}`,
+        v.goal && `目標：${v.goal}`,
+        "", "### 1. 供應鏈節點視覺化",
+        "用 ```mermaid flowchart 呈現供應鏈節點與流向(供應商→生產→倉儲→配送)",
+        "", "### 2. 依賴識別",
+        "關鍵依賴點(單一供應商/瓶頸/長前置)+ 集中度風險",
+        "輸出 ```chart 長條圖顯示各節點風險。",
+        "", "### 3. 韌性評估",
+        "各節點的脆弱度 + 中斷影響評估",
+        "", "### 4. 韌性提升建議",
+        "多元化/備援/可視性的具體行動。全程使用繁體中文。",
+      ],
+      en: (v) => [
+        "You are a supply chain mapping advisor.",
+        "", `Supply chain: ${v.chain}`,
+        v.goal && `Goal: ${v.goal}`,
+        "", "### 1. Node Visualization — ```mermaid flowchart of supply chain nodes and flows (suppliers→production→warehouse→distribution)",
+        "### 2. Dependency Identification — critical dependencies (single supplier/bottleneck/long lead time) + concentration risk. ```chart bar chart of node risk.",
+        "### 3. Resilience Assessment — vulnerability per node + disruption impact",
+        "### 4. Resilience Recommendations — concrete diversification/redundancy/visibility actions. Respond in English.",
+      ],
+    }),
+  },
+  contractorManagement: {
+    inputs: [
+      field("needs", ["採購 / 承包需求", "Procurement / Contracting Needs"], { required: true, placeholder: ["承包項目、規模、現有承包商、痛點", "Contracted work, scale, current contractors, pain points"] }),
+      field("priority", ["重點（選填）", "Priority (optional)"], { type: "text", placeholder: ["例：品質、成本、合規、交期", "e.g. quality, cost, compliance, timeline"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位承包商管理顧問。",
+        "", `承包需求：${v.needs}`,
+        v.priority && `重點：${v.priority}`,
+        "", "### 1. 承包商評選框架",
+        "評選維度與權重(資格/能力/成本/合規/風險),用表格呈現",
+        "", "### 2. 合約管理",
+        "關鍵合約條款(範圍/SLA/罰則/驗收/終止)+ 風險控管",
+        "", "### 3. 績效追蹤計畫",
+        "承包商 KPI + 驗收機制 + 定期檢視",
+        "", "### 4. 關係與治理",
+        "承包商分級 + 改善機制 + 合規(勞務/工安)確認。全程使用繁體中文。",
+      ],
+      en: (v) => [
+        "You are a contractor management advisor.",
+        "", `Contracting needs: ${v.needs}`,
+        v.priority && `Priority: ${v.priority}`,
+        "", "### 1. Contractor Selection Framework — evaluation dimensions and weights (qualification/capability/cost/compliance/risk), table",
+        "### 2. Contract Management — key clauses (scope/SLA/penalties/acceptance/termination) + risk control",
+        "### 3. Performance Tracking — contractor KPIs + acceptance mechanism + periodic review",
+        "### 4. Relationship & Governance — contractor tiering + improvement mechanism + compliance (labor/safety). Respond in English.",
+      ],
+    }),
   },
 };

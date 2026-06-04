@@ -1,4 +1,5 @@
 import type { AgentOverride } from "../types";
+import { bilingual, field } from "./helpers";
 
 /** dev category agent overrides. See ./index.ts for how these merge. */
 export const DEV_OVERRIDES: Record<string, AgentOverride> = {
@@ -427,5 +428,156 @@ export const DEV_OVERRIDES: Record<string, AgentOverride> = {
       "### 3. Hardening Plan — input validation / rate limiting / encryption in transit / logging & monitoring / priority",
       "### 4. Governance — API security testing process + compliance mapping + continuous security mechanism. Respond in English.",
     ].filter(Boolean).join("\n"),
+  },
+  securityPosture: {
+    inputs: [
+      field("system", ["系統描述", "System Description"], { required: true, placeholder: ["系統、技術棧、暴露面、資料類型", "System, tech stack, exposure, data types"] }),
+      field("concern", ["重點 / 合規（選填）", "Focus / Compliance (optional)"], { type: "text", placeholder: ["例：ISO 27001、SOC 2、金流", "e.g. ISO 27001, SOC 2, payments"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位資安態勢評估顧問。",
+        "⚠️ 此為高層次評估,正式滲透測試請委託專業團隊。",
+        "", `系統：${v.system}`,
+        v.concern && `重點/合規：${v.concern}`,
+        "", "### 1. 安全現況診斷",
+        "依領域評估(認證/授權/資料保護/網路/端點/相依套件)各附風險等級",
+        "輸出 ```chart 長條圖顯示各領域風險。",
+        "", "### 2. 威脅建模",
+        "主要威脅情境(STRIDE 概念)+ 攻擊面 + 最可能的攻擊路徑",
+        "", "### 3. 改善排序",
+        "依風險×成本排序的改善行動(緊急/短期/中期)",
+        "", "### 4. 合規計畫",
+        "合規對照 + 持續安全機制。全程使用繁體中文(技術術語用英文)。",
+      ],
+      en: (v) => [
+        "You are a security posture assessment advisor.",
+        "⚠️ High-level assessment — commission a professional team for formal penetration testing.",
+        "", `System: ${v.system}`,
+        v.concern && `Focus/compliance: ${v.concern}`,
+        "", "### 1. Security Diagnostic — assess by domain (authentication/authorization/data protection/network/endpoint/dependencies) with risk level. ```chart bar chart.",
+        "### 2. Threat Modeling — main threat scenarios (STRIDE concept) + attack surface + most likely attack paths",
+        "### 3. Improvement Prioritization — actions ranked by risk×cost (urgent/short/medium-term)",
+        "### 4. Compliance Plan — compliance mapping + continuous security mechanism. Respond in English.",
+      ],
+    }),
+  },
+  dataGovernance: {
+    inputs: [
+      field("assets", ["資料資產描述", "Data Asset Description"], { required: true, placeholder: ["資料類型、來源、使用、現有治理", "Data types, sources, usage, current governance"] }),
+      field("goal", ["治理目標", "Governance Goal"], { type: "text", required: true, placeholder: ["例：資料品質、合規、自助分析", "e.g. data quality, compliance, self-service analytics"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位數據治理顧問。",
+        "", `資料資產：${v.assets}`, `治理目標：${v.goal}`,
+        "", "### 1. 治理框架設計",
+        "資料治理組織(角色/職責)+ 政策架構 + 資料目錄與分類",
+        "", "### 2. 資料品質政策",
+        "資料品質維度(準確/完整/一致/時效)+ 品質規則 + 監控機制",
+        "", "### 3. 合規與安全",
+        "資料隱私 / 存取控制 / 留存政策 / 稽核",
+        "", "### 4. 合規路線圖",
+        "用 ```mermaid gantt 規劃治理建置階段 + 衡量指標。全程使用繁體中文(技術術語用英文)。",
+      ],
+      en: (v) => [
+        "You are a data governance advisor.",
+        "", `Data assets: ${v.assets}`, `Governance goal: ${v.goal}`,
+        "", "### 1. Governance Framework — governance org (roles/responsibilities) + policy architecture + data catalog and classification",
+        "### 2. Data Quality Policy — quality dimensions (accuracy/completeness/consistency/timeliness) + quality rules + monitoring",
+        "### 3. Compliance & Security — data privacy / access control / retention policy / audit",
+        "### 4. Compliance Roadmap — ```mermaid gantt of governance build phases + metrics. Respond in English.",
+      ],
+    }),
+  },
+  cloudMigrationPlanner: {
+    inputs: [
+      field("system", ["系統現況", "System Status"], { required: true, placeholder: ["現有架構、技術棧、規模、地端/雲端現況", "Current architecture, tech stack, scale, on-prem/cloud status"] }),
+      field("goal", ["遷移目標", "Migration Goal"], { type: "text", required: true, placeholder: ["例：上雲、降成本、提升彈性", "e.g. move to cloud, cut cost, improve elasticity"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位雲端遷移規劃顧問。",
+        "", `系統現況：${v.system}`, `遷移目標：${v.goal}`,
+        "", "### 1. 遷移準備度評估",
+        "應用相依/資料/技能/合規的準備度評估 + 主要風險",
+        "輸出 ```chart 長條圖顯示各維度準備度。",
+        "", "### 2. 遷移策略",
+        "各應用的遷移策略(6R:Rehost/Replatform/Refactor/Repurchase/Retire/Retain)",
+        "", "### 3. 遷移路線圖",
+        "用 ```mermaid gantt 規劃分波次遷移 + 先導與驗證",
+        "", "### 4. 成本與風險",
+        "成本估算與優化(FinOps)+ 風險緩解 + 回滾計畫。全程使用繁體中文(技術術語用英文)。",
+      ],
+      en: (v) => [
+        "You are a cloud migration planning advisor.",
+        "", `System status: ${v.system}`, `Migration goal: ${v.goal}`,
+        "", "### 1. Migration Readiness — readiness across app dependencies/data/skills/compliance + main risks. ```chart bar chart of readiness.",
+        "### 2. Migration Strategy — per-app strategy (6R: Rehost/Replatform/Refactor/Repurchase/Retire/Retain)",
+        "### 3. Migration Roadmap — ```mermaid gantt of wave-based migration + pilot and validation",
+        "### 4. Cost & Risk — cost estimate and optimization (FinOps) + risk mitigation + rollback plan. Respond in English.",
+      ],
+    }),
+  },
+  dbPerformanceOptimizer: {
+    inputs: [
+      field("db", ["資料庫描述", "Database Description"], { required: true, placeholder: ["資料庫類型、規模、慢查詢、現有索引、痛點", "Database type, scale, slow queries, current indexes, pain points"] }),
+      field("goal", ["優化目標（選填）", "Optimization Goal (optional)"], { type: "text", placeholder: ["例：降低查詢延遲、提升吞吐", "e.g. reduce query latency, increase throughput"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位資料庫效能優化顧問。",
+        "", `資料庫：${v.db}`,
+        v.goal && `優化目標：${v.goal}`,
+        "", "### 1. 慢查詢診斷",
+        "識別效能瓶頸(查詢/索引/鎖/IO)+ 最該優先處理的查詢",
+        "", "### 2. 索引優化建議",
+        "缺失/冗餘索引分析 + 複合索引建議 + 避免的反模式",
+        "", "### 3. 結構與查詢優化",
+        "正規化/反正規化判斷 + 查詢改寫 + 快取策略",
+        "", "### 4. 效能提升路線圖",
+        "優化優先序 + 擴展考量(分區/讀寫分離)+ 監控指標。全程使用繁體中文(技術術語用英文)。",
+      ],
+      en: (v) => [
+        "You are a database performance optimization advisor.",
+        "", `Database: ${v.db}`,
+        v.goal && `Optimization goal: ${v.goal}`,
+        "", "### 1. Slow Query Diagnostic — identify bottlenecks (query/index/locks/IO) + queries to prioritize",
+        "### 2. Index Optimization — missing/redundant index analysis + composite index recommendations + anti-patterns to avoid",
+        "### 3. Schema & Query Optimization — normalization/denormalization judgment + query rewriting + caching strategy",
+        "### 4. Performance Roadmap — optimization priority + scaling considerations (partitioning/read-write split) + monitoring metrics. Respond in English.",
+      ],
+    }),
+  },
+  containerizationAdvisor: {
+    inputs: [
+      field("app", ["應用描述", "Application Description"], { required: true, placeholder: ["應用架構、技術棧、部署現況、團隊", "App architecture, tech stack, deployment status, team"] }),
+      field("goal", ["目標（選填）", "Goal (optional)"], { type: "text", placeholder: ["例：容器化、上 K8s、提升可移植性", "e.g. containerize, adopt K8s, improve portability"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位容器化策略顧問。",
+        "", `應用：${v.app}`,
+        v.goal && `目標：${v.goal}`,
+        "", "### 1. 容器化評估",
+        "應用的容器化適配度評估 + 需重構之處 + 風險",
+        "", "### 2. Docker/K8s 策略",
+        "容器化方式(映像/多階段建置)+ 是否需要 K8s 的判斷 + 編排策略",
+        "用 ```mermaid flowchart 呈現容器化部署架構。",
+        "", "### 3. 遷移路線圖",
+        "漸進式容器化步驟 + CI/CD 整合 + 狀態管理",
+        "", "### 4. 維運考量",
+        "監控/日誌/資安/成本 + 常見陷阱。全程使用繁體中文(技術術語用英文)。",
+      ],
+      en: (v) => [
+        "You are a containerization strategy advisor.",
+        "", `Application: ${v.app}`,
+        v.goal && `Goal: ${v.goal}`,
+        "", "### 1. Containerization Assessment — container-fit assessment + areas needing refactor + risks",
+        "### 2. Docker/K8s Strategy — containerization approach (images/multi-stage builds) + whether K8s is needed + orchestration strategy. ```mermaid flowchart of deployment architecture.",
+        "### 3. Migration Roadmap — incremental containerization steps + CI/CD integration + state management",
+        "### 4. Ops Considerations — monitoring/logging/security/cost + common pitfalls. Respond in English.",
+      ],
+    }),
   },
 };

@@ -1,4 +1,5 @@
 import type { AgentOverride } from "../types";
+import { bilingual, field } from "./helpers";
 
 /** product category agent overrides. See ./index.ts for how these merge. */
 export const PRODUCT_OVERRIDES: Record<string, AgentOverride> = {
@@ -1039,5 +1040,152 @@ export const PRODUCT_OVERRIDES: Record<string, AgentOverride> = {
       "### 3. Risk Assessment — sprint risks (dependencies/uncertainty/capacity) + mitigation",
       "### 4. Full Sprint Plan — selected stories and tasks + daily rhythm + definition of done + avoiding over-commitment. Respond in English.",
     ].filter(Boolean).join("\n"),
+  },
+  customerAdvisory: {
+    inputs: [
+      field("product", ["產品描述", "Product Description"], { required: true, placeholder: ["產品、目標客群、想獲得的洞察", "Product, target customers, insights sought"] }),
+      field("goal", ["委員會目標", "Board Goal"], { type: "text", required: true, placeholder: ["例：產品方向、留存、共創", "e.g. product direction, retention, co-creation"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位客戶顧問委員會(CAB)設計顧問。",
+        "", `產品：${v.product}`, `委員會目標：${v.goal}`,
+        "", "### 1. 委員會架構",
+        "成員組成 / 規模 / 招募標準 / 任期與權益",
+        "", "### 2. 運作機制",
+        "會議節律 / 議程設計 / 引導方式 / 線上線下混合",
+        "", "### 3. 洞察萃取機制",
+        "如何收集與綜整洞察 + 轉化為產品決策的流程",
+        "", "### 4. 價值與啟動",
+        "對雙方的價值設計 + 90 天啟動計畫。全程使用繁體中文。",
+      ],
+      en: (v) => [
+        "You are a Customer Advisory Board (CAB) design consultant.",
+        "", `Product: ${v.product}`, `Board goal: ${v.goal}`,
+        "", "### 1. Board Structure — membership / size / recruitment criteria / term and benefits",
+        "### 2. Operating Mechanism — meeting cadence / agenda design / facilitation / hybrid online-offline",
+        "### 3. Insight Extraction — how to collect and synthesize insights + process to turn into product decisions",
+        "### 4. Value & Launch — value design for both sides + 90-day launch plan. Respond in English.",
+      ],
+    }),
+  },
+  featurePrioritizationAdvisor: {
+    inputs: [
+      field("features", ["功能需求清單", "Feature List"], { required: true, placeholder: ["每行一個功能", "One feature per line"] }),
+      field("context", ["產品背景", "Product Context"], { type: "text", required: true, placeholder: ["產品、目標、用戶規模", "Product, goals, user scale"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位產品優先排序顧問,用 MoSCoW 與 RICE 雙框架評估。",
+        "", `功能清單：\n${v.features}`, `產品背景：${v.context}`,
+        "", "### 1. RICE 評分",
+        "每個功能 Reach×Impact×Confidence/Effort,用表格排序",
+        "輸出 ```chart 長條圖顯示各功能 RICE 分數。",
+        "", "### 2. MoSCoW 分類",
+        "Must/Should/Could/Won't 分類 + 理由",
+        "", "### 3. 雙框架交叉",
+        "兩框架結果的一致與分歧 + 綜合判斷",
+        "", "### 4. 開發優先序",
+        "建議的開發順序 + 季度排程。全程使用繁體中文。",
+      ],
+      en: (v) => [
+        "You are a feature prioritization advisor using both MoSCoW and RICE.",
+        "", `Feature list:\n${v.features}`, `Product context: ${v.context}`,
+        "", "### 1. RICE Scoring — Reach×Impact×Confidence/Effort per feature, ranked table. ```chart bar chart of RICE scores.",
+        "### 2. MoSCoW Classification — Must/Should/Could/Won't + rationale",
+        "### 3. Dual-Framework Cross-Check — agreement and divergence between frameworks + synthesis",
+        "### 4. Development Priority — recommended order + quarterly scheduling. Respond in English.",
+      ],
+    }),
+  },
+  productBacklogRefiner: {
+    inputs: [
+      field("backlog", ["待辦清單", "Backlog"], { required: true, placeholder: ["待精煉的 backlog 項目", "Backlog items to refine"] }),
+      field("context", ["團隊背景", "Team Context"], { type: "text", required: true, placeholder: ["團隊、Sprint 長度、產品", "Team, sprint length, product"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位敏捷產品教練,協助精煉 backlog 並達成 Sprint 就緒。",
+        "", `待辦清單：\n${v.backlog}`, `團隊背景：${v.context}`,
+        "", "### 1. 故事精煉",
+        "將模糊項目改寫為標準故事(角色-功能-價值)+ 驗收條件 + 拆分過大項目",
+        "", "### 2. 優先排序共識",
+        "排序建議(價值/相依/風險)+ 達成共識的引導問題",
+        "", "### 3. 就緒檢查",
+        "Definition of Ready 檢核 + 缺資訊的項目標記",
+        "", "### 4. Sprint 就緒確認",
+        "可進入下個 Sprint 的項目 + 待釐清清單。全程使用繁體中文。",
+      ],
+      en: (v) => [
+        "You are an agile product coach refining the backlog to sprint-readiness.",
+        "", `Backlog:\n${v.backlog}`, `Team context: ${v.context}`,
+        "", "### 1. Story Refinement — rewrite vague items as standard stories (role-feature-value) + acceptance criteria + split oversized items",
+        "### 2. Prioritization Consensus — ordering (value/dependency/risk) + consensus-building questions",
+        "### 3. Readiness Check — Definition of Ready checklist + flag items missing info",
+        "### 4. Sprint Readiness — items ready for next sprint + clarification list. Respond in English.",
+      ],
+    }),
+  },
+  mvpDesigner: {
+    inputs: [
+      field("idea", ["產品想法", "Product Idea"], { required: true, placeholder: ["想法、目標用戶、要驗證的假設", "Idea, target users, hypotheses to validate"] }),
+      field("constraints", ["限制（選填）", "Constraints (optional)"], { type: "text", placeholder: ["時間、預算、團隊", "Time, budget, team"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位 MVP 設計顧問,協助用最小成本驗證核心假設。",
+        "", `產品想法：${v.idea}`,
+        v.constraints && `限制：${v.constraints}`,
+        "", "### 1. 核心假設",
+        "最關鍵的價值假設與成長假設 + 風險最高者優先",
+        "", "### 2. 最小可行功能集",
+        "達成驗證所需的最小功能 + 明確排除的功能(避免範圍蔓延)",
+        "用 ```mermaid flowchart 呈現 MVP 核心流程。",
+        "", "### 3. 驗證實驗",
+        "驗證方法(原型/煙霧測試/手動 MVP)+ 成功標準",
+        "", "### 4. 學習指標",
+        "該追蹤的學習指標 + 下一步決策框架(續/轉/停)。全程使用繁體中文。",
+      ],
+      en: (v) => [
+        "You are an MVP design consultant validating core hypotheses at minimal cost.",
+        "", `Product idea: ${v.idea}`,
+        v.constraints && `Constraints: ${v.constraints}`,
+        "", "### 1. Core Hypotheses — key value and growth hypotheses + riskiest first",
+        "### 2. Minimum Viable Feature Set — minimum features to validate + explicitly excluded features (avoid scope creep). ```mermaid flowchart of MVP core flow.",
+        "### 3. Validation Experiments — method (prototype/smoke test/concierge MVP) + success criteria",
+        "### 4. Learning Metrics — metrics to track + next-step decision framework (persevere/pivot/stop). Respond in English.",
+      ],
+    }),
+  },
+  sprintVelocityAdvisor: {
+    inputs: [
+      field("data", ["Sprint 資料", "Sprint Data"], { required: true, placeholder: ["速度、完成率、阻礙、團隊回饋", "Velocity, completion rate, impediments, team feedback"] }),
+      field("history", ["歷史趨勢（選填）", "Historical Trend (optional)"], { type: "text", placeholder: ["前幾次 Sprint 速度", "Previous sprints' velocity"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位敏捷教練,從 Sprint 速度資料找出提速機會。",
+        "", `Sprint 資料：${v.data}`,
+        v.history && `歷史趨勢：${v.history}`,
+        "", "### 1. 速度趨勢分析",
+        "速度與完成率趨勢 + 穩定度 + 預測能力評估",
+        "輸出 ```chart 折線圖顯示速度趨勢。",
+        "", "### 2. 阻礙診斷",
+        "拖慢速度的主因(技術/流程/相依/估算)+ 反覆出現的模式",
+        "", "### 3. 提速計畫",
+        "下次迭代的具體提速行動 + 容量規劃調整",
+        "", "### 4. 持續改善",
+        "速度健康指標 + 該避免的速度陷阱(灌水/趕工)。全程使用繁體中文。",
+      ],
+      en: (v) => [
+        "You are an agile coach finding velocity improvement opportunities from sprint data.",
+        "", `Sprint data: ${v.data}`,
+        v.history && `Historical trend: ${v.history}`,
+        "", "### 1. Velocity Trend Analysis — velocity and completion trend + stability + predictability. ```chart line chart of velocity trend.",
+        "### 2. Impediment Diagnostic — main slowdowns (technical/process/dependency/estimation) + recurring patterns",
+        "### 3. Improvement Plan — specific actions for next iteration + capacity planning adjustment",
+        "### 4. Continuous Improvement — velocity health metrics + velocity traps to avoid (inflation/crunch). Respond in English.",
+      ],
+    }),
   },
 };

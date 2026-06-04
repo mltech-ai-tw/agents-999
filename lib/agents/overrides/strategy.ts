@@ -1,4 +1,5 @@
 import type { AgentOverride } from "../types";
+import { bilingual, field } from "./helpers";
 
 /** strategy category agent overrides. See ./index.ts for how these merge. */
 export const STRATEGY_OVERRIDES: Record<string, AgentOverride> = {
@@ -2522,5 +2523,166 @@ export const STRATEGY_OVERRIDES: Record<string, AgentOverride> = {
       "### 3. Catch-Up Strategy — strategy per key gap (fast-follow/differentiated bypass/leapfrog) + priority",
       "### 4. Action Roadmap — phased gap-closing actions + metrics + advantages to defend. Respond in English.",
     ].filter(Boolean).join("\n"),
+  },
+
+  partnerEcosystem: {
+    inputs: [
+      field("business", ["業務描述", "Business Description"], { required: true, placeholder: ["公司、產品、現有夥伴、生態系角色", "Company, product, existing partners, ecosystem role"] }),
+      field("goal", ["生態系目標", "Ecosystem Goal"], { type: "text", required: true, placeholder: ["想透過生態系達成什麼", "What the ecosystem should achieve"] }),
+      field("players", ["已知玩家（選填）", "Known Players (optional)"], { type: "text", placeholder: ["相關平台、供應商、互補者", "Relevant platforms, suppliers, complementors"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位生態系策略顧問,協助企業在價值網絡中佔據最佳位置。",
+        "", `業務：${v.business}`, `生態系目標：${v.goal}`,
+        v.players && `已知玩家：${v.players}`,
+        "", "### 1. 生態系地圖",
+        "將生態系分層(基礎/平台/應用/服務/通路),用 ```mermaid flowchart 呈現各層玩家與本公司位置",
+        "", "### 2. 互補角色識別",
+        "找出最有價值的互補者與合作對象(3-5個)+ 互補性與綜效",
+        "", "### 3. 合作模式設計",
+        "各夥伴類型的合作模式 + 價值交換 + 風險",
+        "", "### 4. 生態系策略",
+        "本公司的最佳生態定位 + 12 個月關係建立行動。全程使用繁體中文。",
+      ],
+      en: (v) => [
+        "You are an ecosystem strategy consultant helping companies claim the best position in the value network.",
+        "", `Business: ${v.business}`, `Ecosystem goal: ${v.goal}`,
+        v.players && `Known players: ${v.players}`,
+        "", "### 1. Ecosystem Map — layer the ecosystem (infra/platform/application/services/channel), ```mermaid flowchart of players per layer and our position",
+        "### 2. Complementary Roles — most valuable complementors and partners (3-5) + complementarity and synergy",
+        "### 3. Collaboration Models — model per partner type + value exchange + risks",
+        "### 4. Ecosystem Strategy — our optimal positioning + 12-month relationship-building actions. Respond in English.",
+      ],
+    }),
+  },
+
+  valueChainAnalyzer: {
+    inputs: [
+      field("business", ["業務描述", "Business Description"], { required: true, placeholder: ["公司、產品/服務、主要活動、成本結構", "Company, product/service, main activities, cost structure"] }),
+      field("goal", ["分析目標", "Analysis Goal"], { type: "text", required: true, placeholder: ["例：找競爭優勢、降成本、找差異化", "e.g. find competitive advantage, cut cost, differentiate"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位策略分析師,用 Porter 價值鏈框架找出競爭優勢來源。",
+        "", `業務：${v.business}`, `分析目標：${v.goal}`,
+        "", "### 1. 價值鏈拆解",
+        "主要活動(進料/生產/出貨/行銷/服務)與支援活動(採購/技術/人資/基礎建設)的現況評估",
+        "用 ```mermaid flowchart 呈現價值鏈。",
+        "", "### 2. 價值與成本分析",
+        "各環節的價值貢獻 vs 成本佔比,找出高價值與高成本環節",
+        "輸出 ```chart 長條圖顯示各環節價值 vs 成本。",
+        "", "### 3. 競爭優勢識別",
+        "最具差異化潛力的環節 + 成本領先機會 + 應外包/強化的判斷",
+        "", "### 4. 策略建議",
+        "強化競爭優勢的優先行動 + 價值鏈重組機會。全程使用繁體中文。",
+      ],
+      en: (v) => [
+        "You are a strategy analyst using Porter's value chain to find sources of competitive advantage.",
+        "", `Business: ${v.business}`, `Analysis goal: ${v.goal}`,
+        "", "### 1. Value Chain Decomposition — primary activities (inbound/operations/outbound/marketing/service) and support activities (procurement/tech/HR/infrastructure). ```mermaid flowchart of the value chain.",
+        "### 2. Value & Cost Analysis — value contribution vs cost share per link, identify high-value and high-cost links. ```chart bar chart of value vs cost per link.",
+        "### 3. Competitive Advantage — links with most differentiation potential + cost leadership opportunities + outsource/strengthen judgment",
+        "### 4. Strategy Recommendations — priority actions to strengthen advantage + value chain reconfiguration opportunities. Respond in English.",
+      ],
+    }),
+  },
+
+  fiveForcesAnalyzer: {
+    inputs: [
+      field("industry", ["產業描述", "Industry Description"], { required: true, placeholder: ["產業、公司位置、主要參與者", "Industry, company position, main players"] }),
+      field("goal", ["分析目的（選填）", "Analysis Purpose (optional)"], { type: "text", placeholder: ["例：評估進入、定價、策略", "e.g. entry evaluation, pricing, strategy"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位產業分析師,用 Porter 五力框架評估產業吸引力。",
+        "", `產業：${v.industry}`,
+        v.goal && `分析目的：${v.goal}`,
+        "", "### 1. 五力評估",
+        "逐項評估(供應商議價力/買方議價力/新進者威脅/替代品威脅/現有競爭),各附強度(高/中/低)與理由,用表格呈現",
+        "輸出 ```chart 長條圖顯示五力強度。",
+        "", "### 2. 產業吸引力評分",
+        "綜合五力的產業吸引力評分(1-10)+ 獲利空間判斷",
+        "", "### 3. 關鍵驅動力",
+        "最影響產業結構的 2-3 個力量 + 未來變化趨勢",
+        "", "### 4. 策略應對計畫",
+        "如何在此產業結構中佔據有利位置 + 削弱不利力量的策略。全程使用繁體中文。",
+      ],
+      en: (v) => [
+        "You are an industry analyst using Porter's Five Forces to assess industry attractiveness.",
+        "", `Industry: ${v.industry}`,
+        v.goal && `Analysis purpose: ${v.goal}`,
+        "", "### 1. Five Forces Assessment — each force (supplier power/buyer power/new entrants/substitutes/rivalry) with intensity (H/M/L) and rationale, table. ```chart bar chart of force intensity.",
+        "### 2. Industry Attractiveness Score — composite score (1-10) + profit potential judgment",
+        "### 3. Key Drivers — 2-3 forces most shaping industry structure + future trends",
+        "### 4. Strategic Response — how to secure a favorable position + strategies to weaken adverse forces. Respond in English.",
+      ],
+    }),
+  },
+
+  competitorMapping: {
+    inputs: [
+      field("company", ["我方公司", "Our Company"], { required: true, placeholder: ["公司、產品、市場地位", "Company, product, market position"] }),
+      field("competitors", ["競爭者清單", "Competitor List"], { type: "text", required: true, placeholder: ["主要競爭者名稱", "Main competitor names"] }),
+      field("dimensions", ["比較維度（選填）", "Comparison Dimensions (optional)"], { type: "text", placeholder: ["例：定價/功能/受眾/通路", "e.g. pricing/features/audience/channel"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位競爭情報分析師,建構完整的競爭全景地圖。",
+        "", `我方公司：${v.company}`, `競爭者：${v.competitors}`,
+        v.dimensions && `比較維度：${v.dimensions}`,
+        "", "### 1. 競爭全景地圖",
+        "將競爭者分群(直接/間接/潛在)+ 各群特性,用表格呈現各競爭者定位",
+        "", "### 2. 定位象限",
+        "選 2 個關鍵維度,描述各競爭者在象限中的位置 + 我方位置 + 空白機會",
+        "輸出 ```chart 長條圖顯示各競爭者在關鍵維度的得分。",
+        "", "### 3. 威脅識別",
+        "最具威脅的競爭者 + 威脅類型 + 我方暴露的弱點",
+        "", "### 4. 差距策略",
+        "縮小落後差距 + 擴大領先優勢的行動方案。全程使用繁體中文。",
+      ],
+      en: (v) => [
+        "You are a competitive intelligence analyst building a full competitive landscape map.",
+        "", `Our company: ${v.company}`, `Competitors: ${v.competitors}`,
+        v.dimensions && `Comparison dimensions: ${v.dimensions}`,
+        "", "### 1. Competitive Landscape Map — group competitors (direct/indirect/potential) + group traits, table of positioning",
+        "### 2. Positioning Quadrant — pick 2 key dimensions, describe each competitor's quadrant position + ours + white space. ```chart bar chart of scores on key dimensions.",
+        "### 3. Threat Identification — most threatening competitors + threat type + our exposed weaknesses",
+        "### 4. Gap Strategy — actions to close lagging gaps + widen leading advantages. Respond in English.",
+      ],
+    }),
+  },
+
+  pivotDecisionMatrix: {
+    inputs: [
+      field("struggle", ["商業困境", "Business Struggle"], { required: true, placeholder: ["目前困境、為何考慮轉向、現有業務", "Current struggle, why pivoting, existing business"] }),
+      field("assets", ["現有資產 / 能力", "Existing Assets / Capabilities"], { type: "text", required: true, placeholder: ["可帶到新方向的資源", "Resources transferable to a new direction"] }),
+      field("constraints", ["限制（選填）", "Constraints (optional)"], { type: "text", placeholder: ["資金跑道、團隊、時間", "Cash runway, team, time"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位轉向決策顧問,用決策矩陣協助理性判斷是否與如何轉向。",
+        "", `困境：${v.struggle}`, `現有資產：${v.assets}`,
+        v.constraints && `限制：${v.constraints}`,
+        "", "### 1. 轉向信號識別",
+        "評估是否該轉向的信號(成長停滯/PMF 不足/市場萎縮)+ 不轉向的代價",
+        "", "### 2. 選項評估矩陣",
+        "列出 3-4 個轉向選項,用加權矩陣評估(市場/可行性/資產契合/風險),用表格呈現",
+        "輸出 ```chart 長條圖顯示各選項綜合分數。",
+        "", "### 3. 執行優先序",
+        "推薦選項 + 理由 + 為何優於其他",
+        "", "### 4. 執行建議",
+        "轉向的第一步 + 驗證里程碑 + 退場條件。全程使用繁體中文。",
+      ],
+      en: (v) => [
+        "You are a pivot decision consultant using a decision matrix to rationally judge whether and how to pivot.",
+        "", `Struggle: ${v.struggle}`, `Existing assets: ${v.assets}`,
+        v.constraints && `Constraints: ${v.constraints}`,
+        "", "### 1. Pivot Signal Identification — signals to pivot (stalled growth/weak PMF/shrinking market) + cost of not pivoting",
+        "### 2. Options Evaluation Matrix — 3-4 pivot options scored via weighted matrix (market/feasibility/asset fit/risk), table. ```chart bar chart of overall scores.",
+        "### 3. Execution Priority — recommended option + rationale + why it beats the others",
+        "### 4. Execution Recommendations — first step + validation milestones + exit criteria. Respond in English.",
+      ],
+    }),
   },
 };

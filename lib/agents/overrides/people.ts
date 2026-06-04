@@ -1,4 +1,5 @@
 import type { AgentOverride } from "../types";
+import { bilingual, field } from "./helpers";
 
 /** people category agent overrides. See ./index.ts for how these merge. */
 export const PEOPLE_OVERRIDES: Record<string, AgentOverride> = {
@@ -1351,5 +1352,155 @@ export const PEOPLE_OVERRIDES: Record<string, AgentOverride> = {
       "### 3. Mentoring Program — mentor matching / mentor and mentee roles / interaction rhythm and outcome tracking",
       "### 4. Talent Development Blueprint — ```mermaid gantt of development timeline + retention strategy + metrics. Respond in English.",
     ].filter(Boolean).join("\n"),
+  },
+  hrAnalytics: {
+    inputs: [
+      field("data", ["HR 數據", "HR Data"], { required: true, placeholder: ["人數、離職率、敬業度、招募、薪酬數據", "Headcount, turnover, engagement, recruiting, comp data"] }),
+      field("question", ["想回答的問題", "Question to Answer"], { type: "text", required: true, placeholder: ["例：為何離職率高、哪類人留不住", "e.g. why turnover is high, who we fail to retain"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位人力資源數據分析師,用數據驅動人才決策。",
+        "", `HR 數據：${v.data}`, `問題：${v.question}`,
+        "", "### 1. 人才趨勢分析",
+        "從數據看人才趨勢(招募/離職/敬業/多元)+ 關鍵發現",
+        "輸出 ```chart 長條圖顯示關鍵 HR 指標。",
+        "", "### 2. 離職預測",
+        "高離職風險群體與信號 + 預測指標",
+        "", "### 3. 根因洞察",
+        "問題的可能根因 + 需進一步分析的方向",
+        "", "### 4. 人力決策指引",
+        "依數據的行動建議 + 該持續追蹤的指標。全程使用繁體中文。",
+      ],
+      en: (v) => [
+        "You are an HR analytics advisor driving talent decisions with data.",
+        "", `HR data: ${v.data}`, `Question: ${v.question}`,
+        "", "### 1. Talent Trend Analysis — trends from data (recruiting/attrition/engagement/diversity) + key findings. ```chart bar chart of key HR metrics.",
+        "### 2. Attrition Prediction — high-risk groups and signals + predictive indicators",
+        "### 3. Root Cause Insights — likely root causes + areas for further analysis",
+        "### 4. Workforce Decision Guide — data-driven action recommendations + metrics to keep tracking. Respond in English.",
+      ],
+    }),
+  },
+  employeeRetentionAdvisor: {
+    inputs: [
+      field("org", ["組織描述", "Organization Description"], { required: true, placeholder: ["公司、團隊、離職現況、痛點", "Company, team, attrition status, pain points"] }),
+      field("focus", ["重點群體（選填）", "Focus Group (optional)"], { type: "text", placeholder: ["最在意或最易流失的群體", "Most valued or churn-prone group"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位員工留才策略師。",
+        "", `組織：${v.org}`,
+        v.focus && `重點群體：${v.focus}`,
+        "", "### 1. 流失風險評估",
+        "流失原因分類(薪酬/主管/成長/文化/工作)+ 各類佔比 + 高危群體",
+        "輸出 ```chart 圓餅圖顯示流失原因分布。",
+        "", "### 2. 留才計畫",
+        "針對主因的留才措施 + 負責角色 + 見效時間",
+        "", "### 3. 長期激勵設計",
+        "留才的長期工具(發展/股權/職涯/彈性)",
+        "", "### 4. 行動與衡量",
+        "90 天留才行動 + 留任指標。全程使用繁體中文。",
+      ],
+      en: (v) => [
+        "You are an employee retention strategist.",
+        "", `Organization: ${v.org}`,
+        v.focus && `Focus group: ${v.focus}`,
+        "", "### 1. Attrition Risk — reason categories (pay/manager/growth/culture/work) + share + high-risk groups. ```chart pie chart of reasons.",
+        "### 2. Retention Plan — measures for main causes + owner + time to impact",
+        "### 3. Long-Term Incentives — retention tools (development/equity/career/flexibility)",
+        "### 4. Action & Measurement — 90-day retention actions + retention metrics. Respond in English.",
+      ],
+    }),
+  },
+  remoteWorkPolicy: {
+    inputs: [
+      field("org", ["組織描述", "Organization Description"], { required: true, placeholder: ["公司、規模、團隊分布、現有遠端做法", "Company, size, team distribution, current remote practices"] }),
+      field("goal", ["政策目標", "Policy Goal"], { type: "text", required: true, placeholder: ["例：全遠端、混合、提升協作", "e.g. fully remote, hybrid, improve collaboration"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位遠端工作政策顧問。",
+        "⚠️ 正式採用前請確認符合當地勞動法規。",
+        "", `組織：${v.org}`, `政策目標：${v.goal}`,
+        "", "### 1. 遠端政策框架",
+        "工作模式(全遠端/混合)+ 工時與彈性 + 設備與費用 + 資安規範",
+        "", "### 2. 溝通規範",
+        "同步 vs 非同步原則 / 會議規範 / 回應時間期待 / 跨時區協作",
+        "", "### 3. 績效衡量機制",
+        "以成果為本的績效衡量 + 信任機制 + 避免微管理",
+        "", "### 4. 落地與合規",
+        "政策推行步驟 + 法規合規確認 + 文化維護。全程使用繁體中文。",
+      ],
+      en: (v) => [
+        "You are a remote work policy advisor.",
+        "⚠️ Verify local labor law compliance before adoption.",
+        "", `Organization: ${v.org}`, `Policy goal: ${v.goal}`,
+        "", "### 1. Remote Policy Framework — work mode (fully remote/hybrid) + hours and flexibility + equipment and expenses + security standards",
+        "### 2. Communication Standards — sync vs async principles / meeting norms / response time expectations / cross-timezone",
+        "### 3. Performance Measurement — outcome-based measurement + trust mechanisms + avoid micromanagement",
+        "### 4. Rollout & Compliance — implementation steps + legal compliance + culture maintenance. Respond in English.",
+      ],
+    }),
+  },
+  feedbackCulture: {
+    inputs: [
+      field("org", ["組織描述", "Organization Description"], { required: true, placeholder: ["公司、團隊、現有反饋現況、痛點", "Company, team, current feedback state, pain points"] }),
+      field("goal", ["目標（選填）", "Goal (optional)"], { type: "text", placeholder: ["想達成的反饋文化", "Desired feedback culture"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位組織文化顧問,建立健康的反饋文化。",
+        "", `組織：${v.org}`,
+        v.goal && `目標：${v.goal}`,
+        "", "### 1. 反饋現況診斷",
+        "現有反饋的問題(頻率/品質/方向/心理安全)+ 主要障礙",
+        "", "### 2. 360 度回饋設計",
+        "回饋機制設計(即時/定期/同儕/向上)+ 工具與節律",
+        "", "### 3. 反饋技巧",
+        "給予與接收回饋的框架(SBI/雷達)+ 訓練重點",
+        "", "### 4. 文化推廣計畫",
+        "從領導示範到全員落地的 90 天計畫 + 衡量指標。全程使用繁體中文。",
+      ],
+      en: (v) => [
+        "You are an organizational culture consultant building a healthy feedback culture.",
+        "", `Organization: ${v.org}`,
+        v.goal && `Goal: ${v.goal}`,
+        "", "### 1. Feedback Diagnostic — current problems (frequency/quality/direction/psychological safety) + main barriers",
+        "### 2. 360-Degree Design — feedback mechanisms (real-time/periodic/peer/upward) + tools and cadence",
+        "### 3. Feedback Skills — giving and receiving frameworks (SBI/radar) + training focus",
+        "### 4. Culture Rollout — 90-day plan from leadership modeling to org-wide adoption + metrics. Respond in English.",
+      ],
+    }),
+  },
+  pipDesigner: {
+    inputs: [
+      field("gap", ["績效落差描述", "Performance Gap Description"], { required: true, placeholder: ["員工角色、績效問題、已觀察行為", "Employee role, performance issue, observed behaviors"] }),
+      field("context", ["背景（選填）", "Context (optional)"], { type: "text", placeholder: ["過往溝通、團隊狀況、動機", "Past conversations, team situation, motivation"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位績效管理顧問,設計公正且具支持性的績效改善計畫(PIP)。",
+        "", `績效落差：${v.gap}`,
+        v.context && `背景：${v.context}`,
+        "", "### 1. 原因診斷",
+        "落差類型(能力/動機/資源/方向)+ 根因 + 是否可改善判斷",
+        "", "### 2. 支援行動設計",
+        "改善所需的支援(訓練/教練/資源/調整)+ 主管角色",
+        "", "### 3. SMART 目標與里程碑",
+        "明確可衡量的改善目標 + 30/60/90 天里程碑 + 檢核點",
+        "", "### 4. 對話與後續",
+        "PIP 對話腳本(可直接用)+ 公平程序提醒 + 各結果的後續。全程使用繁體中文。",
+      ],
+      en: (v) => [
+        "You are a performance management consultant designing a fair, supportive Performance Improvement Plan (PIP).",
+        "", `Performance gap: ${v.gap}`,
+        v.context && `Context: ${v.context}`,
+        "", "### 1. Root Cause — gap type (skill/motivation/resources/direction) + root cause + improvability judgment",
+        "### 2. Support Actions — support needed (training/coaching/resources/adjustment) + manager role",
+        "### 3. SMART Goals & Milestones — measurable improvement goals + 30/60/90-day milestones + checkpoints",
+        "### 4. Conversation & Follow-up — PIP conversation script (ready to use) + fair-process reminders + follow-up per outcome. Respond in English.",
+      ],
+    }),
   },
 };

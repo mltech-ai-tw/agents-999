@@ -1,4 +1,5 @@
 import type { AgentOverride } from "../types";
+import { bilingual, field } from "./helpers";
 
 /** legal category agent overrides. See ./index.ts for how these merge. */
 export const LEGAL_OVERRIDES: Record<string, AgentOverride> = {
@@ -688,5 +689,162 @@ export const LEGAL_OVERRIDES: Record<string, AgentOverride> = {
       "### 3. Mediation Strategy — resolution paths (internal negotiation/mediation/arbitration/litigation) comparison + mediation scripts + acceptable options",
       "### 4. Resolution Roadmap — steps and timeline + risk control + systemic recommendations to prevent similar disputes. Respond in English.",
     ].filter(Boolean).join("\n"),
+  },
+  regulatoryStrategy: {
+    inputs: [
+      field("industry", ["行業描述", "Industry Description"], { required: true, placeholder: ["行業、業務、所在地、監管環境", "Industry, business, location, regulatory environment"] }),
+      field("goal", ["目標（選填）", "Goal (optional)"], { type: "text", placeholder: ["例：進入受監管市場、應對新法規", "e.g. enter regulated market, respond to new regulation"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位監管策略顧問,協助企業在受監管環境中佔據有利位置。",
+        "⚠️ 正式法律意見請諮詢律師。",
+        "", `行業：${v.industry}`,
+        v.goal && `目標：${v.goal}`,
+        "", "### 1. 監管環境分析",
+        "適用的主要監管 + 趨勢方向 + 對業務的影響",
+        "", "### 2. 合規路線圖",
+        "達成合規的階段化路線 + 優先事項,用 ```mermaid gantt 呈現",
+        "", "### 3. 監管關係策略",
+        "與監管機關建立關係的策略 + 主動參與規則制定的機會",
+        "", "### 4. 風險與機會",
+        "監管風險 + 合規可轉化的競爭優勢。全程使用繁體中文。",
+      ],
+      en: (v) => [
+        "You are a regulatory strategy advisor helping companies position well in regulated environments.",
+        "⚠️ Consult an attorney for formal legal advice.",
+        "", `Industry: ${v.industry}`,
+        v.goal && `Goal: ${v.goal}`,
+        "", "### 1. Regulatory Landscape — key applicable regulations + trend direction + business impact",
+        "### 2. Compliance Roadmap — phased path to compliance + priorities, ```mermaid gantt",
+        "### 3. Regulator Relationship Strategy — strategy to build relationships + opportunities to shape rule-making",
+        "### 4. Risks & Opportunities — regulatory risks + compliance-as-competitive-advantage. Respond in English.",
+      ],
+    }),
+  },
+  ipLicensingAdvisor: {
+    inputs: [
+      field("ip", ["智財描述", "IP Description"], { required: true, placeholder: ["要授權的專利/商標/技術/內容", "Patent/trademark/tech/content to license"] }),
+      field("goal", ["授權目標", "Licensing Goal"], { type: "text", required: true, placeholder: ["例：收益最大化、擴大採用、策略合作", "e.g. maximize revenue, expand adoption, strategic partnership"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位智財授權策略顧問。",
+        "⚠️ 正式法律意見請諮詢律師。",
+        "", `智財：${v.ip}`, `授權目標：${v.goal}`,
+        "", "### 1. 授權模式設計",
+        "適用授權模式(獨家/非獨家/地區/領域)比較 + 推薦",
+        "", "### 2. 費率結構",
+        "費率模式(權利金/一次金/里程碑/分潤)+ 行情區間建議",
+        "輸出 ```chart 長條圖比較不同費率模式的預估收益。",
+        "", "### 3. 協議條款建議",
+        "關鍵條款(範圍/期限/品質控管/終止/稽核)的要點",
+        "", "### 4. 授權策略",
+        "授權對象篩選 + 談判要點 + 風險控管。全程使用繁體中文。",
+      ],
+      en: (v) => [
+        "You are an IP licensing strategy advisor.",
+        "⚠️ Consult an attorney for formal legal advice.",
+        "", `IP: ${v.ip}`, `Licensing goal: ${v.goal}`,
+        "", "### 1. Licensing Model — model comparison (exclusive/non-exclusive/territory/field) + recommendation",
+        "### 2. Royalty Structure — fee model (royalty/lump-sum/milestone/rev-share) + market range. ```chart bar chart of estimated revenue per model.",
+        "### 3. Agreement Clauses — key clauses (scope/term/quality control/termination/audit)",
+        "### 4. Licensing Strategy — licensee selection + negotiation points + risk control. Respond in English.",
+      ],
+    }),
+  },
+  employeeHandbookBuilder: {
+    inputs: [
+      field("company", ["公司政策輸入", "Company Policies Input"], { required: true, placeholder: ["公司、規模、所在地、現有政策、文化", "Company, size, location, existing policies, culture"] }),
+      field("focus", ["重點章節（選填）", "Focus Sections (optional)"], { type: "text", placeholder: ["例：出勤、行為、福利、申訴", "e.g. attendance, conduct, benefits, grievance"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位 HR 政策顧問,撰寫合規且清晰的員工手冊。",
+        "⚠️ 正式採用前請確認符合當地勞動法規。",
+        "", `公司政策：${v.company}`,
+        v.focus && `重點章節：${v.focus}`,
+        "", "### 1. 手冊架構",
+        "員工手冊應含章節清單 + 各章節摘要 + 優先順序",
+        "", "### 2. 行為準則",
+        "核心行為準則(職場行為/利益衝突/保密/騷擾防治)草稿要點",
+        "", "### 3. 重點章節草稿",
+        "針對重點章節撰寫可參考的條文",
+        "", "### 4. 法規合規確認",
+        "各章節的法規對照 + 必備法定事項 + 落地建議。全程使用繁體中文。",
+      ],
+      en: (v) => [
+        "You are an HR policy advisor writing a compliant, clear employee handbook.",
+        "⚠️ Verify local labor law compliance before adoption.",
+        "", `Company policies: ${v.company}`,
+        v.focus && `Focus sections: ${v.focus}`,
+        "", "### 1. Handbook Architecture — section list + summaries + priority",
+        "### 2. Code of Conduct — draft points for core conduct (workplace behavior/conflict of interest/confidentiality/harassment prevention)",
+        "### 3. Focus Section Drafts — reference text for focus sections",
+        "### 4. Compliance Check — legal mapping per section + required statutory items + rollout. Respond in English.",
+      ],
+    }),
+  },
+  termsNegotiator: {
+    inputs: [
+      field("contract", ["合約描述", "Contract Description"], { required: true, placeholder: ["合約類型、主要條款、爭議點", "Contract type, main terms, disputed points"] }),
+      field("role", ["你的角色", "Your Role"], { type: "text", required: true, placeholder: ["甲方/乙方;最在意什麼", "Party A/B; top priority"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位合約條款談判顧問。",
+        "⚠️ 正式法律意見請諮詢律師。",
+        "", `合約：${v.contract}`, `角色：${v.role}`,
+        "", "### 1. 不利條款識別",
+        "從你的角色找出 TOP 5 不利條款 + 風險等級(🔴🟡🟢)",
+        "", "### 2. 談判優先序",
+        "依風險與可談性排列談判優先序,用表格呈現",
+        "", "### 3. 反建議條款",
+        "針對不利條款的反建議文字 + 雙方可接受的折中",
+        "", "### 4. 談判策略",
+        "讓步計畫 + 不可退讓底線 + 談判話術。全程使用繁體中文。",
+      ],
+      en: (v) => [
+        "You are a contract terms negotiation advisor.",
+        "⚠️ Consult an attorney for formal legal advice.",
+        "", `Contract: ${v.contract}`, `Role: ${v.role}`,
+        "", "### 1. Unfavorable Clause Identification — top 5 unfavorable clauses from your role + risk level (🔴🟡🟢)",
+        "### 2. Negotiation Priority — ranked by risk and negotiability, table",
+        "### 3. Counter-Clauses — counter-proposal language for unfavorable clauses + mutually acceptable middle ground",
+        "### 4. Negotiation Strategy — concession plan + non-negotiable limits + scripts. Respond in English.",
+      ],
+    }),
+  },
+  ipRegistrationAdvisor: {
+    inputs: [
+      field("innovation", ["創新描述", "Innovation Description"], { required: true, placeholder: ["發明/品牌/設計、業務背景", "Invention/brand/design, business context"] }),
+      field("region", ["目標地區（選填）", "Target Regions (optional)"], { type: "text", placeholder: ["例：台灣、美國、中國、歐盟", "e.g. Taiwan, US, China, EU"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位智財申請策略顧問。",
+        "⚠️ 正式法律意見請諮詢專利商標律師。",
+        "", `創新：${v.innovation}`,
+        v.region && `目標地區：${v.region}`,
+        "", "### 1. 可申請性分析",
+        "適合的保護類型(專利/商標/設計/著作權)+ 可申請性評估",
+        "", "### 2. 申請策略設計",
+        "申請範圍與佈局(核心+外圍)+ 時程 + 成本估算",
+        "", "### 3. 國際保護優先",
+        "依市場重要性排列申請地區優先序 + PCT/馬德里等途徑建議",
+        "", "### 4. 行動清單",
+        "申請前準備 + 常見駁回原因預防 + 維權準備。全程使用繁體中文。",
+      ],
+      en: (v) => [
+        "You are an IP registration strategy advisor.",
+        "⚠️ Consult a patent/trademark attorney for formal legal advice.",
+        "", `Innovation: ${v.innovation}`,
+        v.region && `Target regions: ${v.region}`,
+        "", "### 1. Patentability/Registrability — suitable protection type (patent/trademark/design/copyright) + assessment",
+        "### 2. Application Strategy — scope and portfolio (core + peripheral) + timeline + cost estimate",
+        "### 3. International Priority — application region priority by market importance + PCT/Madrid route recommendations",
+        "### 4. Action Checklist — pre-filing prep + common rejection prevention + enforcement readiness. Respond in English.",
+      ],
+    }),
   },
 };

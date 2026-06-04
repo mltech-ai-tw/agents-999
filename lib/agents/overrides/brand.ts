@@ -1,4 +1,5 @@
 import type { AgentOverride } from "../types";
+import { bilingual, field } from "./helpers";
 
 /** brand category agent overrides. See ./index.ts for how these merge. */
 export const BRAND_OVERRIDES: Record<string, AgentOverride> = {
@@ -1097,5 +1098,120 @@ export const BRAND_OVERRIDES: Record<string, AgentOverride> = {
       "### 3. Calibrated Examples — rewrite inconsistent samples to unified tone (Before/After) + rewrite principles",
       "### 4. Consistency Strategy — cross-channel tone guide (Do/Don't) + reasonable adjustment range per channel + check mechanism. Respond in English.",
     ].filter(Boolean).join("\n"),
+  },
+  brandAwarenessBuilder: {
+    inputs: [
+      field("brand", ["品牌現況", "Brand Status"], { required: true, placeholder: ["品牌、行業、目標受眾、現有知名度", "Brand, industry, target audience, current awareness"] }),
+      field("goal", ["知名度目標", "Awareness Goal"], { type: "text", required: true, placeholder: ["例：提升認知、進入新市場", "e.g. boost recognition, enter new market"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位品牌知名度策略師。",
+        "", `品牌現況：${v.brand}`, `知名度目標：${v.goal}`,
+        "", "### 1. 知名度診斷",
+        "現有知名度評估(認知/回想/聯想)+ 與目標的落差",
+        "", "### 2. 知名度策略",
+        "提升知名度的策略方向(內容/公關/合作/廣告/口碑)+ 核心訊息",
+        "", "### 3. 傳播管道矩陣",
+        "各管道的角色與配比,用表格呈現",
+        "輸出 ```chart 圓餅圖顯示各管道資源配比。",
+        "", "### 4. 執行與衡量",
+        "90 天知名度建構行動 + 衡量指標(觸及/認知/搜尋量)。全程使用繁體中文。",
+      ],
+      en: (v) => [
+        "You are a brand awareness strategist.",
+        "", `Brand status: ${v.brand}`, `Awareness goal: ${v.goal}`,
+        "", "### 1. Awareness Diagnostic — current awareness (recognition/recall/association) + gap vs goal",
+        "### 2. Awareness Strategy — strategic directions (content/PR/partnership/ads/word-of-mouth) + core message",
+        "### 3. Channel Matrix — role and mix per channel, table. ```chart pie chart of channel resource allocation.",
+        "### 4. Execution & Measurement — 90-day awareness actions + metrics (reach/recognition/search volume). Respond in English.",
+      ],
+    }),
+  },
+  brandCommunityBuilder: {
+    inputs: [
+      field("brand", ["品牌描述", "Brand Description"], { required: true, placeholder: ["品牌、受眾、產品、現有社群", "Brand, audience, product, existing community"] }),
+      field("goal", ["社群目標", "Community Goal"], { type: "text", required: true, placeholder: ["例：忠誠度、口碑、共創、留存", "e.g. loyalty, word-of-mouth, co-creation, retention"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位品牌社群建構顧問。",
+        "", `品牌：${v.brand}`, `社群目標：${v.goal}`,
+        "", "### 1. 社群定位",
+        "社群的核心價值(為何加入)+ 目標成員 + 平台選擇",
+        "", "### 2. 參與機制設計",
+        "促進參與的機制(儀式/活動/分級/共創/遊戲化)",
+        "", "### 3. 忠誠度計畫",
+        "會員權益 / 認可機制 / 大使計畫 / 留存設計",
+        "", "### 4. 啟動與衡量",
+        "社群啟動 90 天計畫 + 健康度指標。全程使用繁體中文。",
+      ],
+      en: (v) => [
+        "You are a brand community building consultant.",
+        "", `Brand: ${v.brand}`, `Community goal: ${v.goal}`,
+        "", "### 1. Community Positioning — core value (why join) + target members + platform selection",
+        "### 2. Engagement Mechanisms — rituals/events/tiers/co-creation/gamification",
+        "### 3. Loyalty Program — member benefits / recognition / ambassador program / retention design",
+        "### 4. Launch & Measurement — 90-day launch plan + health metrics. Respond in English.",
+      ],
+    }),
+  },
+  rebrandingAdvisor: {
+    inputs: [
+      field("brand", ["品牌現況", "Brand Status"], { required: true, placeholder: ["品牌、歷史、現有定位、為何重塑", "Brand, history, current positioning, why rebrand"] }),
+      field("goal", ["重塑目標", "Rebranding Goal"], { type: "text", required: true, placeholder: ["例：擺脫老化、新定位、併購整合", "e.g. shed dated image, reposition, M&A integration"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位品牌重塑顧問,協助在保留資產的同時煥然一新。",
+        "", `品牌現況：${v.brand}`, `重塑目標：${v.goal}`,
+        "", "### 1. 品牌老化評估",
+        "現有品牌的問題與資產盤點 + 重塑的必要性與幅度",
+        "", "### 2. 重塑策略方向",
+        "重塑幅度(微調/煥新/全面重塑)+ 新定位/視覺/語調方向",
+        "", "### 3. 變更管理溝通",
+        "對內外溝通計畫 + 過渡策略(避免疏離既有客群)",
+        "", "### 4. 執行路線圖",
+        "用 ```mermaid gantt 規劃重塑階段 + 風險控管。全程使用繁體中文。",
+      ],
+      en: (v) => [
+        "You are a rebranding advisor helping refresh while preserving equity.",
+        "", `Brand status: ${v.brand}`, `Rebranding goal: ${v.goal}`,
+        "", "### 1. Brand Aging Assessment — problems and equity inventory + necessity and degree of rebrand",
+        "### 2. Rebranding Direction — degree (tweak/refresh/full rebrand) + new positioning/visual/tone direction",
+        "### 3. Change Management Communication — internal/external communication plan + transition strategy (avoid alienating existing audience)",
+        "### 4. Execution Roadmap — ```mermaid gantt of rebranding phases + risk control. Respond in English.",
+      ],
+    }),
+  },
+  colourSchemeAdvisor: {
+    inputs: [
+      field("brand", ["品牌描述", "Brand Description"], { required: true, placeholder: ["品牌、個性、受眾、行業、現有色彩", "Brand, personality, audience, industry, existing colors"] }),
+      field("context", ["應用情境（選填）", "Application Context (optional)"], { type: "text", placeholder: ["數位/包裝/全通路", "Digital/packaging/omnichannel"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位品牌色彩方案設計師。",
+        "", `品牌：${v.brand}`,
+        v.context && `應用情境：${v.context}`,
+        "", "### 1. 色彩方案設計",
+        "主色/輔助色/中性色/功能色,各附 Hex 與使用場景,用表格呈現",
+        "", "### 2. 心理效果分析",
+        "各色彩的心理意義 + 與品牌個性的契合 + 與競品的區隔",
+        "", "### 3. 跨媒體應用",
+        "數位/印刷/包裝的色彩一致性 + 對比與無障礙(WCAG)+ 深淺模式",
+        "", "### 4. 使用規範",
+        "色彩比例(60-30-10)+ Do/Don't + 交付設計師的色票。全程使用繁體中文(色碼用英文)。",
+      ],
+      en: (v) => [
+        "You are a brand colour scheme designer.",
+        "", `Brand: ${v.brand}`,
+        v.context && `Application context: ${v.context}`,
+        "", "### 1. Colour Scheme — primary/secondary/neutral/functional, each with Hex and usage, table",
+        "### 2. Psychological Effect — meaning per colour + fit with personality + differentiation from competitors",
+        "### 3. Cross-Media Application — consistency across digital/print/packaging + contrast and accessibility (WCAG) + light-dark mode",
+        "### 4. Usage Rules — ratio (60-30-10) + Do/Don't + swatch list for designers. Respond in English.",
+      ],
+    }),
   },
 };

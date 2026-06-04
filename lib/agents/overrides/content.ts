@@ -1,4 +1,5 @@
 import type { AgentOverride } from "../types";
+import { bilingual, field } from "./helpers";
 
 /** content category agent overrides. See ./index.ts for how these merge. */
 export const CONTENT_OVERRIDES: Record<string, AgentOverride> = {
@@ -235,5 +236,63 @@ export const CONTENT_OVERRIDES: Record<string, AgentOverride> = {
       "### 3. Whitepaper Structure — full outline (executive summary/problem/analysis/solution/case/conclusion/CTA) + key points and length per section",
       "### 4. Argument Development + Marketing Strategy — sample argument development for core sections + distribution and conversion strategy (gated/promotion/repurposing). Respond in English.",
     ].filter(Boolean).join("\n"),
+  },
+  technicalWriting: {
+    inputs: [
+      field("subject", ["產品 / 系統描述", "Product / System Description"], { required: true, placeholder: ["要文件化的產品/API/系統、目標讀者", "Product/API/system to document, target reader"] }),
+      field("type", ["文件類型", "Document Type"], { type: "text", required: true, placeholder: ["例：API 文件、使用手冊、技術說明", "e.g. API docs, user manual, technical spec"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位技術文件撰寫師,產出清晰、結構化的技術文件。",
+        "", `產品/系統：${v.subject}`, `文件類型：${v.type}`,
+        "", "### 1. 文件架構",
+        "依文件類型設計章節結構 + 各章節目的 + 讀者導向",
+        "", "### 2. 內容大綱",
+        "完整大綱(概覽/快速開始/核心內容/範例/疑難排解/參考)+ 各段重點",
+        "", "### 3. 範例與程式碼",
+        "關鍵範例設計(可運作的程式碼片段/步驟說明)",
+        "", "### 4. 可用性",
+        "可讀性原則 + 圖表建議 + 維護與版本機制。全程使用繁體中文(程式術語用英文)。",
+      ],
+      en: (v) => [
+        "You are a technical documentation writer producing clear, structured docs.",
+        "", `Product/system: ${v.subject}`, `Document type: ${v.type}`,
+        "", "### 1. Document Architecture — section structure per doc type + purpose of each + reader orientation",
+        "### 2. Content Outline — full outline (overview/quick start/core content/examples/troubleshooting/reference) + key points",
+        "### 3. Examples & Code — key example design (working code snippets/step-by-step)",
+        "### 4. Usability — readability principles + diagram suggestions + maintenance and versioning. Respond in English.",
+      ],
+    }),
+  },
+  pressReleaseWriter: {
+    inputs: [
+      field("event", ["發布事件描述", "Launch Event Description"], { required: true, placeholder: ["要發布的事件、公司、亮點、引言對象", "Event to announce, company, highlights, quote source"] }),
+      field("audience", ["目標媒體 / 受眾（選填）", "Target Media / Audience (optional)"], { type: "text", placeholder: ["例：科技媒體、財經、一般大眾", "e.g. tech media, financial, general public"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位新聞稿撰寫師,產出專業且有媒體吸引力的新聞稿。",
+        "", `發布事件：${v.event}`,
+        v.audience && `目標媒體/受眾：${v.audience}`,
+        "", "### 1. 新聞稿架構",
+        "標題 / 副標 / 電頭 / 首段(Who/What/Why/When)/ 正文 / 引言 / 公司簡介,400-600字",
+        "", "### 2. 媒體訴求設計",
+        "新聞價值角度 + 標題的吸引力 + 為何記者會報導",
+        "", "### 3. SEO 優化版本",
+        "含關鍵字的標題與描述 + 適合線上發布的版本",
+        "", "### 4. 配套素材",
+        "媒體接觸建議 + 社群短版 + 預測媒體問題。全程使用繁體中文。",
+      ],
+      en: (v) => [
+        "You are a press release writer producing professional, media-worthy releases.",
+        "", `Launch event: ${v.event}`,
+        v.audience && `Target media/audience: ${v.audience}`,
+        "", "### 1. Press Release Structure — headline / subheadline / dateline / lead (Who/What/Why/When) / body / quote / boilerplate, 400-600 words",
+        "### 2. Media Angle — news value angle + headline appeal + why journalists would cover it",
+        "### 3. SEO-Optimized Version — keyword-rich title and description + online-publishing version",
+        "### 4. Companion Assets — media outreach suggestions + short social version + predicted media questions. Respond in English.",
+      ],
+    }),
   },
 };

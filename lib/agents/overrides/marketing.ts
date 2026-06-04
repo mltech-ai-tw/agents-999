@@ -1,4 +1,5 @@
 import type { AgentOverride } from "../types";
+import { bilingual, field } from "./helpers";
 
 /** marketing category agent overrides. See ./index.ts for how these merge. */
 export const MARKETING_OVERRIDES: Record<string, AgentOverride> = {
@@ -1440,5 +1441,153 @@ export const MARKETING_OVERRIDES: Record<string, AgentOverride> = {
       "### 3. Growth Plan — member acquisition and retention + health metrics + monetization considerations. ```chart bar chart of estimated growth contribution per channel.",
       "### 4. Execution Rhythm — community manager daily/weekly rhythm + tool recommendations + 90-day plan. Respond in English.",
     ].filter(Boolean).join("\n"),
+  },
+  appStoreOptimizer: {
+    inputs: [
+      field("app", ["應用程式資訊", "App Info"], { required: true, placeholder: ["App 名稱、類別、目標用戶、現有表現", "App name, category, target users, current performance"] }),
+      field("platform", ["平台（選填）", "Platform (optional)"], { type: "text", placeholder: ["App Store / Google Play", "App Store / Google Play"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位 ASO(App 商店優化)顧問,提升下載與轉換。",
+        "", `應用程式：${v.app}`,
+        v.platform && `平台：${v.platform}`,
+        "", "### 1. ASO 關鍵字策略",
+        "核心關鍵字 + 長尾 + 競爭度,用表格呈現 + 標題/副標/關鍵字欄位建議",
+        "", "### 2. 頁面優化",
+        "圖示/截圖/預覽影片/描述的優化方向 + 首屏轉換要點",
+        "", "### 3. 轉換率提升",
+        "評分與評論策略 / 本地化 / A/B 測試項目",
+        "輸出 ```chart 長條圖顯示各優化項目的預估轉換貢獻。",
+        "", "### 4. 成效追蹤",
+        "ASO 關鍵指標 + 監控節律。全程使用繁體中文。",
+      ],
+      en: (v) => [
+        "You are an ASO (App Store Optimization) advisor improving downloads and conversion.",
+        "", `App: ${v.app}`,
+        v.platform && `Platform: ${v.platform}`,
+        "", "### 1. ASO Keyword Strategy — core + long-tail + competition, table + title/subtitle/keyword field recommendations",
+        "### 2. Listing Optimization — icon/screenshots/preview video/description direction + above-the-fold conversion",
+        "### 3. Conversion Improvement — rating & review strategy / localization / A/B test items. ```chart bar chart of estimated conversion contribution.",
+        "### 4. Performance Tracking — ASO key metrics + monitoring cadence. Respond in English.",
+      ],
+    }),
+  },
+  productMarketingAdvisor: {
+    inputs: [
+      field("product", ["產品描述", "Product Description"], { required: true, placeholder: ["產品、核心價值、目標客群、差異化", "Product, core value, target audience, differentiation"] }),
+      field("goal", ["上市目標", "GTM Goal"], { type: "text", required: true, placeholder: ["例：新品上市、進入新市場、提升採用", "e.g. new launch, new market, boost adoption"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位產品行銷策略師,設計清晰定位與上市行銷漏斗。",
+        "", `產品：${v.product}`, `上市目標：${v.goal}`,
+        "", "### 1. 市場定位",
+        "目標客群 / 價值主張 / 差異化訊息 / 競爭定位",
+        "", "### 2. 訊息框架",
+        "核心訊息 → 支撐論點 → 證明點 + 各客群的訊息要點",
+        "", "### 3. 上市行銷漏斗",
+        "認知→考慮→轉換各階段的渠道與內容,用 ```mermaid flowchart 呈現漏斗",
+        "", "### 4. 執行計畫",
+        "上市行銷活動清單 + 成效指標 + 優先序。全程使用繁體中文。",
+      ],
+      en: (v) => [
+        "You are a product marketing strategist designing clear positioning and a GTM funnel.",
+        "", `Product: ${v.product}`, `GTM goal: ${v.goal}`,
+        "", "### 1. Market Positioning — target audience / value proposition / differentiation message / competitive positioning",
+        "### 2. Message Framework — core message → supporting points → proof points + message per segment",
+        "### 3. GTM Marketing Funnel — channels and content per stage (awareness→consideration→conversion), ```mermaid flowchart of the funnel",
+        "### 4. Execution Plan — GTM campaign list + metrics + priority. Respond in English.",
+      ],
+    }),
+  },
+  clvOptimizer: {
+    inputs: [
+      field("data", ["客戶資料", "Customer Data"], { required: true, placeholder: ["客單價、購買頻率、留存、流失、客群", "AOV, purchase frequency, retention, churn, segments"] }),
+      field("product", ["產品 / 業務", "Product / Business"], { type: "text", required: true, placeholder: ["產品類型、商業模式", "Product type, business model"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位顧客終身價值(CLV)優化顧問。",
+        "", `客戶資料：${v.data}`, `產品/業務：${v.product}`,
+        "", "### 1. CLV 診斷",
+        "估算 CLV(客單×頻率×壽命×毛利)+ 與 CAC 比較 + 各客群 CLV 差異",
+        "輸出 ```chart 長條圖顯示各客群 CLV。",
+        "", "### 2. 購買頻率提升",
+        "提升回購與頻率的策略(訂閱/會員/再行銷/交叉銷售)",
+        "", "### 3. 流失降低",
+        "流失點識別 + 留存機制 + 召回策略",
+        "", "### 4. CLV 提升路線圖",
+        "優先行動 + 預期 CLV 提升 + 衡量指標。全程使用繁體中文。",
+      ],
+      en: (v) => [
+        "You are a Customer Lifetime Value (CLV) optimization advisor.",
+        "", `Customer data: ${v.data}`, `Product/business: ${v.product}`,
+        "", "### 1. CLV Diagnostic — estimate CLV (AOV×frequency×lifespan×margin) + vs CAC + CLV differences across segments. ```chart bar chart of CLV by segment.",
+        "### 2. Purchase Frequency — strategies to boost repeat and frequency (subscription/membership/retargeting/cross-sell)",
+        "### 3. Churn Reduction — churn point identification + retention mechanisms + win-back",
+        "### 4. CLV Roadmap — priority actions + expected CLV uplift + metrics. Respond in English.",
+      ],
+    }),
+  },
+  conversionRateOptimizer: {
+    inputs: [
+      field("funnel", ["轉換漏斗 / 頁面", "Conversion Funnel / Page"], { required: true, placeholder: ["頁面或漏斗描述、現有轉換率、流量", "Page or funnel description, current conversion rate, traffic"] }),
+      field("goal", ["優化目標", "Optimization Goal"], { type: "text", required: true, placeholder: ["想提升哪個轉換", "Which conversion to improve"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位轉換率優化(CRO)專家。",
+        "", `轉換漏斗/頁面：${v.funnel}`, `優化目標：${v.goal}`,
+        "", "### 1. 轉換瓶頸診斷",
+        "找出最大掉出點 + 可能原因(訊息/信任/摩擦/動機)+ 與基準比較",
+        "輸出 ```chart 長條圖顯示各階段轉換率。",
+        "", "### 2. A/B 測試設計",
+        "TOP 3 優化假設的測試設計(變因/指標/樣本數)",
+        "", "### 3. 優化建議",
+        "文案/設計/CTA/信任元素/摩擦減少的具體改善",
+        "", "### 4. CRO 行動計畫",
+        "依影響力排序的優化清單 + 預期提升。全程使用繁體中文。",
+      ],
+      en: (v) => [
+        "You are a Conversion Rate Optimization (CRO) expert.",
+        "", `Funnel/page: ${v.funnel}`, `Optimization goal: ${v.goal}`,
+        "", "### 1. Conversion Bottleneck Diagnostic — biggest drop-off + likely causes (message/trust/friction/motivation) + vs benchmark. ```chart bar chart of conversion by stage.",
+        "### 2. A/B Test Design — test design for top 3 hypotheses (variable/metric/sample size)",
+        "### 3. Optimization Recommendations — copy/design/CTA/trust elements/friction reduction",
+        "### 4. CRO Action Plan — impact-ranked optimization list + expected lift. Respond in English.",
+      ],
+    }),
+  },
+  seoContentAudit: {
+    inputs: [
+      field("content", ["網站內容", "Website Content"], { required: true, placeholder: ["網站、主要頁面/文章、目標關鍵字", "Website, main pages/articles, target keywords"] }),
+      field("goal", ["稽核目標（選填）", "Audit Goal (optional)"], { type: "text", placeholder: ["例：提升排名、找內容缺口", "e.g. improve rankings, find content gaps"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位 SEO 內容稽核師。",
+        "", `網站內容：${v.content}`,
+        v.goal && `稽核目標：${v.goal}`,
+        "", "### 1. SEO 健康度評分",
+        "內容品質/關鍵字覆蓋/結構/內部連結/E-E-A-T 評分,用表格呈現",
+        "輸出 ```chart 長條圖顯示各維度評分。",
+        "", "### 2. 內容缺口分析",
+        "未涵蓋的關鍵字/主題機會 + 競爭者覆蓋但我方缺的內容",
+        "", "### 3. 既有內容優化",
+        "該更新/合併/刪除的內容判斷(content pruning)",
+        "", "### 4. 優化優先清單",
+        "依影響力排序的 TOP 10 行動。全程使用繁體中文。",
+      ],
+      en: (v) => [
+        "You are an SEO content auditor.",
+        "", `Website content: ${v.content}`,
+        v.goal && `Audit goal: ${v.goal}`,
+        "", "### 1. SEO Health Score — content quality/keyword coverage/structure/internal links/E-E-A-T scoring, table. ```chart bar chart of scores.",
+        "### 2. Content Gap Analysis — uncovered keyword/topic opportunities + content competitors cover that we lack",
+        "### 3. Existing Content Optimization — update/merge/prune judgments (content pruning)",
+        "### 4. Prioritized Checklist — top 10 actions ranked by impact. Respond in English.",
+      ],
+    }),
   },
 };

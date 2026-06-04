@@ -1,4 +1,5 @@
 import type { AgentOverride } from "../types";
+import { bilingual, field } from "./helpers";
 
 /** operations category agent overrides. See ./index.ts for how these merge. */
 export const OPERATIONS_OVERRIDES: Record<string, AgentOverride> = {
@@ -244,5 +245,36 @@ export const OPERATIONS_OVERRIDES: Record<string, AgentOverride> = {
       "### 3. Portfolio Balancing — recommended portfolio (go/hold/stop) + risk-reward balance + resource reallocation",
       "### 4. Governance — portfolio review cadence / stage gates / project health monitoring metrics. Respond in English.",
     ].filter(Boolean).join("\n"),
+  },
+  businessContinuity: {
+    inputs: [
+      field("business", ["業務描述", "Business Description"], { required: true, placeholder: ["公司、關鍵業務、營運依賴、現有應變", "Company, critical operations, dependencies, current preparedness"] }),
+      field("concern", ["主要風險（選填）", "Main Risks (optional)"], { type: "text", placeholder: ["例：天災、資安、供應中斷、關鍵人員", "e.g. disaster, cyber, supply disruption, key person"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位業務持續計畫(BCP)顧問。",
+        "", `業務：${v.business}`,
+        v.concern && `主要風險：${v.concern}`,
+        "", "### 1. 關鍵流程識別",
+        "盤點關鍵業務流程 + 營運依賴 + 業務衝擊分析(BIA)",
+        "輸出 ```chart 長條圖顯示各流程的中斷衝擊。",
+        "", "### 2. 中斷情境",
+        "主要中斷情境 + 可能性與影響 + 連鎖效應",
+        "", "### 3. 復原目標設計",
+        "各關鍵流程的 RTO(復原時間)與 RPO(資料復原點)+ 復原策略",
+        "", "### 4. 持續計畫",
+        "應變組織 + 復原步驟 + 演練機制 + 溝通計畫。全程使用繁體中文。",
+      ],
+      en: (v) => [
+        "You are a Business Continuity Planning (BCP) consultant.",
+        "", `Business: ${v.business}`,
+        v.concern && `Main risks: ${v.concern}`,
+        "", "### 1. Critical Process Identification — inventory critical processes + dependencies + Business Impact Analysis (BIA). ```chart bar chart of disruption impact per process.",
+        "### 2. Disruption Scenarios — main scenarios + likelihood and impact + cascading effects",
+        "### 3. Recovery Objectives — RTO (recovery time) and RPO (recovery point) per critical process + recovery strategy",
+        "### 4. Continuity Plan — response org + recovery steps + drill mechanism + communication plan. Respond in English.",
+      ],
+    }),
   },
 };
