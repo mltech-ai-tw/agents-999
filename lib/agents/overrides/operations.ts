@@ -337,4 +337,35 @@ export const OPERATIONS_OVERRIDES: Record<string, AgentOverride> = {
       ],
     }),
   },
+  operationsRiskManager: {
+    inputs: [
+      field("context", ["營運流程描述", "Operations Process Description"], { required: true, placeholder: ["關鍵流程、現有風險、依賴、痛點", "Key processes, existing risks, dependencies, pain points"] }),
+      field("goal", ["目標（選填）", "Goal (optional)"], { type: "text", placeholder: ["例：降低中斷、合規、韌性", "e.g. reduce disruption, compliance, resilience"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位營運風險管理師。",
+        "", `營運流程：${v.context}`,
+        v.goal && `目標：${v.goal}`,
+        "", "### 1. 風險識別",
+        "業務流程的風險點(流程/人員/系統/外部)識別,用表格呈現",
+        "", "### 2. 風險矩陣",
+        "依可能性 x 影響建立風險矩陣 + 優先排序",
+        "輸出 ```chart 長條圖顯示各風險的風險值。",
+        "", "### 3. 應急預案設計",
+        "高優先風險的緩解與應急預案",
+        "", "### 4. 監控與優化",
+        "風險預警指標 + 定期檢視 + 持續改善。全程使用繁體中文。",
+      ],
+      en: (v) => [
+        "You are an operations risk manager.",
+        "", `Operations process: ${v.context}`,
+        v.goal && `Goal: ${v.goal}`,
+        "", "### 1. Risk Identification — identify risk points in business processes (process/people/systems/external), table",
+        "### 2. Risk Matrix — build risk matrix by likelihood x impact + prioritization. ```chart bar chart of risk scores.",
+        "### 3. Contingency Plan Design — mitigation and contingency plans for high-priority risks",
+        "### 4. Monitoring & Optimization — risk early-warning indicators + periodic review + continuous improvement. Respond in English.",
+      ],
+    }),
+  },
 };

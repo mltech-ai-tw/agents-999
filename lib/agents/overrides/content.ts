@@ -415,4 +415,34 @@ export const CONTENT_OVERRIDES: Record<string, AgentOverride> = {
       ],
     }),
   },
+  contentLocalizationAdvisor: {
+    inputs: [
+      field("context", ["在地化需求描述", "Localization Need Description"], { required: true, placeholder: ["內容類型、目標語言/市場、現有內容、品牌調性", "Content type, target languages/markets, current content, brand tone"] }),
+      field("goal", ["目標（選填）", "Goal (optional)"], { type: "text", placeholder: ["例：進入新市場、文化適配、規模化", "e.g. enter new market, cultural fit, scale"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位內容在地化顧問。",
+        "", `在地化需求：${v.context}`,
+        v.goal && `目標：${v.goal}`,
+        "", "### 1. 多語言內容策略",
+        "在地化 vs 翻譯 vs 創譯的策略選擇,用表格呈現各市場做法",
+        "", "### 2. 文化適配分析",
+        "文化差異/禁忌/慣用語/視覺的適配重點",
+        "", "### 3. 執行流程",
+        "在地化流程(翻譯→在地→審校→測試),用 ```mermaid flowchart 呈現",
+        "", "### 4. 品質與規模",
+        "品質把關 + 詞彙庫/風格指南 + 規模化機制。全程使用繁體中文。",
+      ],
+      en: (v) => [
+        "You are a content localization advisor.",
+        "", `Localization need: ${v.context}`,
+        v.goal && `Goal: ${v.goal}`,
+        "", "### 1. Multilingual Content Strategy — strategy choice of localization vs translation vs transcreation, table of approach per market",
+        "### 2. Cultural Adaptation Analysis — adaptation focus on cultural differences/taboos/idioms/visuals",
+        "### 3. Execution Process — localization process (translate→localize→review→test), ```mermaid flowchart",
+        "### 4. Quality & Scale — quality control + glossary/style guide + scaling mechanism. Respond in English.",
+      ],
+    }),
+  },
 };
