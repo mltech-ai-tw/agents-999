@@ -385,4 +385,34 @@ export const CONTENT_OVERRIDES: Record<string, AgentOverride> = {
       ],
     }),
   },
+  scriptwriterAdvisor: {
+    inputs: [
+      field("brief", ["影片 / 腳本需求", "Video / Script Brief"], { required: true, placeholder: ["影片類型、長度、平台、目標、受眾、核心訊息", "Video type, length, platform, goal, audience, core message"] }),
+      field("tone", ["風格（選填）", "Tone (optional)"], { type: "text", placeholder: ["例：幽默、專業、感性、教學", "e.g. humorous, professional, emotional, educational"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位影片腳本編劇。",
+        "", `腳本需求：${v.brief}`,
+        v.tone && `風格：${v.tone}`,
+        "", "### 1. 結構設計",
+        "依平台/長度的腳本結構(鉤子→鋪陳→高潮→CTA)+ 節奏規劃",
+        "", "### 2. 完整腳本",
+        "可直接拍攝的腳本(分鏡/旁白/對白/畫面提示),用表格呈現(時間軸/畫面/旁白)",
+        "", "### 3. 開場鉤子",
+        "3 個前 3 秒抓住注意力的開場方案",
+        "", "### 4. 優化建議",
+        "提升完播與互動的技巧 + A/B 測試點。全程使用繁體中文。",
+      ],
+      en: (v) => [
+        "You are a video scriptwriter.",
+        "", `Script brief: ${v.brief}`,
+        v.tone && `Tone: ${v.tone}`,
+        "", "### 1. Structure Design — script structure by platform/length (hook→build→climax→CTA) + pacing",
+        "### 2. Full Script — shoot-ready script (shots/voiceover/dialogue/visual cues), table (timeline/visual/voiceover)",
+        "### 3. Opening Hook — 3 first-3-seconds attention-grabbing opening options",
+        "### 4. Optimization — techniques to boost completion and engagement + A/B test points. Respond in English.",
+      ],
+    }),
+  },
 };

@@ -307,4 +307,34 @@ export const OPERATIONS_OVERRIDES: Record<string, AgentOverride> = {
       ],
     }),
   },
+  changeControlAdvisor: {
+    inputs: [
+      field("context", ["變更情境描述", "Change Description"], { required: true, placeholder: ["變更類型、影響系統、風險、團隊、現有流程", "Change type, affected systems, risk, team, current process"] }),
+      field("goal", ["目標（選填）", "Goal (optional)"], { type: "text", placeholder: ["例：降低變更風險、加速、合規", "e.g. reduce change risk, accelerate, compliance"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位變更管理(Change Control)顧問。",
+        "", `變更情境：${v.context}`,
+        v.goal && `目標：${v.goal}`,
+        "", "### 1. 變更分類與流程",
+        "依風險分類(標準/一般/緊急)的審批流程,用 ```mermaid flowchart 呈現",
+        "", "### 2. 風險評估與審批",
+        "變更風險評估維度 + 審批層級 + CAB 機制",
+        "", "### 3. 執行與回滾",
+        "執行檢查清單 + 回滾計畫 + 變更窗口",
+        "", "### 4. 驗證與改善",
+        "變更後驗證 + 失敗分析 + 流程持續改善。全程使用繁體中文。",
+      ],
+      en: (v) => [
+        "You are a change control advisor.",
+        "", `Change: ${v.context}`,
+        v.goal && `Goal: ${v.goal}`,
+        "", "### 1. Change Classification & Process — approval process by risk classification (standard/normal/emergency), ```mermaid flowchart",
+        "### 2. Risk Assessment & Approval — change risk dimensions + approval levels + CAB mechanism",
+        "### 3. Execution & Rollback — execution checklist + rollback plan + change window",
+        "### 4. Validation & Improvement — post-change validation + failure analysis + continuous process improvement. Respond in English.",
+      ],
+    }),
+  },
 };
