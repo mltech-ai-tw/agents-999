@@ -12,15 +12,23 @@
 
 **English** · [繁體中文](./README.zh-TW.md)
 
+<a href="https://agents-999.vercel.app"><img src="./docs/screenshots/og-cover.png" alt="agents-999 — 999 free AI consultant agents you run with your own API key" width="680"></a>
+
 </div>
 
-A standalone, self-hostable Next.js web app that lets anyone run 999 AI
-consultant agents using their own LLM API keys. No account, no signup, no data
-sent anywhere except the LLM provider you choose. **API keys are stored in your
-browser's `localStorage` only** — they're sent to the server purely to proxy a
-single request and are never persisted.
+**agents-999** is a free, open-source, self-hostable **AI agents** web app — a
+**ChatGPT-style** library of **999 AI business consultants** (strategy,
+marketing, sales, finance, legal, product, dev and more) that you run with your
+**own LLM API key** (**BYOK — bring your own key**). No account, no signup, no
+subscription, and no data sent anywhere except the LLM provider you pick.
+**API keys live in your browser's `localStorage` only** — they're forwarded to
+the server purely to proxy a single request and are never stored.
 
-Supports: **OpenAI · Anthropic · Gemini · Ollama · Mistral · Groq · Azure OpenAI**
+Built with **Next.js 15 · React 19 · TypeScript · Tailwind CSS**. Supports
+**OpenAI (GPT) · Anthropic (Claude) · Google Gemini · Ollama (local) · Mistral ·
+Groq · Azure OpenAI**.
+
+👉 **[Try the live demo →](https://agents-999.vercel.app)** · no key needed to browse all 999 agents
 
 ---
 
@@ -88,6 +96,16 @@ Your API key travels: `localStorage → request header → /api/run (used, never
   per-provider "Test Connection", default provider/model, Clear All.
 
 Everything is bilingual (繁體中文 / English) via a header toggle.
+
+---
+
+## Screenshots
+
+| Home — searchable grid of all 999 agents | Settings — bring your own key |
+|:---:|:---:|
+| [![agents-999 home page — searchable, category-filtered grid of 999 AI consultant agents](./docs/screenshots/home.png)](https://agents-999.vercel.app) | [![agents-999 settings — add your own OpenAI, Anthropic, Gemini or Ollama API key, stored in the browser only](./docs/screenshots/settings.png)](https://agents-999.vercel.app/settings) |
+
+> ▶ **[Open the live demo →](https://agents-999.vercel.app)** — browse all 999 agents for free; add your own key to run any of them.
 
 ---
 
@@ -414,6 +432,14 @@ generated file** — add an entry to the matching `lib/agents/overrides/<categor
 
 No accounts/OAuth · no conversation history · no agent chaining · no
 file/image input · no in-UI agent creation · no analytics.
+
+---
+
+## Spread the word
+
+Like the project? A ⭐ helps others find it. Ready-to-paste launch/share copy for
+X, Hacker News, Reddit, Product Hunt and LinkedIn lives in
+[docs/PROMOTE.md](./docs/PROMOTE.md).
 
 ---
 

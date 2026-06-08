@@ -12,14 +12,22 @@
 
 [English](./README.md) · **繁體中文**
 
+<a href="https://agents-999.vercel.app"><img src="./docs/screenshots/og-cover.png" alt="agents-999 — 999 個用自己的 API 金鑰執行的免費 AI 顧問代理人" width="680"></a>
+
 </div>
 
-一個獨立、可自架的 Next.js 網頁應用，讓任何人都能用自己的 LLM API 金鑰執行 999 個
-AI 顧問代理人。免帳號、免註冊，除了你選擇的 LLM 供應商外，資料不會傳到任何地方。
-**API 金鑰只儲存在你瀏覽器的 `localStorage`** — 僅在代理單次請求時送到伺服器使用，
+**agents-999** 是一個免費、開源、可自架的 **AI 代理人(AI agents)** 網頁應用 —
+一個 **ChatGPT 風格** 的 **999 個 AI 商業顧問** 庫(策略、行銷、業務、財務、法務、
+產品、開發等),用你自己的 **LLM API 金鑰** 執行(**BYOK — 自帶金鑰**)。免帳號、
+免註冊、免訂閱,除了你選擇的 LLM 供應商外,資料不會傳到任何地方。
+**API 金鑰只儲存在你瀏覽器的 `localStorage`** — 僅在代理單次請求時送到伺服器使用,
 絕不留存。
 
-支援：**OpenAI · Anthropic · Gemini · Ollama · Mistral · Groq · Azure OpenAI**
+以 **Next.js 15 · React 19 · TypeScript · Tailwind CSS** 打造。支援
+**OpenAI(GPT)· Anthropic(Claude)· Google Gemini · Ollama(本地)· Mistral ·
+Groq · Azure OpenAI**。
+
+👉 **[開啟線上展示 →](https://agents-999.vercel.app)** · 免金鑰即可瀏覽全部 999 個代理人
 
 ---
 
@@ -62,6 +70,16 @@ npm start
   預設供應商／模型、清除全部。
 
 整個介面皆為雙語（繁體中文 / English），可由頁首切換。
+
+---
+
+## 介面預覽
+
+| 首頁 — 可搜尋的 999 代理人總覽 | 設定 — 自帶你的金鑰 |
+|:---:|:---:|
+| [![agents-999 首頁 — 可搜尋、可分類篩選的 999 個 AI 顧問代理人總覽](./docs/screenshots/home.png)](https://agents-999.vercel.app) | [![agents-999 設定 — 加入你自己的 OpenAI、Anthropic、Gemini 或 Ollama API 金鑰，只存在瀏覽器](./docs/screenshots/settings.png)](https://agents-999.vercel.app/settings) |
+
+> ▶ **[開啟線上展示 →](https://agents-999.vercel.app)** — 免費瀏覽全部 999 個代理人；加入金鑰即可執行任一個。
 
 ---
 
@@ -385,6 +403,14 @@ npm start
 
 無帳號／OAuth · 無對話歷史 · 無代理人串接 · 無檔案／圖片輸入 ·
 無 UI 內建代理人建立 · 無使用分析。
+
+---
+
+## 幫忙推廣
+
+喜歡這個專案嗎?給一顆 ⭐ 能幫助更多人看見它。可直接複製貼上的社群分享文案
+(X、Hacker News、Reddit、Product Hunt、LinkedIn,含中文版)收錄於
+[docs/PROMOTE.md](./docs/PROMOTE.md)。
 
 ---
 
