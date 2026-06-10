@@ -1735,4 +1735,34 @@ export const DEV_OVERRIDES: Record<string, AgentOverride> = {
       ],
     }),
   },
+  schemaBreakingChangeGuard: {
+    inputs: [
+      field("context", ["Schema 變更描述", "Schema Change Description"], { required: true, placeholder: ["變更內容、資料表、下游消費者、版本", "Change content, tables, downstream consumers, versions"] }),
+      field("goal", ["目標（選填）", "Goal (optional)"], { type: "text", placeholder: ["例：偵測破壞性、安全遷移、相容", "e.g. detect breaking changes, safe migration, compatibility"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位 Schema 破壞性變更守衛。",
+        "", `Schema 變更：${v.context}`,
+        v.goal && `目標：${v.goal}`,
+        "", "### 1. 破壞性影響分析",
+        "變更對下游(API/報表/ETL/服務)的破壞性影響識別,用表格呈現",
+        "", "### 2. 相依影響圖",
+        "Schema → 下游消費者的影響,用 ```mermaid flowchart 呈現",
+        "", "### 3. 安全遷移策略",
+        "向後相容的遷移(擴展優先/雙寫/漸進)+ 風險",
+        "", "### 4. 守衛機制",
+        "變更前檢查 + 契約測試 + 版本控管。全程使用繁體中文(技術詞用英文)。",
+      ],
+      en: (v) => [
+        "You are a schema breaking-change guard.",
+        "", `Schema change: ${v.context}`,
+        v.goal && `Goal: ${v.goal}`,
+        "", "### 1. Breaking Impact Analysis — identify breaking impacts on downstream (API/reports/ETL/services), table",
+        "### 2. Dependency Impact Graph — schema → downstream consumer impact, ```mermaid flowchart",
+        "### 3. Safe Migration Strategy — backward-compatible migration (expand-first/dual-write/gradual) + risks",
+        "### 4. Guard Mechanism — pre-change checks + contract tests + version control. Respond in English.",
+      ],
+    }),
+  },
 };

@@ -1561,4 +1561,35 @@ export const OPS_OVERRIDES: Record<string, AgentOverride> = {
       ],
     }),
   },
+  alertFatigueReducer: {
+    inputs: [
+      field("context", ["告警現況描述", "Alerting Status Description"], { required: true, placeholder: ["告警量、來源、現有規則、誤報率、痛點", "Alert volume, sources, current rules, false-positive rate, pain points"] }),
+      field("goal", ["目標（選填）", "Goal (optional)"], { type: "text", placeholder: ["例：降噪、合併冗餘、提升有效", "e.g. reduce noise, merge redundant, improve signal"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位告警疲勞降低顧問。",
+        "", `告警現況：${v.context}`,
+        v.goal && `目標：${v.goal}`,
+        "", "### 1. 告警有效性分析",
+        "依可行性/誤報率/重複/嚴重度分析告警規則,用表格呈現",
+        "輸出 ```chart 長條圖顯示各類告警量與誤報率。",
+        "", "### 2. 冗餘合併",
+        "可合併/去重/抑制的告警 + 關聯分組",
+        "", "### 3. 規則優化",
+        "閾值/分級/路由優化 + 可行動性原則",
+        "", "### 4. 持續治理",
+        "告警審查節律 + 噪音指標 + 改善。全程使用繁體中文(技術詞用英文)。",
+      ],
+      en: (v) => [
+        "You are an alert fatigue reducer advisor.",
+        "", `Alerting status: ${v.context}`,
+        v.goal && `Goal: ${v.goal}`,
+        "", "### 1. Alert Effectiveness Analysis — analyze alert rules by actionability/false-positive rate/duplication/severity, table. ```chart bar chart of volume and false-positive rate per alert type.",
+        "### 2. Redundancy Merging — alerts to merge/dedupe/suppress + correlation grouping",
+        "### 3. Rule Optimization — threshold/severity/routing optimization + actionability principle",
+        "### 4. Continuous Governance — alert review cadence + noise metrics + improvement. Respond in English.",
+      ],
+    }),
+  },
 };

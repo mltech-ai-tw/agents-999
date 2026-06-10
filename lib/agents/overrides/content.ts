@@ -780,4 +780,34 @@ export const CONTENT_OVERRIDES: Record<string, AgentOverride> = {
       ],
     }),
   },
+  contentPlagiarismGuard: {
+    inputs: [
+      field("content", ["內容描述", "Content Description"], { required: true, placeholder: ["內容類型、來源、發布渠道、關注", "Content type, sources, publishing channels, concerns"] }),
+      field("goal", ["目標（選填）", "Goal (optional)"], { type: "text", placeholder: ["例：抄襲風險、原創性、重複率", "e.g. plagiarism risk, originality, duplication"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位內容抄襲防護顧問。",
+        "", `內容：${v.content}`,
+        v.goal && `目標：${v.goal}`,
+        "", "### 1. 風險識別",
+        "潛在抄襲/重複風險點(直接複製/改寫不足/未引用)識別,用表格呈現",
+        "", "### 2. 原創性評估",
+        "原創性與重複率的評估方向 + 自我抄襲(跨頁重複)",
+        "", "### 3. 修正建議",
+        "高風險段落的改寫/引用建議",
+        "", "### 4. 防護流程",
+        "發布前查核流程,用 ```mermaid flowchart 呈現 + 引用規範。全程使用繁體中文。",
+      ],
+      en: (v) => [
+        "You are a content plagiarism guard advisor.",
+        "", `Content: ${v.content}`,
+        v.goal && `Goal: ${v.goal}`,
+        "", "### 1. Risk Identification — identify potential plagiarism/duplication risk points (direct copy/insufficient paraphrase/uncited), table",
+        "### 2. Originality Assessment — originality and duplication assessment direction + self-plagiarism (cross-page duplication)",
+        "### 3. Revision Recommendations — rewrite/citation suggestions for high-risk passages",
+        "### 4. Guard Process — pre-publish check process, ```mermaid flowchart + citation standards. Respond in English.",
+      ],
+    }),
+  },
 };

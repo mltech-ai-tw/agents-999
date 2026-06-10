@@ -644,4 +644,35 @@ export const OPERATIONS_OVERRIDES: Record<string, AgentOverride> = {
       ],
     }),
   },
+  resourceUtilizationBalancer: {
+    inputs: [
+      field("context", ["資源 / 團隊描述", "Resources / Teams Description"], { required: true, placeholder: ["團隊、資源(人力/設備/產能)、負載、痛點", "Teams, resources (people/equipment/capacity), load, pain points"] }),
+      field("goal", ["目標（選填）", "Goal (optional)"], { type: "text", placeholder: ["例：均衡利用、提升效率、消除閒置", "e.g. balance utilization, improve efficiency, eliminate idle"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位資源使用率均衡器。",
+        "", `資源/團隊：${v.context}`,
+        v.goal && `目標：${v.goal}`,
+        "", "### 1. 使用率診斷",
+        "各團隊/資源的使用率(過載/閒置/瓶頸)診斷,用表格呈現",
+        "輸出 ```chart 長條圖顯示各團隊資源使用率。",
+        "", "### 2. 失衡識別",
+        "過載與閒置的失衡點 + 根因",
+        "", "### 3. 均衡配置",
+        "跨團隊資源再分配建議 + 彈性調度",
+        "", "### 4. 效率提升",
+        "整體利用率提升行動 + 監控指標。全程使用繁體中文。",
+      ],
+      en: (v) => [
+        "You are a resource utilization balancer.",
+        "", `Resources/teams: ${v.context}`,
+        v.goal && `Goal: ${v.goal}`,
+        "", "### 1. Utilization Diagnostic — utilization per team/resource (overload/idle/bottleneck), table. ```chart bar chart of resource utilization per team.",
+        "### 2. Imbalance Identification — overload vs idle imbalance points + root cause",
+        "### 3. Balanced Allocation — cross-team resource reallocation recommendations + flexible scheduling",
+        "### 4. Efficiency Improvement — overall utilization improvement actions + monitoring metrics. Respond in English.",
+      ],
+    }),
+  },
 };
