@@ -810,4 +810,57 @@ export const CONTENT_OVERRIDES: Record<string, AgentOverride> = {
       ],
     }),
   },
+  thoughtLeadershipPlanner: {
+    inputs: [
+      field("context", ["高管 / 主題描述", "Executive / Topic Description"], { required: true, placeholder: ["高管角色、專業領域、受眾、平台、目標", "Executive role, expertise area, audience, platforms, goals"] }),
+      field("goal", ["目標（選填）", "Goal (optional)"], { type: "text", placeholder: ["例：產業影響力、個人品牌、商機", "e.g. industry influence, personal brand, pipeline"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位思想領導規劃顧問。",
+        "", `高管/主題：${v.context}`,
+        v.goal && `目標：${v.goal}`,
+        "", "### 1. 觀點定位", "獨特的思想領導觀點與支柱主題,用表格呈現",
+        "", "### 2. 內容日曆", "高管內容日曆(主題/格式/平台/節律),用 ```mermaid gantt 呈現",
+        "", "### 3. 內容形式", "各平台的內容形式與切角",
+        "", "### 4. 影響力建立", "互動/擴散/影響力指標。全程使用繁體中文。",
+      ],
+      en: (v) => [
+        "You are a thought leadership planner.",
+        "", `Executive/topic: ${v.context}`,
+        v.goal && `Goal: ${v.goal}`,
+        "", "### 1. POV Positioning — unique thought leadership POV and pillar themes, table",
+        "### 2. Content Calendar — executive content calendar (topic/format/platform/cadence), ```mermaid gantt",
+        "### 3. Content Formats — content formats and angles per platform",
+        "### 4. Influence Building — engagement/reach/influence metrics. Respond in English.",
+      ],
+    }),
+  },
+  caseStudyAutoBuilder: {
+    inputs: [
+      field("context", ["客戶成功描述", "Customer Success Description"], { required: true, placeholder: ["客戶、問題、方案、成果數據、引言", "Customer, problem, solution, results data, quotes"] }),
+      field("goal", ["目標（選填）", "Goal (optional)"], { type: "text", placeholder: ["例：高轉換案例、銷售素材", "e.g. high-converting case study, sales collateral"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位客戶案例自動化建構師。",
+        "", `客戶成功：${v.context}`,
+        v.goal && `目標：${v.goal}`,
+        "", "### 1. 案例結構", "高轉換案例結構(挑戰→方案→成果→引言)+ 各段重點",
+        "", "### 2. 成果呈現", "量化成果的有力呈現,用表格呈現(指標/前/後)",
+        "輸出 ```chart 長條圖顯示關鍵成果前後對比。",
+        "", "### 3. 完整草稿", "可直接用的案例草稿",
+        "", "### 4. 多格式", "官網/銷售/社群版本。全程使用繁體中文。",
+      ],
+      en: (v) => [
+        "You are a case study auto-builder.",
+        "", `Customer success: ${v.context}`,
+        v.goal && `Goal: ${v.goal}`,
+        "", "### 1. Case Structure — high-converting structure (challenge→solution→results→quote) + focus per section",
+        "### 2. Results Presentation — compelling presentation of quantified results, table (metric/before/after). ```chart bar chart of key results before vs after.",
+        "### 3. Full Draft — ready-to-use case study draft",
+        "### 4. Multi-Format — website/sales/social versions. Respond in English.",
+      ],
+    }),
+  },
 };
