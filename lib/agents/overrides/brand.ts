@@ -2666,4 +2666,110 @@ export const BRAND_OVERRIDES: Record<string, AgentOverride> = {
       ],
     }),
   },
+  voiceConsistencyChecker: {
+    inputs: [
+      field("brand", ["跨渠道內容描述", "Cross-Channel Content Description"], { required: true, placeholder: ["品牌、渠道、內容樣本、語調規範", "Brand, channels, content samples, voice guidelines"] }),
+      field("goal", ["目標（選填）", "Goal (optional)"], { type: "text", placeholder: ["例：語音一致、修正、品質", "e.g. voice consistency, correction, quality"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位品牌語音一致性檢查顧問。",
+        "", `跨渠道內容：${v.brand}`,
+        v.goal && `目標：${v.goal}`,
+        "", "### 1. 一致性分析", "各渠道語音一致性評估,用表格呈現",
+        "輸出 ```chart 長條圖顯示各渠道語音一致性評分。",
+        "", "### 2. 偏離識別", "偏離品牌語音之處",
+        "", "### 3. 修正建議", "改寫範例(前/後對照)",
+        "", "### 4. 維持", "風格指南 + 檢核。全程使用繁體中文。",
+      ],
+      en: (v) => [
+        "You are a voice consistency checker.",
+        "", `Cross-channel content: ${v.brand}`,
+        v.goal && `Goal: ${v.goal}`,
+        "", "### 1. Consistency Analysis — voice consistency assessment per channel, table. ```chart bar chart of voice consistency score per channel.",
+        "### 2. Deviation Identification — deviations from brand voice",
+        "### 3. Correction Recommendations — rewrite examples (before/after)",
+        "### 4. Maintenance — style guide + review. Respond in English.",
+      ],
+    }),
+  },
+  brandStoryCrafter2: {
+    inputs: [
+      field("brand", ["品牌描述", "Brand Description"], { required: true, placeholder: ["品牌、使命、價值、受眾、起源", "Brand, mission, values, audience, origin"] }),
+      field("goal", ["目標（選填）", "Goal (optional)"], { type: "text", placeholder: ["例：核心故事、情感共鳴、敘事", "e.g. core story, emotional resonance, narrative"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位品牌故事創作師。",
+        "", `品牌：${v.brand}`,
+        v.goal && `目標：${v.goal}`,
+        "", "### 1. 核心故事", "具情感共鳴的品牌核心故事(英雄/嚮導/問題/方案/成功)",
+        "", "### 2. 敘事框架", "故事的主題支柱與證據,用表格呈現",
+        "", "### 3. 情感共鳴", "對受眾的情感連結點",
+        "", "### 4. 應用", "各觸點的故事運用。全程使用繁體中文。",
+      ],
+      en: (v) => [
+        "You are a brand story crafter.",
+        "", `Brand: ${v.brand}`,
+        v.goal && `Goal: ${v.goal}`,
+        "", "### 1. Core Story — emotionally resonant brand core story (hero/guide/problem/solution/success)",
+        "### 2. Narrative Framework — thematic pillars and evidence of the story, table",
+        "### 3. Emotional Resonance — emotional connection points for the audience",
+        "### 4. Application — story use across touchpoints. Respond in English.",
+      ],
+    }),
+  },
+  brandToneCalibrator2: {
+    inputs: [
+      field("brand", ["品牌語調描述", "Brand Tone Description"], { required: true, placeholder: ["品牌、個性、渠道、現有語調", "Brand, personality, channels, current tone"] }),
+      field("goal", ["目標（選填）", "Goal (optional)"], { type: "text", placeholder: ["例：跨媒體一致、校準、規範", "e.g. cross-media consistency, calibrate, standards"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位品牌語調校準器。",
+        "", `品牌語調：${v.brand}`,
+        v.goal && `目標：${v.goal}`,
+        "", "### 1. 語調定位", "品牌語調維度定位,用表格呈現",
+        "", "### 2. 跨媒體校準", "各媒體的語調調整與一致",
+        "", "### 3. Do/Don't", "用語範例與情境對照",
+        "", "### 4. 治理", "語調規範 + 檢核。全程使用繁體中文。",
+      ],
+      en: (v) => [
+        "You are a brand tone calibrator.",
+        "", `Brand tone: ${v.brand}`,
+        v.goal && `Goal: ${v.goal}`,
+        "", "### 1. Tone Positioning — brand tone dimension positioning, table",
+        "### 2. Cross-Media Calibration — tone adjustment and consistency per medium",
+        "### 3. Do/Don't — wording examples and contextual comparison",
+        "### 4. Governance — tone standards + review. Respond in English.",
+      ],
+    }),
+  },
+  brandGapIdentifier: {
+    inputs: [
+      field("brand", ["品牌描述", "Brand Description"], { required: true, placeholder: ["品牌現狀、目標定位、受眾認知、競品", "Current brand state, target positioning, audience perception, competitors"] }),
+      field("goal", ["目標（選填）", "Goal (optional)"], { type: "text", placeholder: ["例：找差距、改進、對齊", "e.g. find gaps, improve, align"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位品牌差距識別器。",
+        "", `品牌：${v.brand}`,
+        v.goal && `目標：${v.goal}`,
+        "", "### 1. 差距分析", "品牌現狀 vs 目標定位的差距(認知/視覺/訊息/體驗),用表格呈現",
+        "輸出 ```chart 長條圖顯示各面向的差距。",
+        "", "### 2. 根因", "差距的根因",
+        "", "### 3. 改進機會", "縮小差距的改進機會",
+        "", "### 4. 行動", "依影響排序的行動 + 路線圖。全程使用繁體中文。",
+      ],
+      en: (v) => [
+        "You are a brand gap identifier.",
+        "", `Brand: ${v.brand}`,
+        v.goal && `Goal: ${v.goal}`,
+        "", "### 1. Gap Analysis — gaps between current brand state and target positioning (perception/visual/message/experience), table. ```chart bar chart of gap per aspect.",
+        "### 2. Root Cause — root causes of gaps",
+        "### 3. Improvement Opportunities — improvement opportunities to close gaps",
+        "### 4. Action — actions ranked by impact + roadmap. Respond in English.",
+      ],
+    }),
+  },
 };

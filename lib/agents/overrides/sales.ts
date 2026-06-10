@@ -2848,4 +2848,163 @@ export const SALES_OVERRIDES: Record<string, AgentOverride> = {
       ],
     }),
   },
+  salesVelocityBooster: {
+    inputs: [
+      field("context", ["銷售漏斗描述", "Sales Funnel Description"], { required: true, placeholder: ["漏斗、各階段轉換、週期、客單、商機數", "Funnel, stage conversion, cycle, deal size, deal count"] }),
+      field("goal", ["目標（選填）", "Goal (optional)"], { type: "text", placeholder: ["例：提升速度、轉換、縮週期", "e.g. boost velocity, conversion, shorten cycle"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位銷售速度加速器。",
+        "", `銷售漏斗：${v.context}`,
+        v.goal && `目標：${v.goal}`,
+        "", "### 1. 速度公式診斷", "銷售速度(商機數 x 客單 x 勝率 / 週期)診斷,用表格呈現",
+        "輸出 ```chart 長條圖顯示各槓桿對速度的影響。",
+        "", "### 2. 階段轉換優化", "各漏斗階段的轉換優化,用 ```mermaid flowchart 呈現漏斗",
+        "", "### 3. 槓桿排序", "最高槓桿的加速行動",
+        "", "### 4. 衡量", "速度指標 + 迭代。全程使用繁體中文。",
+      ],
+      en: (v) => [
+        "You are a sales velocity booster.",
+        "", `Sales funnel: ${v.context}`,
+        v.goal && `Goal: ${v.goal}`,
+        "", "### 1. Velocity Formula Diagnostic — sales velocity (deals x deal size x win rate / cycle) diagnostic, table. ```chart bar chart of each lever's impact on velocity.",
+        "### 2. Stage Conversion Optimization — conversion optimization per funnel stage, ```mermaid flowchart of funnel",
+        "### 3. Lever Ranking — highest-leverage acceleration actions",
+        "### 4. Measurement — velocity metrics + iteration. Respond in English.",
+      ],
+    }),
+  },
+  winLossAnalyzer2: {
+    inputs: [
+      field("context", ["贏輸案例描述", "Win/Loss Description"], { required: true, placeholder: ["贏單與失單、原因、競品、客群", "Wins and losses, reasons, competitors, segments"] }),
+      field("goal", ["目標（選填）", "Goal (optional)"], { type: "text", placeholder: ["例：找決定因子、改善", "e.g. find determining factors, improve"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位贏輸案例分析師。",
+        "", `贏輸案例：${v.context}`,
+        v.goal && `目標：${v.goal}`,
+        "", "### 1. 決定因子", "成交決定因子分析,用表格呈現",
+        "輸出 ```chart 長條圖顯示各因子對勝率的影響。",
+        "", "### 2. 模式", "贏單/失單模式",
+        "", "### 3. 改善", "可改善的環節",
+        "", "### 4. 機制", "覆盤 + 知識沉澱。全程使用繁體中文。",
+      ],
+      en: (v) => [
+        "You are a win/loss analyzer.",
+        "", `Win/loss: ${v.context}`,
+        v.goal && `Goal: ${v.goal}`,
+        "", "### 1. Determining Factors — deal-determining factor analysis, table. ```chart bar chart of each factor's impact on win rate.",
+        "### 2. Patterns — win/loss patterns",
+        "### 3. Improvement — improvable areas",
+        "### 4. Mechanism — debrief + knowledge capture. Respond in English.",
+      ],
+    }),
+  },
+  pricingPsychologyAI: {
+    inputs: [
+      field("context", ["定價描述", "Pricing Description"], { required: true, placeholder: ["產品、定價、客群、競品、目標", "Product, pricing, audience, competitors, goals"] }),
+      field("goal", ["目標（選填）", "Goal (optional)"], { type: "text", placeholder: ["例：高轉化定價、心理錨點", "e.g. high-conversion pricing, psychological anchors"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位定價心理學 AI 顧問。",
+        "", `定價：${v.context}`,
+        v.goal && `目標：${v.goal}`,
+        "", "### 1. 心理學原則", "適用的定價心理學(錨定/對比/誘餌/損失趨避),用表格呈現",
+        "", "### 2. 定價方案", "高轉化定價方案設計(分級/呈現)",
+        "", "### 3. 呈現技巧", "價格呈現與框架技巧",
+        "", "### 4. 測試", "A/B 測試點 + 衡量。全程使用繁體中文。",
+      ],
+      en: (v) => [
+        "You are a pricing psychology AI.",
+        "", `Pricing: ${v.context}`,
+        v.goal && `Goal: ${v.goal}`,
+        "", "### 1. Psychology Principles — applicable pricing psychology (anchoring/contrast/decoy/loss aversion), table",
+        "### 2. Pricing Plan — high-conversion pricing design (tiering/presentation)",
+        "### 3. Presentation Techniques — price presentation and framing techniques",
+        "### 4. Testing — A/B test points + measurement. Respond in English.",
+      ],
+    }),
+  },
+  proposalStrengthScorer: {
+    inputs: [
+      field("context", ["提案描述", "Proposal Description"], { required: true, placeholder: ["提案內容、客戶、競爭、價值主張", "Proposal content, client, competition, value proposition"] }),
+      field("goal", ["目標（選填）", "Goal (optional)"], { type: "text", placeholder: ["例：評分說服力、強化、成交", "e.g. score persuasiveness, strengthen, close"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位提案強度評分器。",
+        "", `提案：${v.context}`,
+        v.goal && `目標：${v.goal}`,
+        "", "### 1. 說服力評分", "提案說服力多維評分(價值/差異/證據/CTA),用表格呈現",
+        "輸出 ```chart 長條圖顯示各維度評分。",
+        "", "### 2. 弱項診斷", "最弱環節與風險",
+        "", "### 3. 強化建議", "關鍵強化改善方向",
+        "", "### 4. 成交", "提升成交率的調整。全程使用繁體中文。",
+      ],
+      en: (v) => [
+        "You are a proposal strength scorer.",
+        "", `Proposal: ${v.context}`,
+        v.goal && `Goal: ${v.goal}`,
+        "", "### 1. Persuasiveness Scoring — multi-dimensional proposal score (value/differentiation/evidence/CTA), table. ```chart bar chart of score per dimension.",
+        "### 2. Weakness Diagnostic — weakest areas and risks",
+        "### 3. Strengthening Recommendations — key areas for improvement",
+        "### 4. Close — adjustments to improve close rate. Respond in English.",
+      ],
+    }),
+  },
+  dealClosingCoach: {
+    inputs: [
+      field("context", ["成交情境描述", "Deal Closing Description"], { required: true, placeholder: ["商機、卡關、客戶、競爭、階段", "Deal, blockers, client, competition, stage"] }),
+      field("goal", ["目標（選填）", "Goal (optional)"], { type: "text", placeholder: ["例：克服障礙、關單、推進", "e.g. overcome obstacles, close, advance"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位成交輔導教練。",
+        "", `成交情境：${v.context}`,
+        v.goal && `目標：${v.goal}`,
+        "", "### 1. 成交障礙", "成交障礙識別(決策/預算/信任/競爭),用表格呈現",
+        "", "### 2. 關單策略", "個性化關單策略與話術(可直接用)",
+        "", "### 3. 推進行動", "克服障礙的推進行動",
+        "", "### 4. 風險", "成交風險 + 備案。全程使用繁體中文。",
+      ],
+      en: (v) => [
+        "You are a deal closing coach.",
+        "", `Deal closing: ${v.context}`,
+        v.goal && `Goal: ${v.goal}`,
+        "", "### 1. Closing Obstacles — identify closing obstacles (decision/budget/trust/competition), table",
+        "### 2. Closing Strategy — personalized closing strategy and scripts (ready to use)",
+        "### 3. Advancement Actions — actions to overcome obstacles",
+        "### 4. Risk — closing risk + backup plan. Respond in English.",
+      ],
+    }),
+  },
+  salesEnablementBuilder: {
+    inputs: [
+      field("context", ["銷售賦能描述", "Sales Enablement Description"], { required: true, placeholder: ["團隊、產品、銷售流程、現有素材、痛點", "Team, product, sales process, current collateral, pain points"] }),
+      field("goal", ["目標（選填）", "Goal (optional)"], { type: "text", placeholder: ["例：賦能資源庫、提升成交、上手", "e.g. enablement library, improve close, ramp"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位銷售賦能資源建構師。",
+        "", `銷售賦能：${v.context}`,
+        v.goal && `目標：${v.goal}`,
+        "", "### 1. 資源庫架構", "結構化賦能資源庫(各階段所需素材),用表格呈現",
+        "", "### 2. 關鍵素材", "高影響素材(話術/案例/對戰卡/FAQ)",
+        "", "### 3. 上手路徑", "新人銷售上手路徑,用 ```mermaid flowchart 呈現",
+        "", "### 4. 衡量", "賦能成效 + 使用率。全程使用繁體中文。",
+      ],
+      en: (v) => [
+        "You are a sales enablement builder.",
+        "", `Sales enablement: ${v.context}`,
+        v.goal && `Goal: ${v.goal}`,
+        "", "### 1. Library Structure — structured enablement library (collateral needed per stage), table",
+        "### 2. Key Collateral — high-impact collateral (scripts/cases/battlecards/FAQ)",
+        "### 3. Ramp Path — new-rep ramp path, ```mermaid flowchart",
+        "### 4. Measurement — enablement effectiveness + usage rate. Respond in English.",
+      ],
+    }),
+  },
 };

@@ -2628,4 +2628,138 @@ export const PRODUCT_OVERRIDES: Record<string, AgentOverride> = {
       ],
     }),
   },
+  featureGapAnalyzer: {
+    inputs: [
+      field("context", ["產品功能描述", "Product Feature Description"], { required: true, placeholder: ["產品、現有功能、競品、用戶需求", "Product, current features, competitors, user needs"] }),
+      field("goal", ["目標（選填）", "Goal (optional)"], { type: "text", placeholder: ["例：找缺口、補強、優先", "e.g. find gaps, improve, prioritize"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位功能缺口分析器。",
+        "", `產品功能：${v.context}`,
+        v.goal && `目標：${v.goal}`,
+        "", "### 1. 缺口分析", "功能缺口(vs 競品/vs 需求)分析,用表格呈現",
+        "輸出 ```chart 長條圖顯示各功能面向的缺口。",
+        "", "### 2. 高優先機會", "高優先補強機會識別",
+        "", "### 3. 影響評估", "各缺口的影響與成本",
+        "", "### 4. 行動", "補強優先序 + 路線圖。全程使用繁體中文。",
+      ],
+      en: (v) => [
+        "You are a feature gap analyzer.",
+        "", `Product features: ${v.context}`,
+        v.goal && `Goal: ${v.goal}`,
+        "", "### 1. Gap Analysis — feature gaps (vs competitors / vs needs), table. ```chart bar chart of gap per feature area.",
+        "### 2. High-Priority Opportunities — high-priority improvement opportunities",
+        "### 3. Impact Assessment — impact and cost per gap",
+        "### 4. Action — improvement priority + roadmap. Respond in English.",
+      ],
+    }),
+  },
+  userJourneyMapper: {
+    inputs: [
+      field("context", ["用戶旅程描述", "User Journey Description"], { required: true, placeholder: ["產品、用戶、旅程階段、痛點", "Product, users, journey stages, pain points"] }),
+      field("goal", ["目標（選填）", "Goal (optional)"], { type: "text", placeholder: ["例：旅程地圖、摩擦、機會", "e.g. journey map, friction, opportunities"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位用戶旅程映射器。",
+        "", `用戶旅程：${v.context}`,
+        v.goal && `目標：${v.goal}`,
+        "", "### 1. 端到端旅程", "端到端用戶旅程,用 ```mermaid flowchart 呈現",
+        "", "### 2. 摩擦與機會", "各階段的摩擦與機會點,用表格呈現",
+        "輸出 ```chart 長條圖顯示各階段體驗評分。",
+        "", "### 3. 優化建議", "針對摩擦的優化",
+        "", "### 4. 衡量", "旅程指標 + 測試。全程使用繁體中文。",
+      ],
+      en: (v) => [
+        "You are a user journey mapper.",
+        "", `User journey: ${v.context}`,
+        v.goal && `Goal: ${v.goal}`,
+        "", "### 1. End-to-End Journey — end-to-end user journey, ```mermaid flowchart",
+        "### 2. Friction & Opportunities — friction and opportunity points per stage, table. ```chart bar chart of experience score per stage.",
+        "### 3. Optimization Recommendations — optimization for friction",
+        "### 4. Measurement — journey metrics + testing. Respond in English.",
+      ],
+    }),
+  },
+  sprintVelocityOptimizer: {
+    inputs: [
+      field("context", ["衝刺 / 團隊描述", "Sprint / Team Description"], { required: true, placeholder: ["團隊、速度數據、衝刺、阻礙", "Team, velocity data, sprints, blockers"] }),
+      field("goal", ["目標（選填）", "Goal (optional)"], { type: "text", placeholder: ["例：提升速度、可預測、改善", "e.g. boost velocity, predictability, improvement"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位衝刺速度優化器。",
+        "", `衝刺/團隊：${v.context}`,
+        v.goal && `目標：${v.goal}`,
+        "", "### 1. 速度診斷", "速度指標與波動診斷,用表格呈現",
+        "輸出 ```chart 折線圖顯示各衝刺速度趨勢。",
+        "", "### 2. 阻礙識別", "影響速度的阻礙(範疇/相依/中斷)",
+        "", "### 3. 改善計畫", "提升速度與可預測的行動",
+        "", "### 4. 衡量", "速度 + 健康指標。全程使用繁體中文。",
+      ],
+      en: (v) => [
+        "You are a sprint velocity optimizer.",
+        "", `Sprint/team: ${v.context}`,
+        v.goal && `Goal: ${v.goal}`,
+        "", "### 1. Velocity Diagnostic — velocity metrics and variability diagnostic, table. ```chart line chart of velocity trend per sprint.",
+        "### 2. Blocker Identification — blockers affecting velocity (scope/dependency/interruption)",
+        "### 3. Improvement Plan — actions to boost velocity and predictability",
+        "### 4. Measurement — velocity + health metrics. Respond in English.",
+      ],
+    }),
+  },
+  productFeedbackTriager: {
+    inputs: [
+      field("context", ["用戶回饋描述", "User Feedback Description"], { required: true, placeholder: ["回饋來源、量、類型、產品", "Feedback sources, volume, types, product"] }),
+      field("goal", ["目標（選填）", "Goal (optional)"], { type: "text", placeholder: ["例：分類、優先、推送開發", "e.g. classify, prioritize, route to dev"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位產品回饋分類助手。",
+        "", `用戶回饋：${v.context}`,
+        v.goal && `目標：${v.goal}`,
+        "", "### 1. 自動分類", "回饋分類(bug/功能/體驗/其他),用表格呈現",
+        "", "### 2. 優先級", "依影響/頻次的優先排序",
+        "輸出 ```chart 長條圖顯示各類別回饋量。",
+        "", "### 3. 推送路由", "推送至對應團隊的路由,用 ```mermaid flowchart 呈現",
+        "", "### 4. 閉環", "回饋追蹤至閉環。全程使用繁體中文。",
+      ],
+      en: (v) => [
+        "You are a product feedback triager.",
+        "", `User feedback: ${v.context}`,
+        v.goal && `Goal: ${v.goal}`,
+        "", "### 1. Auto Classification — feedback classification (bug/feature/experience/other), table",
+        "### 2. Prioritization — priority by impact/frequency. ```chart bar chart of feedback volume per category.",
+        "### 3. Routing — routing to the right team, ```mermaid flowchart",
+        "### 4. Closed Loop — feedback tracking to closure. Respond in English.",
+      ],
+    }),
+  },
+  productExperimentDesigner: {
+    inputs: [
+      field("context", ["實驗 / 假設描述", "Experiment / Hypothesis Description"], { required: true, placeholder: ["產品、假設、目標指標、用戶量", "Product, hypothesis, target metric, user volume"] }),
+      field("goal", ["目標（選填）", "Goal (optional)"], { type: "text", placeholder: ["例：A/B 實驗、驗證、嚴謹", "e.g. A/B experiment, validation, rigor"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位產品實驗設計師。",
+        "", `實驗/假設：${v.context}`,
+        v.goal && `目標：${v.goal}`,
+        "", "### 1. 假設與指標", "實驗假設(若 X 則 Y)+ 主次要指標,用表格呈現",
+        "", "### 2. 實驗設計", "A/B 設計(分組/樣本/時長/統計檢定力)",
+        "", "### 3. 防偏誤", "避免常見偏誤與污染",
+        "", "### 4. 決策", "成功標準 + 後續決策。全程使用繁體中文。",
+      ],
+      en: (v) => [
+        "You are a product experiment designer.",
+        "", `Experiment/hypothesis: ${v.context}`,
+        v.goal && `Goal: ${v.goal}`,
+        "", "### 1. Hypothesis & Metrics — experiment hypothesis (if X then Y) + primary/secondary metrics, table",
+        "### 2. Experiment Design — A/B design (groups/sample/duration/statistical power)",
+        "### 3. Bias Prevention — avoid common biases and contamination",
+        "### 4. Decision — success criteria + next-step decision. Respond in English.",
+      ],
+    }),
+  },
 };

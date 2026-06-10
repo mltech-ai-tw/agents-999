@@ -4277,4 +4277,163 @@ export const STRATEGY_OVERRIDES: Record<string, AgentOverride> = {
       ],
     }),
   },
+  growthLoopArchitect: {
+    inputs: [
+      field("context", ["業務 / 增長描述", "Business / Growth Description"], { required: true, placeholder: ["產品、用戶、現有增長機制、目標", "Product, users, current growth mechanism, goals"] }),
+      field("goal", ["目標（選填）", "Goal (optional)"], { type: "text", placeholder: ["例：自我強化飛輪、複利增長", "e.g. self-reinforcing flywheel, compounding growth"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位增長飛輪架構師。",
+        "", `業務/增長：${v.context}`,
+        v.goal && `目標：${v.goal}`,
+        "", "### 1. 飛輪設計", "自我強化的增長飛輪,用 ```mermaid flowchart 呈現迴圈",
+        "", "### 2. 槓桿節點", "飛輪的關鍵槓桿與加速點,用表格呈現",
+        "", "### 3. 驗證", "飛輪假設的驗證實驗",
+        "", "### 4. 衡量", "飛輪健康指標 + 複利效應。全程使用繁體中文。",
+      ],
+      en: (v) => [
+        "You are a growth loop architect.",
+        "", `Business/growth: ${v.context}`,
+        v.goal && `Goal: ${v.goal}`,
+        "", "### 1. Flywheel Design — self-reinforcing growth flywheel, ```mermaid flowchart of the loop",
+        "### 2. Leverage Nodes — key levers and acceleration points of the flywheel, table",
+        "### 3. Validation — validation experiments for flywheel assumptions",
+        "### 4. Measurement — flywheel health metrics + compounding effect. Respond in English.",
+      ],
+    }),
+  },
+  competitorIntelligenceAI: {
+    inputs: [
+      field("context", ["競爭情報描述", "Competitive Intel Description"], { required: true, placeholder: ["競爭對手、產業、關注面向、現有情報", "Competitors, industry, focus areas, current intel"] }),
+      field("goal", ["目標（選填）", "Goal (optional)"], { type: "text", placeholder: ["例：策略洞察、預警、定位", "e.g. strategic insights, alerts, positioning"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位競爭情報智能引擎。",
+        "", `競爭情報：${v.context}`,
+        v.goal && `目標：${v.goal}`,
+        "", "### 1. 情報框架", "該收集的競爭情報面向與來源,用表格呈現",
+        "", "### 2. 策略洞察", "情報的策略意涵與對我方影響",
+        "", "### 3. 洞察報告", "策略性洞察報告結構",
+        "", "### 4. 應對", "依情報的回應 + 預警。全程使用繁體中文。",
+      ],
+      en: (v) => [
+        "You are a competitor intelligence AI.",
+        "", `Competitive intel: ${v.context}`,
+        v.goal && `Goal: ${v.goal}`,
+        "", "### 1. Intel Framework — competitive intel aspects and sources to collect, table",
+        "### 2. Strategic Insights — strategic implications of intel and impact on you",
+        "### 3. Insight Report — strategic insight report structure",
+        "### 4. Response — intel-based response + early warning. Respond in English.",
+      ],
+    }),
+  },
+  pivotReadinessScanner: {
+    inputs: [
+      field("context", ["組織 / 轉型描述", "Organization / Pivot Description"], { required: true, placeholder: ["組織、轉型方向、能力、資源、文化", "Organization, pivot direction, capabilities, resources, culture"] }),
+      field("goal", ["目標（選填）", "Goal (optional)"], { type: "text", placeholder: ["例：評估就緒、找缺口、降阻力", "e.g. assess readiness, find gaps, reduce barriers"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位轉型就緒度掃描儀。",
+        "", `組織/轉型：${v.context}`,
+        v.goal && `目標：${v.goal}`,
+        "", "### 1. 就緒度評估", "轉型就緒度多維評估(能力/資源/文化/領導),用表格呈現",
+        "輸出 ```chart 長條圖顯示各就緒面向評分。",
+        "", "### 2. 能力缺口", "關鍵能力缺口與障礙",
+        "", "### 3. 補強計畫", "縮小缺口的補強行動",
+        "", "### 4. 決策", "轉型就緒度結論 + 風險。全程使用繁體中文。",
+      ],
+      en: (v) => [
+        "You are a pivot readiness scanner.",
+        "", `Organization/pivot: ${v.context}`,
+        v.goal && `Goal: ${v.goal}`,
+        "", "### 1. Readiness Assessment — multi-dimensional pivot readiness (capabilities/resources/culture/leadership), table. ```chart bar chart of score per readiness aspect.",
+        "### 2. Capability Gaps — critical capability gaps and barriers",
+        "### 3. Remediation Plan — actions to close gaps",
+        "### 4. Decision — pivot readiness conclusion + risks. Respond in English.",
+      ],
+    }),
+  },
+  marketTimingAdvisor: {
+    inputs: [
+      field("context", ["市場 / 時機描述", "Market / Timing Description"], { required: true, placeholder: ["市場、產品、窗口信號、競爭、能力", "Market, product, window signals, competition, readiness"] }),
+      field("goal", ["目標（選填）", "Goal (optional)"], { type: "text", placeholder: ["例：進入/撤退時機、降風險", "e.g. entry/exit timing, reduce risk"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位市場時機進入顧問。",
+        "", `市場/時機：${v.context}`,
+        v.goal && `目標：${v.goal}`,
+        "", "### 1. 窗口信號", "市場窗口信號分析,用表格呈現",
+        "輸出 ```chart 長條圖顯示各信號強度。",
+        "", "### 2. 進入/撤退時機", "最佳進入或撤退時機建議",
+        "", "### 3. 就緒對齊", "市場時機 vs 自身就緒",
+        "", "### 4. 決策", "時機決策 + 監測信號。全程使用繁體中文。",
+      ],
+      en: (v) => [
+        "You are a market timing advisor.",
+        "", `Market/timing: ${v.context}`,
+        v.goal && `Goal: ${v.goal}`,
+        "", "### 1. Window Signals — market window signal analysis, table. ```chart bar chart of signal strength.",
+        "### 2. Entry/Exit Timing — optimal entry or exit timing recommendation",
+        "### 3. Readiness Alignment — market timing vs own readiness",
+        "### 4. Decision — timing decision + signals to monitor. Respond in English.",
+      ],
+    }),
+  },
+  scenarioStressTestAI: {
+    inputs: [
+      field("context", ["策略 / 決策描述", "Strategy / Decision Description"], { required: true, placeholder: ["策略決策、假設、脆弱點、規劃期", "Strategic decisions, assumptions, vulnerabilities, horizon"] }),
+      field("goal", ["目標（選填）", "Goal (optional)"], { type: "text", placeholder: ["例：壓力測試、韌性、應對", "e.g. stress test, resilience, response"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位情境壓力測試 AI。",
+        "", `策略/決策：${v.context}`,
+        v.goal && `目標：${v.goal}`,
+        "", "### 1. 極端情境", "多種極端情境設計,用表格呈現",
+        "", "### 2. 壓力衝擊", "各情境對策略決策的壓力衝擊",
+        "輸出 ```chart 長條圖顯示各情境的衝擊程度。",
+        "", "### 3. 脆弱點", "策略的脆弱點與斷裂",
+        "", "### 4. 韌性建議", "提升韌性的調整 + 觸發。全程使用繁體中文。",
+      ],
+      en: (v) => [
+        "You are a scenario stress test AI.",
+        "", `Strategy/decision: ${v.context}`,
+        v.goal && `Goal: ${v.goal}`,
+        "", "### 1. Extreme Scenarios — design multiple extreme scenarios, table",
+        "### 2. Stress Impact — stress impact of each scenario on strategic decisions. ```chart bar chart of impact magnitude per scenario.",
+        "### 3. Vulnerabilities — strategy vulnerabilities and breaking points",
+        "### 4. Resilience Recommendations — adjustments to improve resilience + triggers. Respond in English.",
+      ],
+    }),
+  },
+  strategicNarrativeBuilder: {
+    inputs: [
+      field("context", ["策略敘事描述", "Strategic Narrative Description"], { required: true, placeholder: ["組織、策略方向、受眾、現況", "Organization, strategic direction, audience, status"] }),
+      field("goal", ["目標（選填）", "Goal (optional)"], { type: "text", placeholder: ["例：對齊內外、凝聚、溝通", "e.g. align internal/external, consensus, communication"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位策略敘事建構師。",
+        "", `策略敘事：${v.context}`,
+        v.goal && `目標：${v.goal}`,
+        "", "### 1. 敘事框架", "說服力強的策略敘事(現況→挑戰→願景→路徑→角色)",
+        "", "### 2. 核心訊息", "可記憶的核心訊息 + why now",
+        "", "### 3. 受眾對齊", "內外部利害關係人的訊息調整,用表格呈現",
+        "", "### 4. 傳遞", "溝通渠道 + 節律。全程使用繁體中文。",
+      ],
+      en: (v) => [
+        "You are a strategic narrative builder.",
+        "", `Strategic narrative: ${v.context}`,
+        v.goal && `Goal: ${v.goal}`,
+        "", "### 1. Narrative Framework — compelling strategic narrative (situation→challenge→vision→path→roles)",
+        "### 2. Core Message — memorable core message + why now",
+        "### 3. Audience Alignment — message tailoring for internal/external stakeholders, table",
+        "### 4. Delivery — communication channels + cadence. Respond in English.",
+      ],
+    }),
+  },
 };
