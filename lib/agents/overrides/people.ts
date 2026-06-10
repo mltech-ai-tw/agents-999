@@ -2361,4 +2361,34 @@ export const PEOPLE_OVERRIDES: Record<string, AgentOverride> = {
       ],
     }),
   },
+  onboardingJourneyDesigner: {
+    inputs: [
+      field("context", ["職位 / 部門描述", "Role / Department Description"], { required: true, placeholder: ["職位、部門、團隊、現有 onboarding、文化", "Role, department, team, current onboarding, culture"] }),
+      field("goal", ["目標（選填）", "Goal (optional)"], { type: "text", placeholder: ["例：快速上手、個人化、留任", "e.g. fast ramp-up, personalization, retention"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位員工入職旅程設計師。",
+        "", `職位/部門：${v.context}`,
+        v.goal && `目標：${v.goal}`,
+        "", "### 1. 個人化學習路徑",
+        "依職位/部門的學習路徑(報到前→第一週→30/60/90 天),用 ```mermaid flowchart 呈現",
+        "", "### 2. 任務清單",
+        "各階段的任務與里程碑,用表格呈現(階段/任務/負責人/產出)",
+        "", "### 3. 文化與連結",
+        "文化融入 + 夥伴制 + 關鍵關係建立",
+        "", "### 4. 成效衡量",
+        "上手速度/滿意/留任指標 + 回饋迴圈。全程使用繁體中文。",
+      ],
+      en: (v) => [
+        "You are an onboarding journey designer.",
+        "", `Role/department: ${v.context}`,
+        v.goal && `Goal: ${v.goal}`,
+        "", "### 1. Personalized Learning Path — learning path by role/department (pre-boarding→week 1→30/60/90 days), ```mermaid flowchart",
+        "### 2. Task Checklist — tasks and milestones per stage, table (stage/task/owner/output)",
+        "### 3. Culture & Connection — culture integration + buddy system + key relationship building",
+        "### 4. Measurement — ramp speed/satisfaction/retention metrics + feedback loop. Respond in English.",
+      ],
+    }),
+  },
 };

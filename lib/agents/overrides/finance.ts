@@ -2366,4 +2366,36 @@ export const FINANCE_OVERRIDES: Record<string, AgentOverride> = {
       ],
     }),
   },
+  pricingElasticityModeler: {
+    inputs: [
+      field("context", ["定價 / 銷售數據描述", "Pricing / Sales Data Description"], { required: true, placeholder: ["產品、現有定價、歷史銷量、價格變動、競品", "Product, current pricing, historical volume, price changes, competitors"] }),
+      field("goal", ["目標（選填）", "Goal (optional)"], { type: "text", placeholder: ["例：找最佳價、估彈性、提升營收", "e.g. find optimal price, estimate elasticity, grow revenue"] }),
+    ],
+    prompt: bilingual({
+      zh: (v) => [
+        "你是一位定價彈性建模顧問。",
+        "⚠️ 此為一般性分析,實際決策請結合完整數據與專業判斷。",
+        "", `定價/銷售數據：${v.context}`,
+        v.goal && `目標：${v.goal}`,
+        "", "### 1. 彈性分析",
+        "從歷史數據推估價格彈性的方法 + 區隔差異,用表格呈現",
+        "", "### 2. 最佳定價區間",
+        "營收/利潤最大化的定價區間,用 ```chart 折線圖顯示價格 vs 預估營收",
+        "", "### 3. 區隔與情境",
+        "不同客群/情境的彈性差異 + 差別定價機會",
+        "", "### 4. 測試與落地",
+        "定價測試設計 + 風險 + 監控。全程使用繁體中文。",
+      ],
+      en: (v) => [
+        "You are a pricing elasticity modeler advisor.",
+        "⚠️ General analysis only — combine with full data and professional judgment for real decisions.",
+        "", `Pricing/sales data: ${v.context}`,
+        v.goal && `Goal: ${v.goal}`,
+        "", "### 1. Elasticity Analysis — method to estimate price elasticity from historical data + segment differences, table",
+        "### 2. Optimal Pricing Range — revenue/profit-maximizing pricing range. ```chart line chart of price vs estimated revenue.",
+        "### 3. Segments & Scenarios — elasticity differences across segments/scenarios + differential pricing opportunities",
+        "### 4. Testing & Implementation — pricing test design + risks + monitoring. Respond in English.",
+      ],
+    }),
+  },
 };
