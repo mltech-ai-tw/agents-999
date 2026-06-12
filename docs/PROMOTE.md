@@ -35,33 +35,58 @@ Self-hostable Next.js. MIT. 👇
 
 ## Hacker News (Show HN)
 
-**Title:**
+> **Naming caveat — read before posting.** On HN, "agent" means an autonomous,
+> tool-using loop. These are curated prompt templates with structured forms. If
+> the title leans on "999 agents", the top comment will likely be *"these aren't
+> agents"* — so the copy below disarms that up front. Honesty reads as
+> credibility here, not weakness.
+
+**Title** (pick one — A recommended; avoid repeating "agents-999 … agents"):
 
 ```
-Show HN: agents-999 – 999 AI consultant agents you run with your own API key
+A) Show HN: A BYO-key AI consultant prompt library – no backend, keys stay in-browser
+B) Show HN: 999 curated AI consultant prompts you run with your own API key
+C) Show HN: Self-hostable AI consultant app – bring your own LLM key, no database
 ```
 
 **Body:**
 
 ```
-agents-999 is a self-hostable Next.js app: a searchable library of 999 AI
-consultant agents across 12 categories (strategy, marketing, sales, finance,
-legal, product, dev, ops…). You bring your own LLM API key.
+I built agents-999: a searchable library of 999 AI consultant "agents" across 12
+categories (strategy, marketing, sales, finance, legal, product, dev, ops…).
 
-Design goals:
-- No database, no auth, no server-side secrets. Keys live in the browser's
-  localStorage and are forwarded to the provider for a single request only.
-- Works with OpenAI, Anthropic, Gemini, Ollama (local), Mistral, Groq, Azure.
-- Agents are data-driven, not 999 files — a flat metadata table + a generic
-  bilingual prompt builder, with per-agent overrides for hand-tuned forms,
-  Markdown tables, charts and Mermaid diagrams.
-- Bilingual (English / 繁體中文). MIT licensed. One-click Vercel deploy.
+Up front, so the name isn't misleading: these aren't autonomous tool-using
+agents. Each one is a hand-tuned prompt template with a structured input form
+(some render Markdown tables, charts, or Mermaid diagrams). Think "a big, curated
+prompt library with a UI" rather than agentic loops.
 
-Live demo (no key needed to browse): https://agents-999.vercel.app
+The part I actually found interesting to build is the architecture:
+
+- No database, no auth, no server-side secrets. Your API key lives in the
+  browser's localStorage and is forwarded to the provider for a single request,
+  then discarded. The server never stores it.
+- One provider abstraction normalises OpenAI, Anthropic, Gemini, Ollama (local),
+  Mistral, Groq and Azure into a single SSE byte stream, so the client has one
+  code path regardless of upstream API shape.
+- The 999 agents are data-driven, not 999 files — a flat metadata table plus a
+  generic bilingual prompt builder, with per-agent overrides for the hand-tuned
+  forms. Build-time pre-renders every page.
+- Bilingual (English / 繁體中文), MIT, one-click Vercel deploy or any Node host.
+
+Demo (no key needed to browse): https://agents-999.vercel.app
 Code: https://github.com/mltech-ai-tw/agents-999
 
-Happy to answer questions about the provider abstraction / SSE streaming layer.
+Happy to go into the provider/SSE layer or the data-driven agent generation.
 ```
+
+**Posting tactics:**
+
+- Best window: weekday **08:00–10:00 ET** (≈ 20:00–22:00 Taipei) onto `/newest`.
+- **Never** ask for upvotes or share an external "upvote my HN post" link — that
+  gets the post flagged.
+- Post a **maker comment immediately** with the one technical detail you most
+  want to be asked about, to seed discussion.
+- Stay online and reply to every comment — ranking rewards comment activity.
 
 ---
 
@@ -189,5 +214,40 @@ LLM API 金鑰只存在瀏覽器的 localStorage,僅用來代理單次請求,絕
 - [x] **README** banner image + screenshots + live-demo CTA
 - [ ] **Custom social preview image** (Settings → Options → Social preview) — upload `docs/screenshots/og-cover.png`
 - [ ] **Pin the repo** on the org/profile
-- [ ] Cut a **tagged release** (e.g. `v1.0.0`) so it shows in the sidebar and feeds
-- [ ] Submit to awesome lists (awesome-llm, awesome-ai-agents, awesome-selfhosted)
+- [x] Cut a **tagged release** (`v1.0.0`) so it shows in the sidebar and feeds
+- [ ] Submit to awesome lists — see the section below
+
+---
+
+## awesome-list submissions (copy-paste entries)
+
+Highest-value, longest-lived backlinks. Each is a single-line PR.
+
+| List | Fit | Notes |
+|------|-----|-------|
+| **awesome-selfhosted** | ★★★★ | Strictest rules, but you qualify (self-hostable, MIT, live demo). Biggest payoff. |
+| **awesome-nextjs** | ★★★★ | You're a Next.js 15 app — natural fit, looser rules. |
+| **awesome-chatgpt / awesome-llm** | ★★★ | Lead with the multi-provider BYOK angle. |
+| **awesome-ai-agents** | ★★ | Name fits, but keep the description honest ("prompt templates"). |
+
+**awesome-selfhosted** — strict format: correct category, alphabetical order,
+description ends with a period, license + language tags at the end:
+
+```
+- [agents-999](https://github.com/mltech-ai-tw/agents-999) - Searchable library of 999 AI consultant prompt templates that run with your own LLM API key; no database, no accounts, keys stay in the browser. ([Demo](https://agents-999.vercel.app)) `MIT` `Nodejs`
+```
+
+> Suggested category: `Automation` (or near `Communication - Custom
+> Communication Systems`). Read that repo's `CONTRIBUTING.md` first — it checks
+> formatting, requires a demo link, and wants the project to be actively
+> maintained (your `v1.0.0` covers that).
+
+**awesome-nextjs** (looser):
+
+```
+- [agents-999](https://github.com/mltech-ai-tw/agents-999) - 999 AI consultant prompt templates, bring-your-own-key, no backend. ([Demo](https://agents-999.vercel.app))
+```
+
+**PR flow:** Fork → add one line to the correct category / alphabetical slot →
+commit `Add agents-999` → open PR titled `Add agents-999`, body: "open source,
+MIT, live demo, actively maintained."
