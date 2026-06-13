@@ -1,0 +1,50 @@
+name: Bug report
+description: Something isn't working as expected
+labels: [bug]
+body:
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: A clear description of the bug, plus what you expected instead.
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Go to '...'
+        2. Pick agent / provider '...'
+        3. See error
+    validations:
+      required: true
+  - type: dropdown
+    id: provider
+    attributes:
+      label: LLM provider (if relevant)
+      options:
+        - Not provider-specific
+        - OpenAI
+        - Anthropic
+        - Gemini
+        - Ollama (local)
+        - Mistral
+        - Groq
+        - Azure OpenAI
+    validations:
+      required: false
+  - type: input
+    id: env
+    attributes:
+      label: Environment
+      placeholder: e.g. Chrome 138 on macOS 15 / self-hosted on Vercel / local dev
+    validations:
+      required: false
+  - type: checkboxes
+    id: no-secrets
+    attributes:
+      label: Confirmation
+      options:
+        - label: I have NOT included any API keys, tokens, or other secrets in this report.
+          required: true

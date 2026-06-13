@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Live demo
+    url: https://agents-999.vercel.app
+    about: Try all 999 agents in the browser (no key needed to browse).
+  - name: Questions & ideas
+    url: https://github.com/mltech-ai-tw/agents-999/discussions
+    about: For open-ended questions, prefer a Discussion over an issue.

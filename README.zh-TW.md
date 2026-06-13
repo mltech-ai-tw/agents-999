@@ -5,6 +5,7 @@
 **999 個免費 AI 顧問代理人。用你自己的 API 金鑰。**
 
 [![線上展示](https://img.shields.io/badge/線上展示-agents--999-d4371b?style=flat-square)](https://agents-999.vercel.app)
+[![CI](https://img.shields.io/github/actions/workflow/status/mltech-ai-tw/agents-999/ci.yml?style=flat-square&label=CI)](https://github.com/mltech-ai-tw/agents-999/actions/workflows/ci.yml)
 [![授權: MIT](https://img.shields.io/badge/授權-MIT-green?style=flat-square)](./LICENSE)
 [![Next.js](https://img.shields.io/badge/Next.js-15-black?style=flat-square&logo=next.js)](https://nextjs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-3178c6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
@@ -70,6 +71,10 @@ npm start
   預設供應商／模型、清除全部。
 
 整個介面皆為雙語（繁體中文 / English），可由頁首切換。
+
+📐 **深入了解：**[ARCHITECTURE.md](./ARCHITECTURE.md) 是程式碼地圖；工程文
+[《一條 SSE 流，七個大模型供應商》](./docs/blog/one-sse-seven-llms.zh-CN.md)
+（[English](./docs/blog/one-sse-seven-llms.md)）說明串流層如何統一所有供應商。
 
 ---
 
@@ -386,6 +391,7 @@ npm start
 | `npm start`          | 提供正式版建置 |
 | `npm run lint`       | ESLint（next/core-web-vitals）|
 | `npm run typecheck`  | `tsc --noEmit` |
+| `npm test`           | SSE／provider 層單元測試（Vitest）|
 | `npm run gen:agents` | 從來源 metadata 重新產生 `lib/agents/data.ts` |
 
 ---

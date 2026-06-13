@@ -5,6 +5,7 @@
 **999 free AI consultant agents. Bring your own API key.**
 
 [![Live demo](https://img.shields.io/badge/Live_demo-agents--999-d4371b?style=flat-square)](https://agents-999.vercel.app)
+[![CI](https://img.shields.io/github/actions/workflow/status/mltech-ai-tw/agents-999/ci.yml?style=flat-square&label=CI)](https://github.com/mltech-ai-tw/agents-999/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green?style=flat-square)](./LICENSE)
 [![Next.js](https://img.shields.io/badge/Next.js-15-black?style=flat-square&logo=next.js)](https://nextjs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-3178c6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
@@ -96,6 +97,11 @@ Your API key travels: `localStorage → request header → /api/run (used, never
   per-provider "Test Connection", default provider/model, Clear All.
 
 Everything is bilingual (繁體中文 / English) via a header toggle.
+
+📐 **Deeper dives:** [ARCHITECTURE.md](./ARCHITECTURE.md) maps the codebase · the
+engineering write-up [*One SSE stream, seven LLM providers*](./docs/blog/one-sse-seven-llms.md)
+([中文版](./docs/blog/one-sse-seven-llms.zh-CN.md)) explains how the streaming
+layer unifies every provider.
 
 ---
 
@@ -414,6 +420,7 @@ they return Markdown tables, data charts (` ```chart `) and Mermaid diagrams
 | `npm start`          | Serve the production build |
 | `npm run lint`       | ESLint (next/core-web-vitals) |
 | `npm run typecheck`  | `tsc --noEmit` |
+| `npm test`           | Unit tests (Vitest) for the SSE / provider layer |
 | `npm run gen:agents` | Regenerate `lib/agents/data.ts` from the source metadata |
 
 ---
