@@ -60,6 +60,13 @@ export default function Header({ lang, onToggleLang }: Props) {
           </div>
 
           <Link
+            href="/pipeline"
+            className="text-muted transition hover:text-foreground"
+          >
+            {t("pipeline", lang)}
+          </Link>
+
+          <Link
             href="/settings"
             className="text-muted transition hover:text-foreground"
           >
