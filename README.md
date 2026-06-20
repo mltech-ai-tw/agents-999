@@ -92,11 +92,35 @@ Your API key travels: `localStorage → request header → /api/run (used, never
 
 - **Home (`/`)** — searchable, category-filtered grid of all 999 agents.
 - **Runner (`/tools/[id]`)** — dynamic form per agent, model selector (only shows
-  providers you've configured), live-streaming output with copy/reset.
+  providers you've configured), live-streaming output. Two modes (see below):
+  a multi-turn **conversation** thread, or a **compare** toggle.
+- **Pipeline (`/pipeline`)** — chain several agents into one sequential run.
 - **Settings (`/settings`)** — one section per provider, show/hide keys,
   per-provider "Test Connection", default provider/model, Clear All.
 
 Everything is bilingual (繁體中文 / English) via a header toggle.
+
+---
+
+## Beyond single runs
+
+Every agent does more than one-shot Q&A — all three modes stream live and run
+entirely on your own key:
+
+- **💬 Multi-turn conversations** — after an agent answers, keep asking follow-up
+  questions. The full thread is replayed to the model each turn, so it remembers
+  the context of the discussion.
+- **⚖️ Cross-model compare** — flip the **Compare** toggle on any agent to run the
+  same inputs against **up to 3 (provider, model) pairs side by side**, streaming
+  in parallel. See how GPT, Claude and Gemini answer the same brief at once.
+- **🔗 Agent pipelines** — on the **`/pipeline`** page, compose an ordered list of
+  steps. Each step picks an agent and an instruction, and **each step's output
+  feeds the next step as context** — e.g. *Market Research → Positioning →
+  Landing-page Copy* in a single run.
+
+> Keys never leave the per-request proxy in any mode, and the server always
+> rebuilds each agent's prompt — conversation history and pipeline context are
+> only ever appended as data.
 
 📐 **Deeper dives:** [ARCHITECTURE.md](./ARCHITECTURE.md) maps the codebase · the
 engineering write-up [*One SSE stream, seven LLM providers*](./docs/blog/one-sse-seven-llms.md)
@@ -435,10 +459,11 @@ generated file** — add an entry to the matching `lib/agents/overrides/<categor
 
 ---
 
-## Out of scope (v1)
+## Out of scope
 
-No accounts/OAuth · no conversation history · no agent chaining · no
-file/image input · no in-UI agent creation · no analytics.
+No accounts/OAuth · no file/image input · no in-UI agent creation · no
+analytics · no server-side persistence (conversations and pipelines live only
+in the open tab).
 
 ---
 

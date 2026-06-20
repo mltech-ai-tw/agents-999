@@ -64,6 +64,9 @@ export default function PipelineRunner() {
   const runningRef = useRef(false);
 
   // Load settings once on mount and pick a sensible provider/model.
+  // One-time hydration from localStorage (unavailable during SSR/render), so
+  // the cascading-render rule doesn't apply here.
+  /* eslint-disable react-hooks/set-state-in-effect */
   useEffect(() => {
     const s = loadSettings();
     setSettings(s);
@@ -82,6 +85,7 @@ export default function PipelineRunner() {
       );
     }
   }, []);
+  /* eslint-enable react-hooks/set-state-in-effect */
 
   // Abort the live stream on unmount so onDelta never fires post-unmount.
   useEffect(() => {
