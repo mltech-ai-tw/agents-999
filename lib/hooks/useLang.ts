@@ -14,6 +14,9 @@ export function useLang(): [Lang, (lang: Lang) => void] {
   useEffect(() => {
     try {
       const stored = window.localStorage.getItem(LANG_STORAGE_KEY);
+      // Intentional one-time hydration from localStorage on mount (can't read
+      // it during SSR/render); the cascading-render warning doesn't apply.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       if (stored === "zh" || stored === "en") setLangState(stored);
     } catch {
       // ignore
