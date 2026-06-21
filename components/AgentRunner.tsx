@@ -48,6 +48,9 @@ export default function AgentRunner({ agent }: { agent: AgentView }) {
   const outputRef = useRef<HTMLDivElement | null>(null);
 
   // Load settings on mount and pick a sensible provider/model.
+  // One-time hydration from localStorage (unavailable during SSR/render), so
+  // the cascading-render rule doesn't apply here.
+  /* eslint-disable react-hooks/set-state-in-effect */
   useEffect(() => {
     const s = loadSettings();
     setSettings(s);
@@ -67,6 +70,7 @@ export default function AgentRunner({ agent }: { agent: AgentView }) {
       );
     }
   }, [agent.model]);
+  /* eslint-enable react-hooks/set-state-in-effect */
 
   // Keep model sensible when provider changes.
   function handleProviderChange(p: ProviderKey) {
