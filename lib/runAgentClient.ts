@@ -1,6 +1,8 @@
 import type { Lang } from "./i18n";
 import type { ProviderKey } from "./llm/types";
 
+export type RunHistoryItem = { role: "user" | "assistant"; content: string };
+
 export type RunAgentParams = {
   agentId: string;
   inputs: Record<string, string>;
@@ -8,6 +10,8 @@ export type RunAgentParams = {
   model: string;
   apiKey: string;
   baseUrl?: string;
+  history?: RunHistoryItem[];
+  context?: string;
   lang: Lang;
   signal?: AbortSignal;
   onDelta: (text: string) => void;
