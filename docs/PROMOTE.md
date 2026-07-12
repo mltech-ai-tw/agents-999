@@ -4,7 +4,7 @@ Copy-paste blurbs for launching / sharing **agents-999**. Swap the links if you
 host your own fork.
 
 - **Repo:** https://github.com/mltech-ai-tw/agents-999
-- **Live demo:** https://agents-999.vercel.app
+- **Live demo:** https://999-agent.mltech.tw
 
 ---
 
@@ -17,7 +17,7 @@ host your own fork.
 
 Bring your own API key (OpenAI / Claude / Gemini / Ollama). No signup, no subscription, keys never leave your browser. Open source.
 
-▶ Try it: https://agents-999.vercel.app
+▶ Try it: https://999-agent.mltech.tw
 ⭐ Code: https://github.com/mltech-ai-tw/agents-999
 ```
 
@@ -73,7 +73,7 @@ The part I actually found interesting to build is the architecture:
   forms. Build-time pre-renders every page.
 - Bilingual (English / 繁體中文), MIT, one-click Vercel deploy or any Node host.
 
-Demo (no key needed to browse): https://agents-999.vercel.app
+Demo (no key needed to browse): https://999-agent.mltech.tw
 Code: https://github.com/mltech-ai-tw/agents-999
 
 Happy to go into the provider/SSE layer or the data-driven agent generation.
@@ -112,7 +112,7 @@ Why you might like it:
 • Bilingual (EN / 繁中), fork-and-rebrand from a single config file
 • MIT licensed
 
-Demo: https://agents-999.vercel.app
+Demo: https://999-agent.mltech.tw
 Code: https://github.com/mltech-ai-tw/agents-999
 
 Feedback welcome!
@@ -166,7 +166,7 @@ browser and is used only to proxy a single request to the provider you choose
 It's MIT-licensed and self-hostable on Vercel in one click — fork it and rebrand
 it for your team from a single config file.
 
-▶ Live demo: https://agents-999.vercel.app
+▶ Live demo: https://999-agent.mltech.tw
 ⭐ Code: https://github.com/mltech-ai-tw/agents-999
 
 #AI #OpenSource #LLM #NextJS #Productivity
@@ -183,7 +183,7 @@ it for your team from a single config file.
 
 自帶 API 金鑰即可使用(OpenAI / Claude / Gemini / 本地 Ollama),免註冊、免訂閱,金鑰只存在你的瀏覽器,不會上傳。MIT 授權,可一鍵自架。
 
-▶ 體驗:https://agents-999.vercel.app
+▶ 體驗:https://999-agent.mltech.tw
 ⭐ 原始碼:https://github.com/mltech-ai-tw/agents-999
 ```
 
@@ -198,7 +198,7 @@ LLM API 金鑰只存在瀏覽器的 localStorage,僅用來代理單次請求,絕
 支援 OpenAI、Anthropic、Google Gemini、本地 Ollama、Mistral、Groq、Azure。
 中英雙語介面,MIT 授權,可在 Vercel 一鍵自架,改一個設定檔就能換成自己的品牌。
 
-▶ 線上體驗:https://agents-999.vercel.app
+▶ 線上體驗:https://999-agent.mltech.tw
 ⭐ GitHub:https://github.com/mltech-ai-tw/agents-999
 
 #AI #開源 #LLM #生產力工具
@@ -234,7 +234,7 @@ Highest-value, longest-lived backlinks. Each is a single-line PR.
 description ends with a period, license + language tags at the end:
 
 ```
-- [agents-999](https://github.com/mltech-ai-tw/agents-999) - Searchable library of 999 AI consultant prompt templates that run with your own LLM API key; no database, no accounts, keys stay in the browser. ([Demo](https://agents-999.vercel.app)) `MIT` `Nodejs`
+- [agents-999](https://github.com/mltech-ai-tw/agents-999) - Searchable library of 999 AI consultant prompt templates that run with your own LLM API key; no database, no accounts, keys stay in the browser. ([Demo](https://999-agent.mltech.tw)) `MIT` `Nodejs`
 ```
 
 > Suggested category: `Automation` (or near `Communication - Custom
@@ -245,7 +245,7 @@ description ends with a period, license + language tags at the end:
 **awesome-nextjs** (looser):
 
 ```
-- [agents-999](https://github.com/mltech-ai-tw/agents-999) - 999 AI consultant prompt templates, bring-your-own-key, no backend. ([Demo](https://agents-999.vercel.app))
+- [agents-999](https://github.com/mltech-ai-tw/agents-999) - 999 AI consultant prompt templates, bring-your-own-key, no backend. ([Demo](https://999-agent.mltech.tw))
 ```
 
 **PR flow:** Fork → add one line to the correct category / alphabetical slot →

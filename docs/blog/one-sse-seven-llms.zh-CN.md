@@ -199,4 +199,4 @@ function resolveAgent(meta: AgentMeta): Agent {
 
 代码开源（MIT）。供应商层或数据驱动生成有任何问题，欢迎评论区聊。
 
-> 仓库：https://github.com/mltech-ai-tw/agents-999 · 在线 Demo：https://agents-999.vercel.app
+> 仓库：https://github.com/mltech-ai-tw/agents-999 · 在线 Demo：https://999-agent.mltech.tw

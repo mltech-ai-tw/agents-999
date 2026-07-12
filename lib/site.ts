@@ -42,5 +42,5 @@ export const SITE = {
    * previews (LinkedIn, X, Slack…) resolve absolute image/links. Forkers:
    * change this to your own deployed domain.
    */
-  url: "https://www.mltech.tw",
+  url: "https://999-agent.mltech.tw",
 } as const;

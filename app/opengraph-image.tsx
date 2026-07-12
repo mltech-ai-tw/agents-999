@@ -3,6 +3,7 @@ import { SITE } from "@/lib/site";
 
 // Dynamically generated Open Graph image (1200×630) used by LinkedIn, X,
 // Slack, etc. Content is driven by lib/site.ts so it stays white-label.
+// Styled to match the app's editorial design: warm paper, warm ink, vermilion.
 export const alt = `${SITE.name} — ${SITE.tagline.en}`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
@@ -19,42 +20,46 @@ export default function OpengraphImage() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          padding: "80px",
-          background: "linear-gradient(135deg, #0a0a0b 0%, #1b1b20 100%)",
-          color: "#f5f5f4",
-          fontFamily: "sans-serif",
+          padding: "72px 80px",
+          background: "#f2eee4",
+          color: "#1b1a16",
+          fontFamily: "serif",
+          borderTop: "16px solid #d4371b",
         }}
       >
         <div
           style={{
             display: "flex",
-            fontSize: 30,
-            color: "#a1a1aa",
-            letterSpacing: 3,
+            justifyContent: "space-between",
+            fontSize: 28,
+            letterSpacing: 4,
+            color: "#6b6656",
           }}
         >
-          {domain}
+          <div style={{ display: "flex" }}>{domain}</div>
+          <div style={{ display: "flex" }}>001 — 999</div>
         </div>
 
         <div style={{ display: "flex", flexDirection: "column" }}>
           <div
             style={{
               display: "flex",
-              fontSize: 120,
+              fontSize: 124,
               fontWeight: 800,
-              letterSpacing: -3,
+              letterSpacing: -4,
               lineHeight: 1,
             }}
           >
-            {SITE.name}
+            <span>agents</span>
+            <span style={{ color: "#d4371b" }}>-999</span>
           </div>
           <div
             style={{
               display: "flex",
-              fontSize: 46,
-              color: "#e4e4e7",
-              marginTop: 28,
-              maxWidth: 980,
+              fontSize: 44,
+              marginTop: 30,
+              maxWidth: 1000,
+              color: "#1b1a16",
             }}
           >
             {SITE.tagline.en}
@@ -64,8 +69,10 @@ export default function OpengraphImage() {
         <div
           style={{
             display: "flex",
-            fontSize: 27,
-            color: "#71717a",
+            fontSize: 26,
+            color: "#6b6656",
+            borderTop: "2px solid #1b1a16",
+            paddingTop: 24,
           }}
         >
           Open source · No account · Keys stay in your browser · OpenAI ·

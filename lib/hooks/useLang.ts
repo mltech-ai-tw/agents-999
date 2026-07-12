@@ -5,8 +5,9 @@ import { LANG_STORAGE_KEY, type Lang } from "../i18n";
 
 /**
  * Reads/writes the UI language from localStorage and keeps it in sync across
- * tabs. Defaults to Chinese. Starts as "zh" on the server to avoid hydration
- * mismatch, then syncs to the stored value after mount.
+ * tabs. Starts as "zh" on the server to avoid hydration mismatch, then syncs
+ * after mount: stored preference first, otherwise the browser language
+ * (non-Chinese browsers get English).
  */
 export function useLang(): [Lang, (lang: Lang) => void] {
   const [lang, setLangState] = useState<Lang>("zh");
@@ -14,10 +15,17 @@ export function useLang(): [Lang, (lang: Lang) => void] {
   useEffect(() => {
     try {
       const stored = window.localStorage.getItem(LANG_STORAGE_KEY);
-      // Intentional one-time hydration from localStorage on mount (can't read
-      // it during SSR/render); the cascading-render warning doesn't apply.
+      const initial =
+        stored === "zh" || stored === "en"
+          ? stored
+          : navigator.language.toLowerCase().startsWith("zh")
+            ? null // browser is Chinese — keep the "zh" default
+            : "en";
+      // Intentional one-time hydration from localStorage / browser language on
+      // mount (can't read either during SSR/render); the cascading-render
+      // warning doesn't apply.
       // eslint-disable-next-line react-hooks/set-state-in-effect
-      if (stored === "zh" || stored === "en") setLangState(stored);
+      if (initial) setLangState(initial);
     } catch {
       // ignore
     }

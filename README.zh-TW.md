@@ -4,16 +4,16 @@
 
 **999 個免費 AI 顧問代理人。用你自己的 API 金鑰。**
 
-[![線上展示](https://img.shields.io/badge/線上展示-agents--999-d4371b?style=flat-square)](https://agents-999.vercel.app)
+[![線上展示](https://img.shields.io/badge/線上展示-agents--999-d4371b?style=flat-square)](https://999-agent.mltech.tw)
 [![CI](https://img.shields.io/github/actions/workflow/status/mltech-ai-tw/agents-999/ci.yml?style=flat-square&label=CI)](https://github.com/mltech-ai-tw/agents-999/actions/workflows/ci.yml)
 [![授權: MIT](https://img.shields.io/badge/授權-MIT-green?style=flat-square)](./LICENSE)
-[![Next.js](https://img.shields.io/badge/Next.js-15-black?style=flat-square&logo=next.js)](https://nextjs.org)
+[![Next.js](https://img.shields.io/badge/Next.js-16-black?style=flat-square&logo=next.js)](https://nextjs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-3178c6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 [![一鍵部署 Vercel](https://img.shields.io/badge/部署-Vercel-black?style=flat-square&logo=vercel)](https://vercel.com/new/clone?repository-url=https://github.com/mltech-ai-tw/agents-999)
 
 [English](./README.md) · **繁體中文**
 
-<a href="https://agents-999.vercel.app"><img src="./docs/screenshots/og-cover.png" alt="agents-999 — 999 個用自己的 API 金鑰執行的免費 AI 顧問代理人" width="680"></a>
+<a href="https://999-agent.mltech.tw"><img src="./docs/screenshots/og-cover.png" alt="agents-999 — 999 個用自己的 API 金鑰執行的免費 AI 顧問代理人" width="680"></a>
 
 </div>
 
@@ -28,7 +28,7 @@
 **OpenAI(GPT)· Anthropic(Claude)· Google Gemini · Ollama(本地)· Mistral ·
 Groq · Azure OpenAI**。
 
-👉 **[開啟線上展示 →](https://agents-999.vercel.app)** · 免金鑰即可瀏覽全部 999 個代理人
+👉 **[開啟線上展示 →](https://999-agent.mltech.tw)** · 免金鑰即可瀏覽全部 999 個代理人
 
 ---
 
@@ -99,9 +99,9 @@ npm start
 
 | 首頁 — 可搜尋的 999 代理人總覽 | 設定 — 自帶你的金鑰 |
 |:---:|:---:|
-| [![agents-999 首頁 — 可搜尋、可分類篩選的 999 個 AI 顧問代理人總覽](./docs/screenshots/home.png)](https://agents-999.vercel.app) | [![agents-999 設定 — 加入你自己的 OpenAI、Anthropic、Gemini 或 Ollama API 金鑰，只存在瀏覽器](./docs/screenshots/settings.png)](https://agents-999.vercel.app/settings) |
+| [![agents-999 首頁 — 可搜尋、可分類篩選的 999 個 AI 顧問代理人總覽](./docs/screenshots/home.png)](https://999-agent.mltech.tw) | [![agents-999 設定 — 加入你自己的 OpenAI、Anthropic、Gemini 或 Ollama API 金鑰，只存在瀏覽器](./docs/screenshots/settings.png)](https://999-agent.mltech.tw/settings) |
 
-> ▶ **[開啟線上展示 →](https://agents-999.vercel.app)** — 免費瀏覽全部 999 個代理人；加入金鑰即可執行任一個。
+> ▶ **[開啟線上展示 →](https://999-agent.mltech.tw)** — 免費瀏覽全部 999 個代理人；加入金鑰即可執行任一個。
 
 ---
 

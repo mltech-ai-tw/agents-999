@@ -4,16 +4,16 @@
 
 **999 free AI consultant agents. Bring your own API key.**
 
-[![Live demo](https://img.shields.io/badge/Live_demo-agents--999-d4371b?style=flat-square)](https://agents-999.vercel.app)
+[![Live demo](https://img.shields.io/badge/Live_demo-agents--999-d4371b?style=flat-square)](https://999-agent.mltech.tw)
 [![CI](https://img.shields.io/github/actions/workflow/status/mltech-ai-tw/agents-999/ci.yml?style=flat-square&label=CI)](https://github.com/mltech-ai-tw/agents-999/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green?style=flat-square)](./LICENSE)
-[![Next.js](https://img.shields.io/badge/Next.js-15-black?style=flat-square&logo=next.js)](https://nextjs.org)
+[![Next.js](https://img.shields.io/badge/Next.js-16-black?style=flat-square&logo=next.js)](https://nextjs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-3178c6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 [![Deploy with Vercel](https://img.shields.io/badge/Deploy-Vercel-black?style=flat-square&logo=vercel)](https://vercel.com/new/clone?repository-url=https://github.com/mltech-ai-tw/agents-999)
 
 **English** · [繁體中文](./README.zh-TW.md)
 
-<a href="https://agents-999.vercel.app"><img src="./docs/screenshots/og-cover.png" alt="agents-999 — 999 free AI consultant agents you run with your own API key" width="680"></a>
+<a href="https://999-agent.mltech.tw"><img src="./docs/screenshots/og-cover.png" alt="agents-999 — 999 free AI consultant agents you run with your own API key" width="680"></a>
 
 </div>
 
@@ -29,7 +29,7 @@ Built with **Next.js 15 · React 19 · TypeScript · Tailwind CSS**. Supports
 **OpenAI (GPT) · Anthropic (Claude) · Google Gemini · Ollama (local) · Mistral ·
 Groq · Azure OpenAI**.
 
-👉 **[Try the live demo →](https://agents-999.vercel.app)** · no key needed to browse all 999 agents
+👉 **[Try the live demo →](https://999-agent.mltech.tw)** · no key needed to browse all 999 agents
 
 ---
 
@@ -133,9 +133,9 @@ layer unifies every provider.
 
 | Home — searchable grid of all 999 agents | Settings — bring your own key |
 |:---:|:---:|
-| [![agents-999 home page — searchable, category-filtered grid of 999 AI consultant agents](./docs/screenshots/home.png)](https://agents-999.vercel.app) | [![agents-999 settings — add your own OpenAI, Anthropic, Gemini or Ollama API key, stored in the browser only](./docs/screenshots/settings.png)](https://agents-999.vercel.app/settings) |
+| [![agents-999 home page — searchable, category-filtered grid of 999 AI consultant agents](./docs/screenshots/home.png)](https://999-agent.mltech.tw) | [![agents-999 settings — add your own OpenAI, Anthropic, Gemini or Ollama API key, stored in the browser only](./docs/screenshots/settings.png)](https://999-agent.mltech.tw/settings) |
 
-> ▶ **[Open the live demo →](https://agents-999.vercel.app)** — browse all 999 agents for free; add your own key to run any of them.
+> ▶ **[Open the live demo →](https://999-agent.mltech.tw)** — browse all 999 agents for free; add your own key to run any of them.
 
 ---
 
